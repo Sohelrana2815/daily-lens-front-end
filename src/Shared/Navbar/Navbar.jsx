@@ -1,87 +1,92 @@
-import "./Navbar.css";
-const Navbar = () => {
-  const showSideBar = () => {
-    const sidebar = document.querySelector(".sidebar");
-    sidebar.style.display = "flex";
-  };
-  const hideSidebar = () => {
-    const sidebar = document.querySelector(".sidebar");
-    sidebar.style.display = "none";
-  };
-  return (
-    <nav>
-      <ul className="sidebar">
-        <li onClick={hideSidebar}>
-          <a href="#">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="26px"
-              viewBox="0 -960 960 960"
-              width="26px"
-              fill="#000000"
-            >
-              <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-            </svg>
-          </a>
-        </li>
-        <li>
-          <a href="#">Daily Lens</a>
-        </li>
-        <li>
-          <a href="#">Home</a>
-        </li>
-        <li>
-          <a href="#">Products</a>
-        </li>
-        <li>
-          <a href="#">About</a>
-        </li>
-      </ul>
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { FiMenu, FiX } from "react-icons/fi";
+import Button from "./Button";
 
-      <ul>
-        <li>
-          <a href="#">Daily Lens</a>
-        </li>
-        <li>
-          <a href="" className="hideOnMobile">
-            Blog
-          </a>
-        </li>
-        <li>
-          <a href="" className="hideOnMobile">
-            Products
-          </a>
-        </li>
-        <li>
-          <a href="" className="hideOnMobile">
-            About
-          </a>
-        </li>
-        <li>
-          <a href="" className="hideOnMobile">
-            Contact
-          </a>
-        </li>
-        <li>
-          <a href="" className="hideOnMobile">
-            Login
-          </a>
-        </li>
-        <li className="menuButton" onClick={showSideBar}>
-          <a href="#">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="26px"
-              viewBox="0 -960 960 960"
-              width="26px"
-              fill="#000000"
+const Navbar = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="shadow-md w-full fixed top-0 left-0">
+      <div className="md:flex items-center justify-between bg-white py-6 md:px-10 px-7">
+        {/* Logo Section */}
+        <div
+          className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] 
+      text-gray-800"
+        >
+          <span className="text-3xl text-indigo-600 mr-1 pt-2">
+            <ion-icon name="logo-ionic"></ion-icon>
+          </span>
+          Designer
+        </div>
+
+        {/* Menu Icon */}
+        <div
+          onClick={() => setOpen(!open)}
+          className="text-3xl absolute right-8 top-6 cursor-pointer md:hidden"
+        >
+          {open ? (
+            <FiX className="text-black" />
+          ) : (
+            <FiMenu className="text-black" />
+          )}
+        </div>
+
+        {/* Navigation Links */}
+        <ul
+          className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${
+            open ? "top-20 " : "top-[-490px]"
+          }`}
+        >
+          <li className="md:ml-8 text-xl md:my-0 my-7">
+            <NavLink
+              to="/"
+              className="text-gray-800 hover:text-gray-400 duration-500"
+              onClick={() => setOpen(false)}
             >
-              <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
-            </svg>
-          </a>
-        </li>
-      </ul>
-    </nav>
+              HOME
+            </NavLink>
+          </li>
+          <li className="md:ml-8 text-xl md:my-0 my-7">
+            <NavLink
+              to="/service"
+              className="text-gray-800 hover:text-gray-400 duration-500"
+              onClick={() => setOpen(false)}
+            >
+              SERVICE
+            </NavLink>
+          </li>
+          <li className="md:ml-8 text-xl md:my-0 my-7">
+            <NavLink
+              to="/about"
+              className="text-gray-800 hover:text-gray-400 duration-500"
+              onClick={() => setOpen(false)}
+            >
+              ABOUT
+            </NavLink>
+          </li>
+          <li className="md:ml-8 text-xl md:my-0 my-7">
+            <NavLink
+              to="/blogs"
+              className="text-gray-800 hover:text-gray-400 duration-500"
+              onClick={() => setOpen(false)}
+            >
+              BLOG&apos;S
+            </NavLink>
+          </li>
+          <li className="md:ml-8 text-xl md:my-0 my-7">
+            <NavLink
+              to="/contact"
+              className="text-gray-800 hover:text-gray-400 duration-500"
+              onClick={() => setOpen(false)}
+            >
+              CONTACT
+            </NavLink>
+          </li>
+          <Button>Get Started</Button>
+        </ul>
+      </div>
+    </div>
   );
 };
 
