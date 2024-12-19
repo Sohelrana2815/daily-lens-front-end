@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const Button = (props) => {
   return (
     <button
@@ -7,6 +9,11 @@ const Button = (props) => {
       {props.children}
     </button>
   );
+};
+
+// Define propTypes
+Button.propTypes = {
+  children: PropTypes.node.isRequired, // Ensures children is required and can be any renderable content
 };
 
 export default Button;
