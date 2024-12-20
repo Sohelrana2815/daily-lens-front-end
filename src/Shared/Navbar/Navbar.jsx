@@ -56,7 +56,7 @@ const Navbar = () => {
           </li>
           <li className="lg:ml-8 text-xl lg:my-0 my-7">
             <NavLink
-              to="/service"
+              to="/addArticles"
               className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
               onClick={() => setOpen(false)}
             >
