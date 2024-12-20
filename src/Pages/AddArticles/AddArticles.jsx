@@ -58,9 +58,7 @@ const AddArticles = () => {
             Select Publisher
           </option>
 
-          <option>
-            
-          </option>
+          <option></option>
         </select>
       </div>
 
