@@ -4,7 +4,7 @@ const Statistics = () => {
     <div>
       <div>
         <h1>
-          <CountUp start={0} end={100} duration={2.5} />
+          <CountUp start={0} end={500} prefix="$" suffix=" USD" duration={3} />
         </h1>
       </div>
     </div>
