@@ -1,10 +1,7 @@
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
+import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 const SignUp = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-
   // auth
   const { createNewUser, updateUserProfile } = useAuth();
 
@@ -51,8 +48,7 @@ const SignUp = () => {
                   type="text"
                   placeholder="Enter your full name"
                   className="input input-bordered"
-                  {...register("name")}
-                  required
+                  {...register("name", { required: true })}
                 />
               </div>
               {/* email */}
@@ -64,8 +60,7 @@ const SignUp = () => {
                   type="email"
                   placeholder="Enter your email address"
                   className="input input-bordered"
-                  {...register("email")}
-                  required
+                  {...register("email", { required: true })}
                 />
               </div>
               {/* photo URL */}
@@ -77,8 +72,7 @@ const SignUp = () => {
                   type="text"
                   placeholder="Enter photo URL"
                   className="input input-bordered"
-                  {...register("photoURL")}
-                  required
+                  {...register("photoURL", { required: true })}
                 />
               </div>
               {/* Password */}
@@ -90,7 +84,7 @@ const SignUp = () => {
                   type="password"
                   placeholder="Enter password"
                   className="input input-bordered"
-                  {...register("password")}
+                  {...register("password", { required: true })}
                   required
                 />
               </div>
@@ -99,6 +93,7 @@ const SignUp = () => {
                   Sign up
                 </button>
               </div>
+              <SocialLogin />
             </form>
           </div>
         </div>

@@ -5,7 +5,18 @@ import useTheme from "../../Hooks/useTheme";
 import { LuSun } from "react-icons/lu";
 import { GoMoon } from "react-icons/go";
 import websiteLogo from "../../assets/Website logo/website logo.png";
+import useAuth from "../../Hooks/useAuth";
 const Navbar = () => {
+  // auth
+
+  const { user, signOutUser } = useAuth();
+
+  // logout function
+
+  const handleSignOut = () => {
+    signOutUser();
+  };
+
   const [open, setOpen] = useState(false);
   const { isDarkMode, toggleDarkMode } = useTheme();
   return (
@@ -89,24 +100,58 @@ const Navbar = () => {
               Dashboard
             </NavLink>
           </li>
-          <li className="lg:ml-8 lg:my-0 my-6">
-            <NavLink
-              to="/signIn"
-              className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
-              onClick={() => setOpen(false)}
-            >
-              Sign in
-            </NavLink>
-          </li>
-          <li className="lg:ml-8 lg:my-0 my-6">
-            <NavLink
-              to="/signUp"
-              className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
-              onClick={() => setOpen(false)}
-            >
-              Sign up
-            </NavLink>
-          </li>
+          {user ? (
+            <div className="dropdown lg:dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
+                title={user?.displayName}
+              >
+                <div className="w-10 rounded-full">
+                  <img alt={user?.displayName} src={user?.photoURL} />
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              >
+                <li>
+                  <a className="justify-between">
+                    Profile
+                    <span className="badge">New</span>
+                  </a>
+                </li>
+                <li>
+                  <a>Settings</a>
+                </li>
+                <li>
+                  <a onClick={handleSignOut}>Logout</a>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <>
+              <li className="lg:ml-8 lg:my-0 my-6">
+                <NavLink
+                  to="/signIn"
+                  className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                  onClick={() => setOpen(false)}
+                >
+                  Sign in
+                </NavLink>
+              </li>
+              <li className="lg:ml-8 lg:my-0 my-6">
+                <NavLink
+                  to="/signUp"
+                  className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                  onClick={() => setOpen(false)}
+                >
+                  Sign up
+                </NavLink>
+              </li>
+            </>
+          )}
 
           <div className="ml-3">
             {isDarkMode ? (
