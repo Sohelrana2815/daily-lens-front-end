@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
-import Button from "./Button";
 import useTheme from "../../Hooks/useTheme";
 import { LuSun } from "react-icons/lu";
 import { GoMoon } from "react-icons/go";
@@ -11,7 +10,7 @@ const Navbar = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
   return (
     <div className="shadow-md w-full fixed z-10 top-0 left-0">
-      <div className="lg:flex items-center justify-between bg-white dark:bg-gray-900 dark:text-gray-300 py-6 lg:px-10 px-7">
+      <div className="lg:flex items-center  justify-between bg-white dark:bg-gray-900 dark:text-gray-300 py-6 lg:px-10 px-7">
         {/* Logo Section */}
         <div className="font-bold text-2xl cursor-pointer flex justify-center items-center font-[Poppins] text-gray-800 dark:text-white">
           <span className="text-3xl text-indigo-600 dark:text-indigo-400 mr-1 pt-2">
@@ -45,7 +44,7 @@ const Navbar = () => {
             open ? "top-20 " : "top-[-490px]"
           }`}
         >
-          <li className="lg:ml-8 text-xl lg:my-0 my-7">
+          <li className="lg:ml-8 lg:my-0 my-6">
             <NavLink
               to="/"
               className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
@@ -54,7 +53,7 @@ const Navbar = () => {
               HOME
             </NavLink>
           </li>
-          <li className="lg:ml-8 text-xl lg:my-0 my-7">
+          <li className="lg:ml-8 lg:my-0 my-6">
             <NavLink
               to="/addArticles"
               className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
@@ -63,7 +62,7 @@ const Navbar = () => {
               Add Articles
             </NavLink>
           </li>
-          <li className="lg:ml-8 text-xl lg:my-0 my-7">
+          <li className="lg:ml-8  lg:my-0 my-6">
             <NavLink
               to="/about"
               className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
@@ -72,7 +71,7 @@ const Navbar = () => {
               All Articles
             </NavLink>
           </li>
-          <li className="lg:ml-8 text-xl lg:my-0 my-7">
+          <li className="lg:ml-8 lg:my-0 my-6">
             <NavLink
               to="/blogs"
               className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
@@ -81,7 +80,7 @@ const Navbar = () => {
               Subscriptions
             </NavLink>
           </li>
-          <li className="lg:ml-8 text-xl lg:my-0 my-7">
+          <li className="lg:ml-8 lg:my-0 my-6">
             <NavLink
               to="/dashboard"
               className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
@@ -90,9 +89,25 @@ const Navbar = () => {
               Dashboard
             </NavLink>
           </li>
-          <Button className="text-gray-800 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400">
-            Get Started
-          </Button>
+          <li className="lg:ml-8 lg:my-0 my-6">
+            <NavLink
+              to="/signIn"
+              className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+              onClick={() => setOpen(false)}
+            >
+              Sign in
+            </NavLink>
+          </li>
+          <li className="lg:ml-8 lg:my-0 my-6">
+            <NavLink
+              to="/signUp"
+              className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+              onClick={() => setOpen(false)}
+            >
+              Sign up
+            </NavLink>
+          </li>
+
           <div className="ml-3">
             {isDarkMode ? (
               <button

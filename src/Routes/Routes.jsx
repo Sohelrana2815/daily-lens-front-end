@@ -4,6 +4,8 @@ import MainLayout from "../Layouts/MainLayout/MainLayout";
 import AddArticles from "../Pages/AddArticles/AddArticles";
 import Dashboard from "../Layouts/Dashboard/Dashboard";
 import AddPublisher from "../Pages/Dashboard/AddPublisher/AddPublisher";
+import SignIn from "../Pages/SignIn/SignIn";
+import SignUp from "../Pages/SignUp/SignUp";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +19,14 @@ const router = createBrowserRouter([
       {
         path: "addArticles",
         element: <AddArticles />,
+      },
+      {
+        path: "signIn",
+        element: <SignIn />,
+      },
+      {
+        path: "signUp",
+        element: <SignUp />,
       },
     ],
   },
