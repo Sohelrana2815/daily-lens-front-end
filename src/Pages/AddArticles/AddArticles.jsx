@@ -1,6 +1,18 @@
+import { useForm } from "react-hook-form";
 import Select from "react-select";
+import { useEffect, useState } from "react";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+
+
+
+
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const AddArticles = () => {
+  const [publishers, setPublishers] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const axiosPublic = useAxiosPublic();
   // Tag options (predefined)
   const tagOptions = [
     { value: "news", label: "News" },
@@ -13,8 +25,42 @@ const AddArticles = () => {
     { value: "finance", label: "Finance" },
   ];
 
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+   try {
+ const imageFile =  {image: data.articleImage[0]}
+   }
+catch(error){
+  console.error("Error While Adding Article",error);
+  
+}
+
+
+  };
+
+  useEffect(() => {
+    axiosPublic
+      .get("/publishers")
+      .then((publishersResponse) => {
+        setPublishers(publishersResponse.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [axiosPublic]);
+
   return (
-    <form className="card-body bg-gray-300">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="card-body bg-gray-300 mt-40"
+    >
+      <h2 className="text-center">{publishers.length}</h2>
       {/* Title Field */}
       <div className="form-control">
         <label className="label">
@@ -24,8 +70,11 @@ const AddArticles = () => {
           type="text"
           placeholder="Article Title"
           className="input input-bordered"
-          required
+          {...register("articleTitle", { required: true })}
         />
+        {errors.title && (
+          <span className="text-error">Title field is required</span>
+        )}
       </div>
 
       {/* Description Field */}
@@ -36,8 +85,11 @@ const AddArticles = () => {
         <textarea
           placeholder="Article Description"
           className="textarea textarea-bordered"
-          required
+          {...register("articleDescription", { required: true })}
         />
+        {errors.description && (
+          <span className="text-error">Description field is required</span>
+        )}
       </div>
 
       {/* Image Upload */}
@@ -45,7 +97,14 @@ const AddArticles = () => {
         <label className="label">
           <span className="label-text">Image</span>
         </label>
-        <input type="file" className="input input-bordered" required />
+        <input
+          type="file"
+          className="input input-bordered"
+          {...register("articleImage", { required: true })}
+        />
+        {errors.image && (
+          <span className="text-error">Image field is required</span>
+        )}
       </div>
 
       {/* Publisher Dropdown */}
@@ -53,13 +112,23 @@ const AddArticles = () => {
         <label className="label">
           <span className="label-text">Publisher</span>
         </label>
-        <select className="select select-bordered" required>
+        <select
+          defaultValue=""
+          className="select select-bordered"
+          {...register("publisherName", { required: true })}
+        >
           <option value="" disabled>
-            Select Publisher
+            Select Publisher Name
           </option>
-
-          <option></option>
+          {publishers.map((publisher) => (
+            <option key={publisher._id} value={publisher.name}>
+              {publisher.publisherName}
+            </option>
+          ))}
         </select>
+        {errors.publisher && (
+          <span className="text-error">Publisher field is required</span>
+        )}
       </div>
 
       {/* Tags Multi-Select */}
@@ -67,7 +136,13 @@ const AddArticles = () => {
         <label className="label">
           <span className="label-text">Tags</span>
         </label>
-        <Select isMulti options={tagOptions} className="basic-multi-select" />
+        <Select
+          isMulti
+          options={tagOptions}
+          value={selectedTags}
+          onChange={(selectedOptions) => setSelectedTags(selectedOptions)}
+          className="basic-multi-select"
+        />
       </div>
 
       {/* Submit Button */}

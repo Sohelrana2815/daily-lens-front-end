@@ -1,7 +1,9 @@
 import { useForm } from "react-hook-form";
 import useAuth from "../../Hooks/useAuth";
+import { useState } from "react";
 
 const SignIn = () => {
+  const [err, setErr] = useState("");
   const { signInUser, updateUserProfile } = useAuth();
 
   const { handleSubmit, register, reset } = useForm();
@@ -12,13 +14,18 @@ const SignIn = () => {
 
     // Register/Sign up
 
-    signInUser(email, password).then((result) => {
-      console.log(result.user);
+    signInUser(email, password)
+      .then((result) => {
+        console.log(result.user);
 
-      // Now update the profile
-      updateUserProfile();
-      reset();
-    });
+        // Now update the profile
+        updateUserProfile();
+        reset();
+      })
+      .catch((error) => {
+        setErr("Email or Password invalid please try again");
+        console.log(error);
+      });
   };
   return (
     <>
@@ -62,6 +69,7 @@ const SignIn = () => {
                 <button type="submit" className="btn btn-primary">
                   Login
                 </button>
+                {err && <p className="text-red-500">{err}</p>}
               </div>
             </form>
           </div>
