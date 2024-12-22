@@ -2,9 +2,7 @@ import { useForm } from "react-hook-form";
 import Select from "react-select";
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
-
-
-
+import useAuth from "../../Hooks/useAuth";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -12,6 +10,7 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 const AddArticles = () => {
   const [publishers, setPublishers] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
+  const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
   // Tag options (predefined)
   const tagOptions = [
@@ -28,20 +27,50 @@ const AddArticles = () => {
   const {
     handleSubmit,
     register,
-    reset,
+    // reset,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-   try {
- const imageFile =  {image: data.articleImage[0]}
-   }
-catch(error){
-  console.error("Error While Adding Article",error);
-  
-}
+  const onSubmit = async (data) => {
+    const articleTag = selectedTags.map((tag) => tag.value);
 
+    try {
+      const imageFile = { image: data.articleImage[0] };
+      const response = await axiosPublic.post(image_hosting_api, imageFile, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
 
+      console.log(response.data);
+
+      if (response.data.success) {
+        const articleData = {
+          articleTitle: data.articleTitle,
+          articleDescription: data.articleDescription,
+          articleImage: response.data.data.display_url,
+          publisherName: data.publisherName,
+          articleTags: articleTag,
+          postedDate: new Date(),
+          status: "pending",
+          authorName: user?.displayName,
+          authorEmail: user?.email,
+          authorPhoto: user?.photoURL,
+        };
+        console.log(articleData);
+
+        const articleResponse = await axiosPublic.post(
+          "/articles",
+          articleData
+        );
+
+        if (articleResponse.data.insertedId) {
+          console.log(articleResponse.data);
+        }
+      }
+    } catch (error) {
+      console.error("Error While Adding Article", error);
+    }
   };
 
   useEffect(() => {

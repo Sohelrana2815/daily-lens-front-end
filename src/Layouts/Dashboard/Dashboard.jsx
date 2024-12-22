@@ -7,7 +7,7 @@ const Dashboard = () => {
         <NavLink to="/allUsers">All Users</NavLink>
       </li>
       <li>
-        <NavLink to="/allArticles">All Articles</NavLink>
+        <NavLink to="/dashboard/allArticles">All Articles</NavLink>
       </li>
       <li>
         <NavLink to="/dashboard/addPublisher">Add Publisher</NavLink>

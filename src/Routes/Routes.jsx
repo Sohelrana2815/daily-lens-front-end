@@ -6,6 +6,7 @@ import Dashboard from "../Layouts/Dashboard/Dashboard";
 import AddPublisher from "../Pages/Dashboard/AddPublisher/AddPublisher";
 import SignIn from "../Pages/SignIn/SignIn";
 import SignUp from "../Pages/SignUp/SignUp";
+import AllArticlesAdmin from "../Pages/Dashboard/AllArticlesAdmin/AllArticlesAdmin";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "addPublisher",
         element: <AddPublisher />,
+      },
+      {
+        path: "allArticles",
+        element: <AllArticlesAdmin />,
       },
     ],
   },

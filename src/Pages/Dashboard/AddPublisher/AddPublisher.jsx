@@ -20,14 +20,14 @@ const AddPublisher = () => {
       console.log(response.data);
 
       if (response.data.success) {
-        const publisherInfo = {
+        const publisherData = {
           publisherName: data.publisherName,
           publisherImage: response.data.data.display_url,
         };
 
         const publisherResponse = await axiosPublic.post(
           "/publishers",
-          publisherInfo
+          publisherData
         );
 
         if (publisherResponse.data.insertedId) {
