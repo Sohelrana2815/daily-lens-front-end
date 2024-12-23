@@ -20,8 +20,8 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { isDarkMode, toggleDarkMode } = useTheme();
   return (
-    <div className="shadow-md w-full fixed z-10 top-0 left-0">
-      <div className="lg:flex items-center  justify-between bg-white dark:bg-gray-900 dark:text-gray-300 py-6 lg:px-10 px-7">
+    <div className="shadow-md fixed w-full z-10 top-0 left-0">
+      <div className="lg:flex  items-center justify-between bg-white dark:bg-gray-900 dark:text-gray-300 py-6 lg:px-10 px-7">
         {/* Logo Section */}
         <div className="font-bold text-2xl cursor-pointer flex justify-center items-center font-[Poppins] text-gray-800 dark:text-white">
           <span className="text-3xl text-indigo-600 dark:text-indigo-400 mr-1 pt-2">
@@ -51,7 +51,7 @@ const Navbar = () => {
 
         {/* Navigation Links */}
         <ul
-          className={`lg:flex lg:items-center lg:pb-0 pb-12 absolute lg:static bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-300 lg:z-auto z-[-1] left-0 w-full lg:w-auto lg:pl-0 pl-9 transition-all duration-500 ease-in ${
+          className={`lg:flex lg:items-center lg:pb-0 pb-12 absolute lg:static lg:bg-white bg-base-200 dark:bg-gray-800 lg:dark:bg-gray-900 text-gray-800 dark:text-gray-300 lg:z-auto z-[-1] left-0 w-full lg:w-auto lg:pl-0 pl-9 transition-all duration-500 ease-in ${
             open ? "top-20 " : "top-[-490px]"
           }`}
         >
@@ -75,7 +75,7 @@ const Navbar = () => {
           </li>
           <li className="lg:ml-8  lg:my-0 my-6">
             <NavLink
-              to="/about"
+              to="/allArticles"
               className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
               onClick={() => setOpen(false)}
             >

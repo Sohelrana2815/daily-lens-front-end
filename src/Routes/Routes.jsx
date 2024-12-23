@@ -7,6 +7,7 @@ import AddPublisher from "../Pages/Dashboard/AddPublisher/AddPublisher";
 import SignIn from "../Pages/SignIn/SignIn";
 import SignUp from "../Pages/SignUp/SignUp";
 import AllArticlesAdmin from "../Pages/Dashboard/AllArticlesAdmin/AllArticlesAdmin";
+import AllArticlesPublic from "../Pages/AllArticlesPublic/AllArticlesPublic";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "addArticles",
         element: <AddArticles />,
+      },
+      {
+        path: "allArticles",
+        element: <AllArticlesPublic />,
       },
       {
         path: "signIn",

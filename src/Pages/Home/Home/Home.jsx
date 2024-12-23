@@ -7,7 +7,7 @@ import TrendingArticles from "../TrendingArticles/TrendingArticles";
 const Home = () => {
   return (
     <>
-      <div className="my-32">
+      <div>
         <Banner />
         <TrendingArticles />
         <AllPublishers />
