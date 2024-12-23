@@ -56,6 +56,7 @@ const AddArticles = () => {
           authorName: user?.displayName,
           authorEmail: user?.email,
           authorPhoto: user?.photoURL,
+          isPremium: "no",
         };
         console.log(articleData);
 
