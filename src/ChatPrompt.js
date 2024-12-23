@@ -1,0 +1,3 @@
+// When a user posts an article for the first time, it will be pending and not visible in the all articles page (public route). However, after the user posts an article, I successfully show those posted articles in the admin route all articles page. I created an approve btn, a decline btn, and a show modal when clicking decline btn. I also sent the decline status and reason using the patch method. I also create delete and made a premium API as well.
+
+// Now I want to show the approved articles in the All Articles public route page only approve articles. Also, i want to show the premium article which made by admin some different style like show both approve and Premium articles but the premium articles card design will be some different. Obviously it is premium

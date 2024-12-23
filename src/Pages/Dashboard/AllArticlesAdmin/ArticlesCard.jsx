@@ -20,7 +20,12 @@ const ArticlesCard = ({ article }) => {
   const axiosPublic = useAxiosPublic();
   const [selectedArticle, setSelectedArticle] = useState(null);
 
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   // Handle Decline Submission
 
@@ -42,11 +47,13 @@ const ArticlesCard = ({ article }) => {
       );
 
       console.log("Article decline: ", response.data);
+      if (response.data.modifiedCount > 0) {
+        alert("update success!");
+        closeModal();
+        reset();
+      }
 
       // Reset state and close modal
-
-      closeModal();
-      reset();
     } catch (error) {
       // catch error
       console.log("Error updating article:", error);
@@ -57,9 +64,7 @@ const ArticlesCard = ({ article }) => {
 
   const approveArticle = async (id) => {
     try {
-      const response = await axiosPublic.patch(`/approveArticles/${id}`, {
-        status: "approved",
-      });
+      const response = await axiosPublic.patch(`/approveArticles/${id}`);
       console.log("Article approved:", response.data);
     } catch (error) {
       console.error("Error approving article:", error);
@@ -70,9 +75,7 @@ const ArticlesCard = ({ article }) => {
 
   const makePremiumArticle = async (id) => {
     try {
-      const response = await axiosPublic.patch(`/makePremium/${id}`, {
-        idPremium: true,
-      });
+      const response = await axiosPublic.patch(`/makePremium/${id}`);
       console.log("Article made premium:", response.data);
     } catch (error) {
       console.error("Error making article premium:", error);
@@ -107,6 +110,7 @@ const ArticlesCard = ({ article }) => {
     }
 
     setSelectedArticle(null);
+    reset();
   };
 
   return (
@@ -171,19 +175,28 @@ const ArticlesCard = ({ article }) => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-control">
               <textarea
+                {...register("declineReason", { required: true })}
                 placeholder="Why?"
                 className="textarea textarea-bordered"
               ></textarea>
+              {errors.declineReason && (
+                <span className="text-error">This field is required</span>
+              )}
             </div>
-            <div>
+            <div className="flex justify-center">
               <button
                 type="submit"
-                className="btn mt-5 bg-red-600 rounded-full text-white uppercase w-full"
+                className="btn mt-5 bg-primary w-full rounded-lg text-white uppercase"
               >
                 Submit
               </button>
             </div>
           </form>
+          <div className="modal-action">
+            <button className="btn btn-outline btn-error" onClick={closeModal}>
+              Close
+            </button>
+          </div>
         </div>
       </dialog>
     </>
