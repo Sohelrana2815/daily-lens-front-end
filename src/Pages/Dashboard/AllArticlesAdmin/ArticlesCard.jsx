@@ -94,7 +94,6 @@ const ArticlesCard = ({ article }) => {
   };
 
   // Open modal
-
   const openModal = (article) => {
     setSelectedArticle(article);
     const modal = document.getElementById(`modal_${article._id}`);
