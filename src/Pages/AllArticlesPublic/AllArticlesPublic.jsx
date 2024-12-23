@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import ArticlesCard from "./ArticlesCard";
 
 const AllArticlesPublic = () => {
   const axiosPublic = useAxiosPublic();
@@ -7,7 +8,7 @@ const AllArticlesPublic = () => {
 
   useEffect(() => {
     axiosPublic
-      .get("/approvedArticles?status=approved")
+      .get("/approvedArticles")
       .then((response) => {
         setApprovedArticles(response.data);
       })
@@ -21,9 +22,12 @@ const AllArticlesPublic = () => {
       <h2 className="text-center">
         Approved Articles: {approvedArticles.length}
       </h2>
-      <div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {approvedArticles.map((approvedArticle) => (
-          <ul key={approvedArticle._id}>{approvedArticle.articleTitle}</ul>
+          <ArticlesCard
+            key={approvedArticle._id}
+            approvedArticle={approvedArticle}
+          />
         ))}
       </div>
     </div>

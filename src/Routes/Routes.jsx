@@ -8,6 +8,7 @@ import SignIn from "../Pages/SignIn/SignIn";
 import SignUp from "../Pages/SignUp/SignUp";
 import AllArticlesAdmin from "../Pages/Dashboard/AllArticlesAdmin/AllArticlesAdmin";
 import AllArticlesPublic from "../Pages/AllArticlesPublic/AllArticlesPublic";
+import ArticlesDetails from "../Pages/ArticlesDetails/ArticlesDetails";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,13 @@ const router = createBrowserRouter([
         path: "allArticles",
         element: <AllArticlesPublic />,
       },
+      {
+        path: "articlesDetails/:id",
+        element: <ArticlesDetails />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/approvedArticles/${params.id}`),
+      },
+
       {
         path: "signIn",
         element: <SignIn />,
