@@ -84,7 +84,7 @@ const Navbar = () => {
           </li>
           <li className="lg:ml-8 lg:my-0 my-6">
             <NavLink
-              to="/blogs"
+              to="/subscriptions"
               className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
               onClick={() => setOpen(false)}
             >

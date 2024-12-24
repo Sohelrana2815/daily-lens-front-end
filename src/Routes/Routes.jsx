@@ -9,6 +9,7 @@ import SignUp from "../Pages/SignUp/SignUp";
 import AllArticlesAdmin from "../Pages/Dashboard/AllArticlesAdmin/AllArticlesAdmin";
 import AllArticlesPublic from "../Pages/AllArticlesPublic/AllArticlesPublic";
 import ArticlesDetails from "../Pages/ArticlesDetails/ArticlesDetails";
+import Subscriptions from "../Pages/Subscriptions/Subscriptions";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
         element: <ArticlesDetails />,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/approvedArticles/${params.id}`),
+      },
+      {
+        path: "subscriptions",
+        element: <Subscriptions />,
       },
 
       {

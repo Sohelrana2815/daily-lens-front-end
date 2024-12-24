@@ -2,7 +2,7 @@
 const Subscriptions = () => {
     return (
         <div>
-            
+            Subscription
         </div>
     );
 };

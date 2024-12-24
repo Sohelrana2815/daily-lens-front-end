@@ -1,4 +1,5 @@
 import { FaCrown } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Plans = () => {
   const plans = [
@@ -71,9 +72,11 @@ const Plans = () => {
               </ul>
             </div>
             <div className="text-center">
-              <button className={`btn ${plan.buttonStyle} w-full`}>
-                {plan.buttonText}
-              </button>
+              <Link to={`/subscriptions`}>
+                <button className={`btn ${plan.buttonStyle} w-full`}>
+                  {plan.buttonText}
+                </button>
+              </Link>
             </div>
           </div>
         ))}
