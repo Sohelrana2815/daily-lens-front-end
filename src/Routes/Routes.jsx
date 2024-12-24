@@ -11,6 +11,7 @@ import AllArticlesPublic from "../Pages/AllArticlesPublic/AllArticlesPublic";
 import ArticlesDetails from "../Pages/ArticlesDetails/ArticlesDetails";
 import Subscriptions from "../Pages/Subscriptions/Subscriptions";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import Payment from "../Components/CheckoutForm/Payment";
 
 const router = createBrowserRouter([
   {
@@ -51,7 +52,10 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-
+      {
+        path: "payment",
+        element: <Payment />,
+      },
       {
         path: "signIn",
         element: <SignIn />,
