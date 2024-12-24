@@ -10,6 +10,7 @@ import AllArticlesAdmin from "../Pages/Dashboard/AllArticlesAdmin/AllArticlesAdm
 import AllArticlesPublic from "../Pages/AllArticlesPublic/AllArticlesPublic";
 import ArticlesDetails from "../Pages/ArticlesDetails/ArticlesDetails";
 import Subscriptions from "../Pages/Subscriptions/Subscriptions";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,11 @@ const router = createBrowserRouter([
       },
       {
         path: "addArticles",
-        element: <AddArticles />,
+        element: (
+          <PrivateRoute>
+            <AddArticles />
+          </PrivateRoute>
+        ),
       },
       {
         path: "allArticles",
@@ -30,13 +35,21 @@ const router = createBrowserRouter([
       },
       {
         path: "articlesDetails/:id",
-        element: <ArticlesDetails />,
+        element: (
+          <PrivateRoute>
+            <ArticlesDetails />
+          </PrivateRoute>
+        ),
         loader: ({ params }) =>
           fetch(`http://localhost:5000/approvedArticles/${params.id}`),
       },
       {
         path: "subscriptions",
-        element: <Subscriptions />,
+        element: (
+          <PrivateRoute>
+            <Subscriptions />
+          </PrivateRoute>
+        ),
       },
 
       {

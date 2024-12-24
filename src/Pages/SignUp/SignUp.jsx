@@ -2,11 +2,14 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../Hooks/useAuth";
 import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const SignUp = () => {
   const [err, setErr] = useState("");
   // auth
   const { createNewUser, updateUserProfile } = useAuth();
-
+  const location = useLocation();
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -22,9 +25,17 @@ const SignUp = () => {
       .then(() => {
         // Now update the profile
         updateUserProfile(name, photoURL).then(() => {
+          navigate(location?.state ? location.state : "/");
           if ((name, photoURL)) {
             alert("Successfully updated the user profile");
             reset();
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Sign up successfully",
+              showConfirmButton: false,
+              timer: 2000,
+            });
           }
         });
       })

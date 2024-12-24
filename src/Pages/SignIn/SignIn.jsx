@@ -1,11 +1,15 @@
 import { useForm } from "react-hook-form";
 import useAuth from "../../Hooks/useAuth";
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const SignIn = () => {
   const [err, setErr] = useState("");
   const { signInUser, updateUserProfile } = useAuth();
-
+  const location = useLocation();
+  const navigate = useNavigate();
+  // console.log("location in the login page", location);
   const { handleSubmit, register, reset } = useForm();
   const onSubmit = (data) => {
     console.log(data);
@@ -21,6 +25,15 @@ const SignIn = () => {
         // Now update the profile
         updateUserProfile();
         reset();
+        // Navigate after login
+        navigate(location?.state ? location.state : "/");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Welcome Back!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
       })
       .catch((error) => {
         setErr("Email or Password invalid please try again");
