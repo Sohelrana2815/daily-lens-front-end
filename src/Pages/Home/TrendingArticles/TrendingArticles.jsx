@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -9,8 +9,23 @@ import "swiper/css/navigation";
 
 // import required modules
 import { Pagination, Navigation } from "swiper/modules";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 const TrendingArticles = () => {
+  const [trendingArticles, setTrendingArticles] = useState([]);
+
   const [swiperRef, setSwiperRef] = useState(null);
+  const axiosPublic = useAxiosPublic();
+  useEffect(() => {
+    const fetchTrendingArticles = async () => {
+      try {
+        const response = await axiosPublic.get("/trendingArticles");
+        setTrendingArticles(response.data);
+      } catch (error) {
+        console.error("Error fetching trending articles:", error);
+      }
+    };
+    fetchTrendingArticles();
+  }, [axiosPublic]);
 
   let appendNumber = 4;
   let prependNumber = 1;
@@ -42,6 +57,10 @@ const TrendingArticles = () => {
   };
   return (
     <>
+      <h2 className="text-center">
+        6 Trending articles: {trendingArticles.length}
+      </h2>
+
       <Swiper
         onSwiper={setSwiperRef}
         slidesPerView={3}
@@ -54,10 +73,18 @@ const TrendingArticles = () => {
         modules={[Pagination, Navigation]}
         className="mySwiper"
       >
-        <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
+        {trendingArticles.map((trendingArticle) => (
+          <SwiperSlide key={trendingArticle._id}>
+            <div className="card">
+              <img
+                src={trendingArticle.articleImage}
+                alt={trendingArticle.articleTitle}
+              />
+              <h3 className="article-title">{trendingArticle.articleTitle}</h3>
+              <p className="article-views">Views: {trendingArticle.views}</p>
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
 
       <p className="append-buttons">
