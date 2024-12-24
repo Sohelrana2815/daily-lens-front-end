@@ -5,7 +5,7 @@ const Subscriptions = () => {
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
       <Link to="/payment">
-        <button className="btn btn-primary">Pay</button>
+        <button className="btn btn-primary">Checkout</button>
       </Link>
       <img src={checkoutImg} alt="" />
     </div>
