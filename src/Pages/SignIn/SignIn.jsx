@@ -21,12 +21,21 @@ const SignIn = () => {
     // Register/Sign up
 
     signInUser(email, password)
-      .then((result) => {
+      .then(async (result) => {
         console.log(result.user);
 
         // Now update the profile
         updateUserProfile();
-        axiosPublic.patch(`/users/`);
+
+        try {
+          await axiosPublic.patch(`/users/${email}`);
+          console.log("Logged-in date updated successfully");
+        } catch (error) {
+          console.error("Error updating logged-in date:", error);
+        }
+
+        // Navigate after login
+
         // Navigate after login
         navigate(location?.state ? location.state : "/");
         Swal.fire({
@@ -38,7 +47,7 @@ const SignIn = () => {
         });
       })
       .catch((error) => {
-        setErr("Email or Password invalid please try again");
+        setErr("Email or Password invalid, please try again");
         console.log(error);
       });
   };

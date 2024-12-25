@@ -57,7 +57,7 @@ const router = createBrowserRouter([
         element: <Payment />,
       },
       {
-        path: "signIn/:id",
+        path: "signIn",
         element: <SignIn />,
       },
       {

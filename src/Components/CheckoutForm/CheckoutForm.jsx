@@ -1,6 +1,8 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ subscription }) => {
+  console.log(subscription);
+
   const stripe = useStripe();
   const elements = useElements();
 
@@ -38,7 +40,10 @@ const CheckoutForm = () => {
         onSubmit={handleSubmit}
       >
         <h2 className="text-2xl font-bold text-center text-blue-700">
-          Payment Form
+          Payment Form for{" "}
+          {subscription
+            ? `${subscription.label} - $${subscription.price}`
+            : "Loading..."}
         </h2>
         <p className="text-center text-gray-600">
           Enter your card details below to proceed with the payment.
