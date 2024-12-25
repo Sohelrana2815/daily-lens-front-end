@@ -30,7 +30,7 @@ const SignUp = () => {
             email: email,
             name: name,
             photoURL: photoURL,
-            premiumTaken: null,
+            premiumExpires: null,
           };
           // Make a POST request to save the user data
 

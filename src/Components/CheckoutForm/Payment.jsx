@@ -2,6 +2,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 // Make sure to call 'loadStripe outside of a component's render to avoid recreating the `stripe` object on every render'
 
@@ -12,10 +13,12 @@ const Payment = () => {
   const subscriptionData = location.state?.subscription;
   console.log(subscriptionData);
 
-  if (!subscriptionData) {
-    // Redirect if no subscription data is found
-    navigate("/");
-  }
+  useEffect(() => {
+    if (!subscriptionData) {
+      navigate("/");
+    }
+  }, [navigate, subscriptionData]);
+  // Redirect if no subscription data is found
 
   return (
     <Elements stripe={stripePromise}>

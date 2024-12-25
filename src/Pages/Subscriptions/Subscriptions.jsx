@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import checkoutImg from "../../assets/CheckoutImg/payment-information-concept-illustration_114360-2296.jpg";
 import { useState } from "react";
 
@@ -18,8 +18,6 @@ const Subscriptions = () => {
     setSelectedSubscription(selected);
   };
 
-  const navigate = useNavigate();
-
   return (
     <>
       <div className="flex flex-col justify-center items-center min-h-screen">
@@ -32,7 +30,9 @@ const Subscriptions = () => {
               <select
                 onChange={handleSubscription}
                 className="select select-bordered"
+                defaultValue="value"
               >
+                <option value="">Select your plan</option>
                 {subscriptionOptions.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label} - ${option.price}

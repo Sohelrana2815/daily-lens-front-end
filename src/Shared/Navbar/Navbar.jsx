@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import useTheme from "../../Hooks/useTheme";
 import { LuSun } from "react-icons/lu";
@@ -33,7 +33,9 @@ const Navbar = () => {
               className="w-10 xl:w-16 dark:bg-gray-300 rounded-full"
               alt="Logo"
             />
-            <p>Daily Lens</p>
+            <Link to="/">
+              <p className="hover:text-indigo-500">Daily Lens</p>
+            </Link>
           </div>
         </div>
 
