@@ -3,8 +3,10 @@ import useAuth from "../../Hooks/useAuth";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const SignIn = () => {
+  const axiosPublic = useAxiosPublic();
   const [err, setErr] = useState("");
   const { signInUser, updateUserProfile } = useAuth();
   const location = useLocation();
@@ -24,7 +26,7 @@ const SignIn = () => {
 
         // Now update the profile
         updateUserProfile();
-        reset();
+        axiosPublic.patch(`/users/`);
         // Navigate after login
         navigate(location?.state ? location.state : "/");
         Swal.fire({

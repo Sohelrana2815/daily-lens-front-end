@@ -2,15 +2,14 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../Hooks/useAuth";
 import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 const SignUp = () => {
   const axiosPublic = useAxiosPublic();
   const [err, setErr] = useState("");
   // auth
-  const { createNewUser, updateUserProfile } = useAuth();
-  const location = useLocation();
+  const { createNewUser, updateUserProfile, signOutUser } = useAuth();
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -38,14 +37,18 @@ const SignUp = () => {
           axiosPublic.post("/users", userData).then((response) => {
             console.log("User data posted successfullyL:", response.data);
             if (response.data.insertedId) {
-              navigate(location?.state ? location.state : "/");
+              signOutUser();
+
+              setTimeout(() => {
+                navigate("/signIn");
+              }, 1000);
 
               Swal.fire({
                 position: "center",
                 icon: "success",
                 title: "Sign up successfully",
-                showConfirmButton: false,
-                timer: 2000,
+                text: "Please login to continue",
+                timer: 6000,
               });
               // Reset the form after successful user creation
               reset();
