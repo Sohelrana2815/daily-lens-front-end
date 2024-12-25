@@ -4,7 +4,9 @@ import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 const SignUp = () => {
+  const axiosPublic = useAxiosPublic();
   const [err, setErr] = useState("");
   // auth
   const { createNewUser, updateUserProfile } = useAuth();
@@ -25,23 +27,41 @@ const SignUp = () => {
       .then(() => {
         // Now update the profile
         updateUserProfile(name, photoURL).then(() => {
-          navigate(location?.state ? location.state : "/");
-          if ((name, photoURL)) {
-            alert("Successfully updated the user profile");
-            reset();
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Sign up successfully",
-              showConfirmButton: false,
-              timer: 2000,
-            });
-          }
+          const userData = {
+            email: email,
+            name: name,
+            photoURL: photoURL,
+            premiumTaken: null,
+          };
+          // Make a POST request to save the user data
+
+          axiosPublic.post("/users", userData).then((response) => {
+            console.log("User data posted successfullyL:", response.data);
+            if (response.data.insertedId) {
+              navigate(location?.state ? location.state : "/");
+
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Sign up successfully",
+                showConfirmButton: false,
+                timer: 2000,
+              });
+              // Reset the form after successful user creation
+              reset();
+            }
+          });
         });
       })
       .catch((error) => {
         setErr("Something went wrong please try again");
         console.error(error);
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Failed to save user data",
+          showConfirmButton: true,
+        });
       });
   };
   return (

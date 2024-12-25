@@ -73,9 +73,11 @@ const Plans = () => {
             </div>
             <div className="text-center">
               <Link to={`/subscriptions`}>
-                <button className={`btn ${plan.buttonStyle} w-full`}>
-                  {plan.buttonText}
-                </button>
+                {plan.title === "Basic Plan" || (
+                  <button className={`btn ${plan.buttonStyle} w-full`}>
+                    {plan.buttonText}
+                  </button>
+                )}
               </Link>
             </div>
           </div>
