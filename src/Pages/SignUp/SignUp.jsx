@@ -30,7 +30,7 @@ const SignUp = () => {
             email: email,
             name: name,
             photoURL: photoURL,
-            premiumExpires: null,
+            subscriptionPeriod: null,
           };
           // Make a POST request to save the user data
 
@@ -41,7 +41,7 @@ const SignUp = () => {
 
               setTimeout(() => {
                 navigate("/signIn");
-              }, 1000);
+              }, 500);
 
               Swal.fire({
                 position: "center",

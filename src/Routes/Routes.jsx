@@ -12,6 +12,8 @@ import ArticlesDetails from "../Pages/ArticlesDetails/ArticlesDetails";
 import Subscriptions from "../Pages/Subscriptions/Subscriptions";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import Payment from "../Components/CheckoutForm/Payment";
+import ExpiredSubscription from "../Pages/ExpiredSubscription/ExpiredSubscription";
+import PremiumArticles from "../Pages/PremiumArticles/PremiumArticles";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +69,14 @@ const router = createBrowserRouter([
       {
         path: "signUp",
         element: <SignUp />,
+      },
+      {
+        path: "expiredSubscription",
+        element: <ExpiredSubscription />,
+      },
+      {
+        path: "premiumArticles",
+        element: <PremiumArticles />,
       },
     ],
   },

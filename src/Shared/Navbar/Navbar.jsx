@@ -102,6 +102,15 @@ const Navbar = () => {
               Dashboard
             </NavLink>
           </li>
+          <li className="lg:ml-8 lg:my-0 my-6">
+            <NavLink
+              to="/premiumArticles"
+              className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+              onClick={() => setOpen(false)}
+            >
+              Premium Articles
+            </NavLink>
+          </li>
           {user ? (
             <div className="dropdown lg:dropdown-end">
               <div
