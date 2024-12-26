@@ -1,28 +1,31 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import useAuth from "../../Hooks/useAuth";
 
 const CheckoutForm = ({ subscription }) => {
+  const { user } = useAuth();
   console.log(subscription);
   const axiosPublic = useAxiosPublic();
 
   const { label, value, price } = subscription;
+  console.log(price, value);
 
   const [error, setError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
+  const [transactionId, setTransactionId] = useState("");
 
   const stripe = useStripe();
   const elements = useElements();
 
   useEffect(() => {
-    if (price && value) {
-      const packageData = {
-        packagePrice: price,
-        expireTime: value,
+    if (price) {
+      const packagePrice = {
+        price: parseFloat(price),
       };
 
       axiosPublic
-        .post("create-payment-intent", { packageData })
+        .post("/create-payment-intent", { packagePrice })
         .then((response) => {
           console.log("Payment intent created:", response.data.clientSecret);
           setClientSecret(response.data.clientSecret);
@@ -59,6 +62,41 @@ const CheckoutForm = ({ subscription }) => {
     } else {
       console.log("[PaymentMethod]", paymentMethod);
       setError("");
+    }
+
+    // confirm payment
+
+    const { paymentIntent, error: confirmError } =
+      await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card,
+          billing_details: {
+            email: user?.email || "anonymous",
+            name: user?.displayName || "anonymous",
+          },
+        },
+      });
+    if (confirmError) {
+      console.log("Confirm error");
+    } else {
+      console.log("Payment Intent", paymentIntent);
+      if (paymentIntent.status === "succeeded") {
+        console.log("Transaction id:", paymentIntent.id);
+        setTransactionId(paymentIntent.id);
+      }
+      const subscriptionInfo = {
+        price: paymentIntent.amount, // Amount paid
+        period: subscription.value, // "1minute", "5days", "10days"
+      };
+
+      axiosPublic
+        .patch(`/userSubscriptionInfo/${user?.email}`, { subscriptionInfo })
+        .then((response) => {
+          console.log("Subscription updated:", response.data);
+        })
+        .catch((error) => {
+          console.error("Error updating subscription:", error);
+        });
     }
   };
 
@@ -102,6 +140,11 @@ const CheckoutForm = ({ subscription }) => {
           Pay
         </button>
         <p className="text-red-600">{error}</p>
+        {transactionId && (
+          <p className="text-center text-green-500">
+            Your Transaction Id: {transactionId}
+          </p>
+        )}
       </form>
     </div>
   );
