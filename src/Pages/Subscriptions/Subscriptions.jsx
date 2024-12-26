@@ -10,6 +10,7 @@ const subscriptionOptions = [
 
 const Subscriptions = () => {
   const [selectedSubscription, setSelectedSubscription] = useState(null);
+
   const handleSubscription = (event) => {
     const selectedValue = event.target.value;
     const selected = subscriptionOptions.find(
@@ -17,7 +18,6 @@ const Subscriptions = () => {
     );
     setSelectedSubscription(selected);
   };
-
   return (
     <>
       <div className="flex flex-col justify-center items-center min-h-screen">
@@ -40,13 +40,22 @@ const Subscriptions = () => {
                 ))}
               </select>
             </div>
-            <Link to="/payment" state={{ subscription: selectedSubscription }}>
-              <div className="form-control mt-6">
-                <button className="btn btn-primary" type="submit">
+            <div className="form-control mt-6">
+              {selectedSubscription ? (
+                <Link
+                  to="/payment"
+                  state={{ subscription: selectedSubscription }}
+                >
+                  <button type="submit" className="btn btn-primary">
+                    Proceed to Payment
+                  </button>
+                </Link>
+              ) : (
+                <button className="btn btn-primary" disabled>
                   Proceed to Payment
                 </button>
-              </div>
-            </Link>
+              )}
+            </div>
           </form>
         </div>
         <img src={checkoutImg} alt="" />
