@@ -77,15 +77,17 @@ const Navbar = () => {
                 HOME
               </NavLink>
             </li>
-            <li className="lg:ml-8 lg:my-0 my-6">
-              <NavLink
-                to="/addArticles"
-                className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
-                onClick={() => setOpen(false)}
-              >
-                Add Articles
-              </NavLink>
-            </li>
+            {user && (
+              <li className="lg:ml-8 lg:my-0 my-6">
+                <NavLink
+                  to="/addArticles"
+                  className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                  onClick={() => setOpen(false)}
+                >
+                  Add Articles
+                </NavLink>
+              </li>
+            )}
             <li className="lg:ml-8  lg:my-0 my-6">
               <NavLink
                 to="/allArticles"
@@ -95,7 +97,7 @@ const Navbar = () => {
                 All Articles
               </NavLink>
             </li>
-            {hasActiveSubscription || (
+            {user && !hasActiveSubscription ? (
               <li className="lg:ml-8 lg:my-0 my-6">
                 <NavLink
                   to="/subscriptions"
@@ -105,17 +107,19 @@ const Navbar = () => {
                   Subscriptions
                 </NavLink>
               </li>
+            ) : null}
+            {user && (
+              <li className="lg:ml-8 lg:my-0 my-6">
+                <NavLink
+                  to="/dashboard"
+                  className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                  onClick={() => setOpen(false)}
+                >
+                  Dashboard
+                </NavLink>
+              </li>
             )}
-            <li className="lg:ml-8 lg:my-0 my-6">
-              <NavLink
-                to="/dashboard"
-                className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
-                onClick={() => setOpen(false)}
-              >
-                Dashboard
-              </NavLink>
-            </li>
-            {hasActiveSubscription && (
+            {hasActiveSubscription && user ? (
               <li className="lg:ml-8 lg:my-0 my-6">
                 <NavLink
                   to="/premiumArticles"
@@ -125,7 +129,7 @@ const Navbar = () => {
                   Premium Articles
                 </NavLink>
               </li>
-            )}
+            ) : null}
             {user ? (
               <div className="dropdown lg:dropdown-end">
                 <div

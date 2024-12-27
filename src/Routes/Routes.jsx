@@ -16,11 +16,13 @@ import ExpiredSubscription from "../Pages/ExpiredSubscription/ExpiredSubscriptio
 import PremiumArticles from "../Pages/PremiumArticles/PremiumArticles";
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 import PremiumRoute from "./PremiumRoute/PremiumRoute";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",

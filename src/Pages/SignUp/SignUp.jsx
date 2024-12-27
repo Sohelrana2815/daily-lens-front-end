@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../Hooks/useAuth";
 import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 const SignUp = () => {
@@ -161,6 +161,12 @@ const SignUp = () => {
                 {err && <p className="text-red-500">{err}</p>}
               </div>
               <SocialLogin />
+              <p className="text-center">
+                Already have an account?{" "}
+                <Link to="/signIn">
+                  <span className="text-blue-700 underline">Login</span>
+                </Link>
+              </p>
             </form>
           </div>
         </div>
