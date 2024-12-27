@@ -2,14 +2,16 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import useAuth from "../../Hooks/useAuth";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import useUsers from "../../Hooks/useUsers";
 
 const CheckoutForm = ({ subscription }) => {
   const { user } = useAuth();
-  console.log(subscription);
+  const { refetch } = useUsers();
   const axiosPublic = useAxiosPublic();
-
+  const navigate = useNavigate();
   const { label, value, price } = subscription;
-  console.log(price, value);
 
   const [error, setError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
@@ -27,7 +29,6 @@ const CheckoutForm = ({ subscription }) => {
       axiosPublic
         .post("/create-payment-intent", { packagePrice })
         .then((response) => {
-          console.log("Payment intent created:", response.data.clientSecret);
           setClientSecret(response.data.clientSecret);
         })
         .catch((error) => {
@@ -38,18 +39,10 @@ const CheckoutForm = ({ subscription }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!stripe || !elements) {
-      // Stripe.js has not loaded yet. Make sure to disabled form submission until Stripe.js has loaded
-      return;
-    }
+    if (!stripe || !elements) return;
 
     const card = elements.getElement(CardElement);
-
-    if (card == null) {
-      return;
-    }
-
-    // Use your card elements with other Stripe.js API's
+    if (card == null) return;
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
@@ -57,14 +50,12 @@ const CheckoutForm = ({ subscription }) => {
     });
 
     if (error) {
-      console.log("[error]", error);
       setError(error.message);
     } else {
-      console.log("[PaymentMethod]", paymentMethod);
+      console.log(paymentMethod);
+
       setError("");
     }
-
-    // confirm payment
 
     const { paymentIntent, error: confirmError } =
       await stripe.confirmCardPayment(clientSecret, {
@@ -76,27 +67,36 @@ const CheckoutForm = ({ subscription }) => {
           },
         },
       });
+
     if (confirmError) {
       console.log("Confirm error");
     } else {
-      console.log("Payment Intent", paymentIntent);
       if (paymentIntent.status === "succeeded") {
-        console.log("Transaction id:", paymentIntent.id);
         setTransactionId(paymentIntent.id);
-      }
-      const subscriptionInfo = {
-        price: paymentIntent.amount, // Amount paid
-        period: subscription.value, // "1minute", "5days", "10days"
-      };
 
-      axiosPublic
-        .patch(`/userSubscriptionInfo/${user?.email}`, { subscriptionInfo })
-        .then((response) => {
-          console.log("Subscription updated:", response.data);
-        })
-        .catch((error) => {
-          console.error("Error updating subscription:", error);
-        });
+        // Optimistic update
+        const subscriptionInfo = {
+          price: paymentIntent.amount,
+          period: subscription.value,
+        };
+
+        axiosPublic
+          .patch(`/userSubscriptionInfo/${user?.email}`, { subscriptionInfo })
+          .then((response) => {
+            if (response.data.modifiedCount > 0) {
+              refetch();
+              Swal.fire({
+                title: "Thank you for subscription",
+                text: "You Can Access Premium Articles!",
+                icon: "success",
+              });
+              navigate("/");
+            }
+          })
+          .catch((error) => {
+            console.error("Error updating subscription:", error);
+          });
+      }
     }
   };
 

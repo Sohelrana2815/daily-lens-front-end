@@ -4,7 +4,7 @@ const Dashboard = () => {
   const navLinks = (
     <>
       <li>
-        <NavLink to="/allUsers">All Users</NavLink>
+        <NavLink to="/dashboard/allUsers">All Users</NavLink>
       </li>
       <li>
         <NavLink to="/dashboard/allArticles">All Articles</NavLink>
@@ -12,6 +12,7 @@ const Dashboard = () => {
       <li>
         <NavLink to="/dashboard/addPublisher">Add Publisher</NavLink>
       </li>
+
       {/* Shared navLinks */}
       <li>
         <NavLink to="/">Home</NavLink>

@@ -3,9 +3,8 @@ import useAxiosPublic from "./useAxiosPublic";
 
 const useUsers = () => {
   const axiosPublic = useAxiosPublic();
-
   const {
-    date: users = [],
+    data: users = [],
     refetch,
     isPending,
     error,
@@ -16,7 +15,7 @@ const useUsers = () => {
       return response.data;
     },
   });
-  return { users, refetch, isPending, error };
+  return { allUsers: users, refetch, isPending, error };
 };
 
 export default useUsers;

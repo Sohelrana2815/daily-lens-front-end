@@ -14,6 +14,8 @@ import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import Payment from "../Components/CheckoutForm/Payment";
 import ExpiredSubscription from "../Pages/ExpiredSubscription/ExpiredSubscription";
 import PremiumArticles from "../Pages/PremiumArticles/PremiumArticles";
+import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
+import PremiumRoute from "./PremiumRoute/PremiumRoute";
 
 const router = createBrowserRouter([
   {
@@ -76,7 +78,11 @@ const router = createBrowserRouter([
       },
       {
         path: "premiumArticles",
-        element: <PremiumArticles />,
+        element: (
+          <PremiumRoute>
+            <PremiumArticles />
+          </PremiumRoute>
+        ),
       },
     ],
   },
@@ -91,6 +97,10 @@ const router = createBrowserRouter([
       {
         path: "allArticles",
         element: <AllArticlesAdmin />,
+      },
+      {
+        path: "allUsers",
+        element: <AllUsers />,
       },
     ],
   },
