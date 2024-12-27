@@ -51,10 +51,12 @@ const Navbar = () => {
           </div>
 
           {/* Menu Icon */}
+
           <div
             onClick={() => setOpen(!open)}
             className="text-3xl absolute left-8 top-6 cursor-pointer lg:hidden"
           >
+            {/* close and open icon navbar */}
             {open ? (
               <FiX className="dark:text-gray-300 text-gray-800" />
             ) : (
@@ -68,6 +70,7 @@ const Navbar = () => {
               open ? "top-20 " : "top-[-490px]"
             }`}
           >
+            {/* Home */}
             <li className="lg:ml-8 lg:my-0 my-6">
               <NavLink
                 to="/"
@@ -77,6 +80,7 @@ const Navbar = () => {
                 HOME
               </NavLink>
             </li>
+            {/* Add Articles (Private route) */}
             {user && (
               <li className="lg:ml-8 lg:my-0 my-6">
                 <NavLink
@@ -88,6 +92,7 @@ const Navbar = () => {
                 </NavLink>
               </li>
             )}
+            {/* All Articles (Public) */}
             <li className="lg:ml-8  lg:my-0 my-6">
               <NavLink
                 to="/allArticles"
@@ -97,6 +102,19 @@ const Navbar = () => {
                 All Articles
               </NavLink>
             </li>
+            {/* My Articles (Private route) */}
+            {user && (
+              <li className="lg:ml-8  lg:my-0 my-6">
+                <NavLink
+                  to="/myArticles"
+                  className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                  onClick={() => setOpen(false)}
+                >
+                  My Articles
+                </NavLink>
+              </li>
+            )}
+            {/*subscription (Private route)  */}
             {user && !hasActiveSubscription ? (
               <li className="lg:ml-8 lg:my-0 my-6">
                 <NavLink
@@ -108,6 +126,8 @@ const Navbar = () => {
                 </NavLink>
               </li>
             ) : null}
+
+            {/* Dashboard (private route) */}
             {user && (
               <li className="lg:ml-8 lg:my-0 my-6">
                 <NavLink
@@ -119,6 +139,8 @@ const Navbar = () => {
                 </NavLink>
               </li>
             )}
+
+            {/* Premium Articles (private and premium user only) */}
             {hasActiveSubscription && user ? (
               <li className="lg:ml-8 lg:my-0 my-6">
                 <NavLink
@@ -130,6 +152,7 @@ const Navbar = () => {
                 </NavLink>
               </li>
             ) : null}
+
             {user ? (
               <div className="dropdown lg:dropdown-end">
                 <div

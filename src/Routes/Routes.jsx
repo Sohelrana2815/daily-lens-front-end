@@ -17,6 +17,7 @@ import PremiumArticles from "../Pages/PremiumArticles/PremiumArticles";
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 import PremiumRoute from "./PremiumRoute/PremiumRoute";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
+import MyArticles from "../Pages/MyArticles/MyArticles";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: "allArticles",
         element: <AllArticlesPublic />,
+      },
+      {
+        path: "myArticles",
+        element: <MyArticles />,
       },
       {
         path: "articlesDetails/:id",
