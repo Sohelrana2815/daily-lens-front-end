@@ -131,7 +131,7 @@ const Navbar = () => {
             {user && (
               <li className="lg:ml-8 lg:my-0 my-6">
                 <NavLink
-                  to="/dashboard"
+                  to="/dashboard/analytics"
                   className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
                   onClick={() => setOpen(false)}
                 >

@@ -7,7 +7,7 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 
 const AddPublisher = () => {
   const axiosPublic = useAxiosPublic();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const onSubmit = async (data) => {
     try {
       // upload image on img bb then get url
@@ -31,6 +31,7 @@ const AddPublisher = () => {
         );
 
         if (publisherResponse.data.insertedId) {
+          reset();
           alert("posted publisher!");
         }
       }

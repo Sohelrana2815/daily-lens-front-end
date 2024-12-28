@@ -22,12 +22,20 @@ const AddArticles = () => {
     { value: "science", label: "Science" },
     { value: "health", label: "Health" },
     { value: "finance", label: "Finance" },
+    { value: "worldNews", label: "World News" },
+    { value: "travel", label: "Travel" },
+    { value: "art", label: "Art & Culture" },
+    { value: "ai", label: "AI" },
+    { value: "innovation", label: "Innovation" },
+    { value: "climateChange", label: "Climate change" },
+    { value: "environment", label: "Environment" },
+    { value: "economy", label: "Economy" },
   ];
 
   const {
     handleSubmit,
     register,
-    // reset,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -49,6 +57,7 @@ const AddArticles = () => {
           articleTitle: data.articleTitle,
           articleDescription: data.articleDescription,
           articleImage: response.data.data.display_url,
+          imageDeleteUrl: response.data.data.delete_url, // Save delete URL here
           publisherName: data.publisherName,
           articleTags: articleTag,
           postedDate: new Date(),
@@ -66,6 +75,8 @@ const AddArticles = () => {
         );
 
         if (articleResponse.data.insertedId) {
+          reset();
+          alert("Article created successfully!");
           console.log(articleResponse.data);
         }
       }
@@ -102,7 +113,7 @@ const AddArticles = () => {
           className="input input-bordered"
           {...register("articleTitle", { required: true })}
         />
-        {errors.title && (
+        {errors.articleTitle && (
           <span className="text-error">Title field is required</span>
         )}
       </div>
@@ -117,7 +128,7 @@ const AddArticles = () => {
           className="textarea textarea-bordered"
           {...register("articleDescription", { required: true })}
         />
-        {errors.description && (
+        {errors.articleDescription && (
           <span className="text-error">Description field is required</span>
         )}
       </div>
@@ -132,7 +143,7 @@ const AddArticles = () => {
           className="input input-bordered"
           {...register("articleImage", { required: true })}
         />
-        {errors.image && (
+        {errors.articleImage && (
           <span className="text-error">Image field is required</span>
         )}
       </div>
@@ -156,7 +167,7 @@ const AddArticles = () => {
             </option>
           ))}
         </select>
-        {errors.publisher && (
+        {errors.publisherName && (
           <span className="text-error">Publisher field is required</span>
         )}
       </div>

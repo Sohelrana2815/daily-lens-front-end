@@ -7,6 +7,8 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
+import { SiReason } from "react-icons/si";
+import { BsEye } from "react-icons/bs";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosing_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -39,7 +41,7 @@ const MyArticles = () => {
   const [publishers, setPublishers] = useState([]);
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [selectedTags, setSelectedTags] = useState([]);
-
+  const [declineReason, setDeclineReason] = useState("");
   // React hook form
 
   const {
@@ -50,54 +52,57 @@ const MyArticles = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    const articleTag = selectedTags.map((tag) => tag.value); // Get tags from selectedTags state
+
     if (!selectedArticle) {
       alert("No article selected!");
       return;
     }
 
     try {
-      const imageFile = { image: data.articleImage[0] };
+      let updatedImageUrl = selectedArticle.articleImage; // Default to current image
 
-      const imageResponse = await axiosPublic.post(
-        image_hosing_api,
-        imageFile,
-        {
-          headers: {
-            "content-type": "multipart/form-data",
-          },
-        }
-      );
+      // Check if a new image is uploaded
+      if (data.articleImage && data.articleImage.length > 0) {
+        const imageFile = { image: data.articleImage[0] };
 
-      console.log(imageResponse.data);
-
-      if (imageResponse.data.success) {
-        const articleTag = selectedTags.map((tag) => tag.value);
-
-        const myArticle = {
-          articleTitle: data.articleTitle,
-          articleDescription: data.articleDescription,
-          articleImage: imageResponse.data.data.display_url,
-          publisherName: data.publisherName,
-          articleTags: articleTag,
-        };
-
-        // update my posted articles
-
-        const response = await axiosPublic.patch(
-          `/myArticles/${selectedArticle._id}`,
-          myArticle
+        const imageResponse = await axiosPublic.post(
+          image_hosing_api,
+          imageFile,
+          {
+            headers: {
+              "content-type": "multipart/form-data",
+            },
+          }
         );
 
-        console.log("Article update:", response.data);
-        if (response.data.modifiedCount > 0) {
-          refetch();
-          alert("Update success!");
-          closeModal();
-          reset();
+        if (imageResponse.data.success) {
+          updatedImageUrl = imageResponse.data.data.display_url; // Use new image URL
         }
       }
+
+      const myArticle = {
+        articleTitle: data.articleTitle,
+        articleDescription: data.articleDescription,
+        articleImage: updatedImageUrl,
+        publisherName: data.publisherName,
+        articleTags: articleTag, // Use selectedTags
+      };
+
+      // Update the article
+      const response = await axiosPublic.patch(
+        `/myArticles/${selectedArticle._id}`,
+        myArticle
+      );
+
+      if (response.data.modifiedCount > 0) {
+        refetch();
+        alert("Update success!");
+        closeModal();
+        reset();
+      }
     } catch (error) {
-      console.log("Error updating article:", error);
+      console.error("Error updating article:", error);
     }
   };
 
@@ -124,13 +129,22 @@ const MyArticles = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const response = await axiosPublic.delete(`/myArticles/${id}`);
-        if (response.data.deletedCount > 0) {
-          refetch();
+        try {
+          const response = await axiosPublic.delete(`/myArticles/${id}`);
+          if (response.data.deletedCount > 0) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your article have been deleted.",
+              icon: "success",
+            });
+          }
+        } catch (error) {
+          console.error("Error deleting article or image:", error);
           Swal.fire({
-            title: "Deleted!",
-            text: "Your Article has been deleted.",
-            icon: "success",
+            title: "Error!",
+            text: "Failed to delete the article or image. Try again.",
+            icon: "error",
           });
         }
       }
@@ -143,6 +157,9 @@ const MyArticles = () => {
     console.log(article);
 
     setSelectedArticle(article); // set selected article
+    setSelectedTags(
+      article.articleTags.map((tag) => ({ value: tag, label: tag })) // Map tags for select component
+    );
     const modal = document.getElementById("my_modal_5");
     modal.showModal(); // Open the modal
   };
@@ -180,7 +197,26 @@ const MyArticles = () => {
                 <tr key={myArticle._id} className="hover">
                   <th>{index + 1}</th>
                   <td>{myArticle.articleTitle}</td>
-                  <td>{myArticle.status}</td>
+                  <td>
+                    {myArticle.status === "decline" ? (
+                      <>
+                        Declined
+                        <button
+                          className="btn btn-sm btn-info ml-2"
+                          onClick={() => {
+                            setDeclineReason(myArticle.declineReason); // Set decline reason
+                            document
+                              .getElementById("decline_reason_modal")
+                              .showModal(); // Open modal
+                          }}
+                        >
+                          <BsEye />
+                        </button>
+                      </>
+                    ) : (
+                      myArticle.status
+                    )}
+                  </td>
                   <td>{myArticle.isPremium ? "Yes" : "NO"}</td>
                   <td>
                     {myArticle.status === "approved" ? (
@@ -254,8 +290,7 @@ const MyArticles = () => {
                   className="textarea textarea-bordered bg-[#31795A17]"
                 />
               </div>
-              {/* Current Image Preview
-
+              {/* Current Image Preview */}
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Current Image</span>
@@ -265,7 +300,19 @@ const MyArticles = () => {
                   alt="Current Article"
                   className="w-32 h-32 object-cover rounded"
                 />
-              </div> */}
+              </div>
+
+              {/* File Input */}
+              <div className="form-control mt-4">
+                <label className="label">
+                  <span className="label-text">Upload New Image</span>
+                </label>
+                <input
+                  type="file"
+                  {...register("articleImage")} // No 'required' validation here
+                  className="file-input file-input-bordered w-full max-w-xs"
+                />
+              </div>
 
               {/* Publisher Name Dropdown*/}
               <div className="form-control">
@@ -273,7 +320,7 @@ const MyArticles = () => {
                   <span className="label-text">Publisher Name</span>
                 </label>
                 <select
-                  defaultValue=""
+                  defaultValue={selectedArticle.publisherName}
                   className="select select-bordered"
                   {...register("publisherName", { required: true })}
                 >
@@ -300,7 +347,7 @@ const MyArticles = () => {
                 <Select
                   isMulti
                   options={tagOptions}
-                  value={selectedTags}
+                  value={selectedTags} // Use selectedTags state
                   onChange={(selectedOptions) =>
                     setSelectedTags(selectedOptions)
                   }
@@ -317,6 +364,27 @@ const MyArticles = () => {
           )}
           <div className="modal-action">
             <button className="btn btn-outline btn-error" onClick={closeModal}>
+              Close
+            </button>
+          </div>
+        </div>
+      </dialog>
+
+      {/* Decline Reason Modal */}
+      <dialog
+        id="decline_reason_modal"
+        className="modal modal-bottom sm:modal-middle"
+      >
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Decline Reason</h3>
+          <p>{declineReason || "No reason provided."}</p>
+          <div className="modal-action">
+            <button
+              className="btn btn-outline btn-error"
+              onClick={() => {
+                document.getElementById("decline_reason_modal").close(); // Close modal
+              }}
+            >
               Close
             </button>
           </div>
