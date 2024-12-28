@@ -18,6 +18,7 @@ import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 import PremiumRoute from "./PremiumRoute/PremiumRoute";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import MyArticles from "../Pages/MyArticles/MyArticles";
+import Analytics from "../Pages/Dashboard/Analytics/Analytics";
 
 const router = createBrowserRouter([
   {
@@ -94,7 +95,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "dashboard/analytics",
+    path: "dashboard",
     element: <Dashboard />,
     children: [
       {
@@ -108,6 +109,10 @@ const router = createBrowserRouter([
       {
         path: "allUsers",
         element: <AllUsers />,
+      },
+      {
+        path: "analytics",
+        element: <Analytics />,
       },
     ],
   },

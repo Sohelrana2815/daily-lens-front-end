@@ -4,9 +4,6 @@ const Dashboard = () => {
   const navLinks = (
     <>
       <li>
-        <NavLink to="/dashboard/analytics">All Users</NavLink>
-      </li>
-      <li>
         <NavLink to="/dashboard/allUsers">All Users</NavLink>
       </li>
       <li>
