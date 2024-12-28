@@ -33,6 +33,12 @@ const ArticlesDetails = () => {
       <p>{article.articleDescription}</p>
       <p>Views: {article.views}</p>
       <p>Published by: {article.publisherName}</p>
+      <p>
+        Tags:
+        {article.articleTags.map((tag, index) => (
+          <span key={index}> #{tag}</span>
+        ))}
+      </p>
       <p>{article.isPremium && "This is a premium article!"}</p>
     </div>
   );
