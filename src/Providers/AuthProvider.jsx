@@ -12,9 +12,11 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { createContext } from "react";
 import auth from "../Firebase/firebase.config";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
+  const axiosPublic = useAxiosPublic();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
@@ -68,14 +70,29 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log("User in the auth state changed", currentUser);
+
+      // User info will stored here
+
+      if (currentUser) {
+        // get the token and set it to LC
+        const userEmail = { email: currentUser.email };
+        axiosPublic.post("/jwt", userEmail).then((response) => {
+          if (response.data.token) {
+            localStorage.setItem("access-token", response.data.token);
+            setLoading(false);
+          }
+        });
+      } else {
+        localStorage.removeItem("access-token");
+        setLoading(false);
+      }
       setUser(currentUser);
-      setLoading(false);
     });
 
     return () => {
       unsubscribe();
     };
-  });
+  }, [axiosPublic]);
 
   // auth related information for difference auth operations
 

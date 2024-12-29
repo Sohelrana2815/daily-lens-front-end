@@ -1,11 +1,13 @@
 import Swal from "sweetalert2";
-import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+// import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import useUsers from "../../../Hooks/useUsers";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const AllUsers = () => {
   const { allUsers, refetch } = useUsers();
 
-  const axiosPublic = useAxiosPublic();
+  // const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const makeUserAdmin = (user) => {
     console.log(user);
 
@@ -19,7 +21,7 @@ const AllUsers = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const response = await axiosPublic.patch(
+        const response = await axiosSecure.patch(
           `/users-make-admin/${user._id}`
         );
         if (response.data.modifiedCount > 0) {
