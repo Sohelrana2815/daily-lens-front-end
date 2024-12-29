@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import usePublishers from "../../../Hooks/usePublishers";
 const AllPublishers = () => {
-  const { publishers, refetch, isPending, error } = usePublishers();
+  const { publishers } = usePublishers();
 
   return (
     <>

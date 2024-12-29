@@ -7,6 +7,7 @@ import { GoMoon } from "react-icons/go";
 import websiteLogo from "../../assets/Website logo/website logo.png";
 import useAuth from "../../Hooks/useAuth";
 import useUsers from "../../Hooks/useUsers";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { user, signOutUser } = useAuth();
@@ -24,7 +25,22 @@ const Navbar = () => {
   // logout function
 
   const handleSignOut = () => {
-    signOutUser();
+    Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Logout",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        signOutUser();
+        Swal.fire({
+          title: `${user.displayName} Logged out!`,
+          icon: "success",
+        });
+      }
+    });
   };
 
   const [open, setOpen] = useState(false);
@@ -128,18 +144,15 @@ const Navbar = () => {
             ) : null}
 
             {/* Dashboard (private route) */}
-            {user && (
-              <li className="lg:ml-8 lg:my-0 my-6">
-                <NavLink
-                  to="/dashboard/analytics"
-                  className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
-                  onClick={() => setOpen(false)}
-                >
-                  Dashboard
-                </NavLink>
-              </li>
-            )}
-
+            <li className="lg:ml-8 lg:my-0 my-6">
+              <NavLink
+                to="/dashboard/analytics"
+                className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                onClick={() => setOpen(false)}
+              >
+                Dashboard
+              </NavLink>
+            </li>
             {/* Premium Articles (private and premium user only) */}
             {hasActiveSubscription && user ? (
               <li className="lg:ml-8 lg:my-0 my-6">

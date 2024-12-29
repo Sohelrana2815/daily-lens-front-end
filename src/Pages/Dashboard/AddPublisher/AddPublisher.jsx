@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+// import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 
@@ -7,6 +8,7 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 
 const AddPublisher = () => {
   const axiosPublic = useAxiosPublic();
+  // const axiosSecure = useAxiosSecure();
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = async (data) => {
     try {

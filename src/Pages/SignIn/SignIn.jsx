@@ -35,8 +35,6 @@ const SignIn = () => {
         }
 
         // Navigate after login
-
-        // Navigate after login
         navigate(location?.state ? location.state : "/");
         Swal.fire({
           position: "center",

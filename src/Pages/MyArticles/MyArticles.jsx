@@ -7,8 +7,8 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
-import { SiReason } from "react-icons/si";
 import { BsEye } from "react-icons/bs";
+// import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosing_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -27,6 +27,7 @@ const tagOptions = [
 
 const MyArticles = () => {
   const axiosPublic = useAxiosPublic();
+  // const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const { data: myArticles = [], refetch } = useQuery({
     queryKey: ["myArticles", user?.email],
