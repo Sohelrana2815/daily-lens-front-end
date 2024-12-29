@@ -19,11 +19,20 @@ const SocialLogin = () => {
           photoURL: result.user.photoURL,
           subscriptionPeriod: null,
         };
-
+        if (result.user) {
+          navigate("/");
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Sign up successfully",
+            timer: 6000,
+          });
+        }
         // Make a POST request to save the user data
 
         axiosPublic.post("/users", userData).then((response) => {
           console.log("User data posted successfully:", response.data);
+
           if (response.data.insertedId) {
             setTimeout(() => {
               navigate("/");
