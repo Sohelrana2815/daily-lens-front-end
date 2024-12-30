@@ -1,35 +1,44 @@
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import usePublishers from "../../../Hooks/usePublishers";
+import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
 const AllPublishers = () => {
   const { publishers } = usePublishers();
 
   return (
     <>
-      <h2 className="text-center">All Publishers: {publishers.length}</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {publishers.map((publisher) => (
-          <Card key={publisher._id} sx={{ maxWidth: 345 }}>
-            <CardMedia
-              sx={{ height: 140 }}
-              image={publisher.publisherImage}
-              title="green iguana"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {publisher.publisherName}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">Share</Button>
-              <Button size="small">Learn More</Button>
-            </CardActions>
-          </Card>
-        ))}
+      <SectionTitle titleStyle="Discover" title="All Publishers" />
+      <div className="max-w-screen-xl mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {publishers.map((publisher) => (
+            <div
+              key={publisher._id}
+              className="bg-white rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl hover:bg-gray-200  overflow-hidden"
+            >
+              <div className="relative h-40">
+                <img
+                  src={publisher.publisherImage}
+                  alt={publisher.publisherName}
+                  className="w-full h-full object-cover border-b-2 border-red-600"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                  {publisher.publisherName}
+                </h3>
+                <p className="text-sm text-gray-600">
+                  {publisher.description || "Publisher description goes here."}
+                </p>
+              </div>
+              <div className="p-4 border-t flex justify-between">
+                <button className="text-indigo-600 font-semibold hover:underline">
+                  Share
+                </button>
+                <button className="text-indigo-600 font-semibold hover:underline">
+                  Learn More
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

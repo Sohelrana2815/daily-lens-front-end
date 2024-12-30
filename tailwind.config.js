@@ -3,7 +3,11 @@ export default {
   darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        volKHob: ["Volkhov", "serif"],
+      },
+    },
   },
   plugins: [
     // eslint-disable-next-line no-undef

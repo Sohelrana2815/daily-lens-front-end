@@ -33,7 +33,7 @@ const TrendingArticles = () => {
   return (
     <>
       <div className="max-w-screen-2xl mx-auto p-4 dark:bg-gray-600 bg-base-200 my-40">
-        <SectionTitle title="Trending Articles Based on Popularity" />
+        <SectionTitle titleStyle="Trending" title="Articles" />
         <Swiper
           slidesPerView={1}
           centeredSlides={true}
