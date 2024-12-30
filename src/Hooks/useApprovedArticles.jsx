@@ -9,9 +9,9 @@ const useApprovedArticles = () => {
     isPending,
     error,
   } = useQuery({
-    queryKey: ["articles"],
+    queryKey: ["approvedArticles"],
     queryFn: async () => {
-      const response = await axiosPublic.get("/articles");
+      const response = await axiosPublic.get("/approvedArticles");
       return response.data;
     },
   });

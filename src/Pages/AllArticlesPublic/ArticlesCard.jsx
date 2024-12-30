@@ -36,7 +36,8 @@ const ArticlesCard = ({ approvedArticle }) => {
           <h2 className="card-title">{articleTitle}</h2>
           <p>{publisherName}</p>
           <p>
-            {articleDescription.slice(0, 80)} <span className="text-blue-600">read more...</span>
+            {articleDescription.slice(0, 80)}{" "}
+            <span className="text-blue-600">read more...</span>
           </p>
           <div className="card-actions justify-end">
             <Link to={`/articlesDetails/${_id}`}>

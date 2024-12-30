@@ -45,7 +45,7 @@ const Banner = () => {
             className="object-cover h-full w-full"
           />
           {/* Card Component */}
-          <div className="absolute inset-0 flex items-center justify-center md:left-28 md:justify-start text-start ">
+          <div className="absolute inset-0 flex items-center justify-center md:left-56 md:justify-start text-start ">
             <div className="bg-white shadow-lg  p-6 max-w-xs md:max-w-md space-y-4 lg:min-h-60 border-black border-t-8">
               {/* Tag and date */}
               <div className="flex items-center gap-x-4">

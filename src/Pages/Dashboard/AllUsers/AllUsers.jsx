@@ -52,7 +52,7 @@ const AllUsers = () => {
             {/* row 1 */}
             {allUsers.map((user) => (
               <tr key={user._id} className="hover">
-                <th>{user.displayName}</th>
+                <td className="uppercase">{user.name}</td>
                 <td>{user.email}</td>
                 <td>
                   <img src={user.photoURL} className="w-10 lg:w-14" alt="" />

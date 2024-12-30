@@ -32,11 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: "addArticles",
-        element: (
-          <PrivateRoute>
-            <AddArticles />
-          </PrivateRoute>
-        ),
+        element: <AddArticles />,
       },
       {
         path: "allArticles",
@@ -48,11 +44,7 @@ const router = createBrowserRouter([
       },
       {
         path: "articlesDetails/:id",
-        element: (
-          <PrivateRoute>
-            <ArticlesDetails />
-          </PrivateRoute>
-        ),
+        element: <ArticlesDetails />,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/approvedArticles/${params.id}`),
       },

@@ -1,21 +1,8 @@
-import { useEffect, useState } from "react";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import ArticlesCard from "./ArticlesCard";
+import useApprovedArticles from "../../Hooks/useApprovedArticles";
 
 const AllArticlesPublic = () => {
-  const axiosPublic = useAxiosPublic();
-  const [approvedArticles, setApprovedArticles] = useState([]);
-
-  useEffect(() => {
-    axiosPublic
-      .get("/approvedArticles")
-      .then((response) => {
-        setApprovedArticles(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [axiosPublic]);
+  const { approvedArticles } = useApprovedArticles();
 
   return (
     <div>
