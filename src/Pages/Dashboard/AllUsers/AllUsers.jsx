@@ -10,8 +10,6 @@ const AllUsers = () => {
   // const axiosSecure = useAxiosSecure();
   // Make admin function
   const makeUserAdmin = (user) => {
-    console.log(user);
-
     Swal.fire({
       title: "Are you sure?",
       text: `Do you want to make ${user?.name} an admin? This action cannot be undone.`,
@@ -19,12 +17,10 @@ const AllUsers = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Yes, Make Admin!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const response = await axiosPublic.patch(
-          `/users-make-admin/${user._id}`
-        );
+        const response = await axiosPublic.patch(`/users/${user._id}`);
         if (response.data.modifiedCount > 0) {
           refetch();
           Swal.fire({

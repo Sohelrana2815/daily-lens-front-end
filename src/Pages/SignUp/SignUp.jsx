@@ -31,6 +31,7 @@ const SignUp = () => {
             name: name,
             photoURL: photoURL,
             subscriptionPeriod: null,
+            isAdmin: null,
           };
           // Make a POST request to save the user data
 

@@ -8,6 +8,7 @@ import websiteLogo from "../../assets/Website logo/website logo.png";
 import useAuth from "../../Hooks/useAuth";
 import useUsers from "../../Hooks/useUsers";
 import Swal from "sweetalert2";
+import { FaSearch } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, signOutUser } = useAuth();
@@ -47,17 +48,17 @@ const Navbar = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
   return (
     <>
-      <div className="shadow-md fixed w-full z-10 top-0 left-0">
-        <div className="lg:flex  items-center justify-between bg-white dark:bg-gray-900 dark:text-gray-300 py-6 lg:px-10 px-7">
+      <div className="shadow-md fixed w-full z-10 top-0  left-0">
+        <div className="lg:flex  items-center justify-around bg-white dark:bg-gray-900 dark:text-gray-300 py-6 lg:px-10 px-7">
           {/* Logo Section */}
-          <div className="font-bold text-2xl cursor-pointer flex justify-center items-center font-[Poppins] text-gray-800 dark:text-white">
-            <span className="text-3xl text-indigo-600 dark:text-indigo-400 mr-1 pt-2">
+          <div className="font-bold text-2xl cursor-pointer flex justify-center items-center font-[Poppins] text-gray-800 dark:text-white ">
+            <span className="text-3xl text-indigo-600 dark:text-indigo-400 mr-1 pt-2 ">
               <ion-icon name="logo-ionic"></ion-icon>
             </span>
             <div className="flex items-center gap-2">
               <img
                 src={websiteLogo}
-                className="w-10 xl:w-16 dark:bg-gray-300 rounded-full"
+                className="w-10 xl:w-16 dark:bg-gray-300 rounded-full xl:p-2"
                 alt="Logo"
               />
               <Link to="/">
@@ -74,7 +75,7 @@ const Navbar = () => {
           >
             {/* close and open icon navbar */}
             {open ? (
-              <FiX className="dark:text-gray-300 text-gray-800" />
+              <FiX className="dark:text-red-600 text-red-600" />
             ) : (
               <FiMenu className="dark:text-gray-300 text-gray-800" />
             )}
@@ -165,9 +166,26 @@ const Navbar = () => {
                 </NavLink>
               </li>
             ) : null}
-
+            {/* Dark mode */}
+            <div className="py-3 lg:ml-8">
+              {isDarkMode ? (
+                <button
+                  onClick={toggleDarkMode}
+                  className="btn btn-sm rounded-full btn-warning"
+                >
+                  <LuSun />
+                </button>
+              ) : (
+                <button
+                  onClick={toggleDarkMode}
+                  className="btn btn-sm rounded-full bg-gray-800 text-white"
+                >
+                  <GoMoon />
+                </button>
+              )}
+            </div>
             {user ? (
-              <div className="dropdown lg:dropdown-end">
+              <div className="dropdown lg:dropdown-end lg:ml-8">
                 <div
                   tabIndex={0}
                   role="button"
@@ -210,22 +228,16 @@ const Navbar = () => {
               </>
             )}
 
-            <div className="ml-3">
-              {isDarkMode ? (
-                <button
-                  onClick={toggleDarkMode}
-                  className="btn btn-sm btn-warning"
-                >
-                  <LuSun />
-                </button>
-              ) : (
-                <button
-                  onClick={toggleDarkMode}
-                  className="btn btn-sm btn-primary"
-                >
-                  <GoMoon />
-                </button>
-              )}
+            {/* Search */}
+            <div className="form-control relative w-3/4 block lg:hidden mt-4 dark:text-gray-800">
+              <input
+                type="text"
+                placeholder="Search"
+                className="input input-bordered"
+              />
+              <p className="absolute right-0 top-4 pr-4">
+                <FaSearch />
+              </p>
             </div>
           </ul>
         </div>
