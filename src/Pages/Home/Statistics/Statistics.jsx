@@ -6,6 +6,7 @@ import user1 from "../../../assets/Total users/user1.webp";
 import user2 from "../../../assets/Total users/user2.webp";
 import user3 from "../../../assets/Total users/user3.webp";
 import ReactStars from "react-rating-stars-component";
+import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
 const ratingChanged = (newRating) => {
   console.log(newRating);
 };
@@ -29,9 +30,14 @@ const Statistics = () => {
 
   return (
     <>
+      <SectionTitle
+        titleStyle="User"
+        title="Insights"
+        subTitle="A closer look at our growing community"
+      />
       <div className="max-w-screen-xl mx-auto my-36">
         {/* Stats Section */}
-        <div className="stats stats-vertical lg:stats-horizontal shadow p-8">
+        <div className="stats stats-vertical dark:bg-gray-800 dark:text-gray-200 lg:stats-horizontal shadow p-8">
           {/* Total Users */}
           <div className="stat">
             <div className="stat-title bg-[#E5E4E2] rounded-lg px-8 py-1 relative">
@@ -43,7 +49,9 @@ const Statistics = () => {
             <div className="stat-value text-4xl font-bold">
               <CountUp end={totalUsers} duration={2} separator="," />
             </div>
-            <div className="stat-desc">Jan 1st - Feb 1st</div>
+            <div className="stat-desc dark:text-gray-200">
+              Jan 1st - Feb 1st
+            </div>
           </div>
 
           {/* Premium Users */}
@@ -57,7 +65,7 @@ const Statistics = () => {
             <div className="stat-value text-4xl font-bold">
               <CountUp end={premiumUsers} duration={2} separator="," />
             </div>
-            <div className="stat-desc">
+            <div className="stat-desc dark:text-gray-200">
               ↗︎ <CountUp end={400} duration={1.5} separator="," /> (22%)
             </div>
           </div>
@@ -73,11 +81,17 @@ const Statistics = () => {
             <div className="stat-value text-4xl font-bold">
               <CountUp end={normalUsers} duration={2} separator="," />
             </div>
-            <div className="stat-desc">
+            <div className="stat-desc dark:text-gray-200">
               ↘︎ <CountUp end={90} duration={1.5} separator="," /> (14%)
             </div>
           </div>
         </div>
+
+        <SectionTitle
+          titleStyle="Happy"
+          title="Readers"
+          subTitle="Voices of trust from our satisfied audience."
+        />
 
         {/* User Cards Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-8">

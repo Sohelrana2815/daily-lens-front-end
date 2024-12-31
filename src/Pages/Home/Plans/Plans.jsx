@@ -1,59 +1,56 @@
 import { FaCrown } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
 
 const Plans = () => {
   const plans = [
     {
       title: "Basic Plan",
-      price: "Free",
-      features: ["Access to 10 articles", "Basic support", "Community access"],
+      price: "$5",
+      features: ["1 Minute", "Quick updates", "Fast read"],
       buttonText: "Get Started",
       buttonStyle: "btn-primary",
     },
     {
-      title: "Standard Plan",
-      price: "$9.99/month",
-      features: [
-        "Access to 50 articles",
-        "Priority support",
-        "Ad-free experience",
-      ],
+      title: "Standard",
+      price: "$20",
+      features: ["5 Days", "Daily highlights", "Brief stories"],
       buttonText: "Upgrade Now",
-      buttonStyle: "btn-secondary",
+      buttonStyle: "btn-info",
     },
     {
-      title: "Premium Plan",
-      price: "$19.99/month",
-      features: [
-        "Unlimited articles",
-        "Premium support",
-        "Access to exclusive content",
-        "Ad-free experience",
-      ],
+      title: "Premium",
+      price: "$35",
+      features: ["10 Days", "In-depth", "Comprehensive coverage"],
       buttonText: "Go Premium",
-      buttonStyle: "btn-success",
+      buttonStyle: "btn-warning",
     },
   ];
   return (
     <>
-      <div className="plans-section grid grid-cols-1 md:grid-cols-3 gap-6 px-4 py-10">
+      <SectionTitle
+        titleStyle="Subscription"
+        title="Plans"
+        subTitle="Tailored plans to match your reading habits."
+      />
+      <div className="plans-section grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 py-10 max-w-screen-xl mx-auto">
         {plans.map((plan, index) => (
           <div
             key={index}
             className={`plan-card border rounded-lg shadow-lg p-6 flex flex-col relative ${
-              plan.title === "Premium Plan"
+              plan.title === "Premium"
                 ? " border-2 border-yellow-400"
                 : "border-gray-300"
             }`}
           >
             <div className="flex-grow">
-              {plan.title === "Premium Plan" && ( // Conditionally render badge
+              {plan.title === "Premium" && ( // Conditionally render badge
                 <div className="absolute badge badge-warning gap-2 right-1 top-1">
                   <FaCrown />
                   Premium
                 </div>
               )}
-              {plan.title === "Standard Plan" && ( // Conditionally render badge
+              {plan.title === "Standard" && ( // Conditionally render badge
                 <div className="absolute badge badge-ghost gap-2 right-1 top-1">
                   <FaCrown />
                   Standard
@@ -65,19 +62,20 @@ const Plans = () => {
               <p className="text-center text-xl font-bold mb-6">{plan.price}</p>
               <ul className="features-list mb-6">
                 {plan.features.map((feature, idx) => (
-                  <li key={idx} className="text-gray-700 text-sm mb-2">
+                  <li
+                    key={idx}
+                    className="text-gray-700 dark:text-gray-200 text-sm mb-2"
+                  >
                     • {feature}
                   </li>
                 ))}
               </ul>
             </div>
             <div className="text-center">
-              <Link to={`/subscriptions`}>
-                {plan.title === "Basic Plan" || (
-                  <button className={`btn ${plan.buttonStyle} w-full`}>
-                    {plan.buttonText}
-                  </button>
-                )}
+              <Link to="/subscriptions">
+                <button className={`btn ${plan.buttonStyle} w-full`}>
+                  {plan.buttonText}
+                </button>
               </Link>
             </div>
           </div>

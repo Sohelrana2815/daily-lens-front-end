@@ -50,19 +50,11 @@ const router = createBrowserRouter([
       },
       {
         path: "subscriptions",
-        element: (
-          <PrivateRoute>
-            <Subscriptions />
-          </PrivateRoute>
-        ),
+        element: <Subscriptions />,
       },
       {
         path: "payment",
-        element: (
-          <PrivateRoute>
-            <Payment />,
-          </PrivateRoute>
-        ),
+        element: <Payment />,
       },
       {
         path: "signIn",
