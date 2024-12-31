@@ -10,12 +10,10 @@ import AllArticlesAdmin from "../Pages/Dashboard/AllArticlesAdmin/AllArticlesAdm
 import AllArticlesPublic from "../Pages/AllArticlesPublic/AllArticlesPublic";
 import ArticlesDetails from "../Pages/ArticlesDetails/ArticlesDetails";
 import Subscriptions from "../Pages/Subscriptions/Subscriptions";
-import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import Payment from "../Components/CheckoutForm/Payment";
 import ExpiredSubscription from "../Pages/ExpiredSubscription/ExpiredSubscription";
 import PremiumArticles from "../Pages/PremiumArticles/PremiumArticles";
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
-import PremiumRoute from "./PremiumRoute/PremiumRoute";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import MyArticles from "../Pages/MyArticles/MyArticles";
 import Analytics from "../Pages/Dashboard/Analytics/Analytics";
@@ -70,11 +68,7 @@ const router = createBrowserRouter([
       },
       {
         path: "premiumArticles",
-        element: (
-          <PremiumRoute>
-            <PremiumArticles />
-          </PremiumRoute>
-        ),
+        element: <PremiumArticles />,
       },
     ],
   },

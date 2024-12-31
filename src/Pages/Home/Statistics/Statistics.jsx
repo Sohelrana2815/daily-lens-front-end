@@ -39,52 +39,54 @@ const Statistics = () => {
       />
       <div className="max-w-screen-xl mx-auto my-36">
         {/* Stats Section */}
-        <div className="stats stats-vertical dark:bg-gray-800 dark:text-gray-200 lg:stats-horizontal shadow p-8">
-          {/* Total Users */}
-          <div className="stat">
-            <div className="stat-title bg-[#E5E4E2] rounded-lg px-8 py-1 relative">
-              <p className="text-[#555555] font-medium">Total Users</p>
-              <p className="absolute bottom-1/4 right-2 md:text-lg">
-                <FcGlobe />
-              </p>
+        <div className="flex justify-center md:justify-start">
+          <div className="stats stats-vertical dark:bg-gray-800 dark:text-gray-200 lg:stats-horizontal shadow p-8 border">
+            {/* Total Users */}
+            <div className="stat">
+              <div className="stat-title bg-[#E5E4E2] rounded-lg px-8 py-1 relative">
+                <p className="text-[#555555] font-medium">Total Users</p>
+                <p className="absolute bottom-1/4 right-2 md:text-lg">
+                  <FcGlobe />
+                </p>
+              </div>
+              <div className="stat-value text-4xl font-bold">
+                <CountUp end={totalUsers} duration={2} separator="," />
+              </div>
+              <div className="stat-desc dark:text-gray-200">
+                Jan 1st - Feb 1st
+              </div>
             </div>
-            <div className="stat-value text-4xl font-bold">
-              <CountUp end={totalUsers} duration={2} separator="," />
-            </div>
-            <div className="stat-desc dark:text-gray-200">
-              Jan 1st - Feb 1st
-            </div>
-          </div>
 
-          {/* Premium Users */}
-          <div className="stat">
-            <div className="stat-title bg-[#F3C623] rounded-lg px-8 py-1 relative">
-              <p className="text-[#10375C]">Premium Users</p>
-              <p className="absolute bottom-1/4 right-2 md:text-lg">
-                <FaCrown />
-              </p>
+            {/* Premium Users */}
+            <div className="stat">
+              <div className="stat-title bg-[#F3C623] rounded-lg px-8 py-1 relative">
+                <p className="text-[#10375C]">Premium Users</p>
+                <p className="absolute bottom-1/4 right-2 md:text-lg">
+                  <FaCrown className="text-gray-950" />
+                </p>
+              </div>
+              <div className="stat-value text-4xl font-bold">
+                <CountUp end={premiumUsers} duration={2} separator="," />
+              </div>
+              <div className="stat-desc dark:text-gray-200">
+                ↗︎ <CountUp end={400} duration={1.5} separator="," /> (22%)
+              </div>
             </div>
-            <div className="stat-value text-4xl font-bold">
-              <CountUp end={premiumUsers} duration={2} separator="," />
-            </div>
-            <div className="stat-desc dark:text-gray-200">
-              ↗︎ <CountUp end={400} duration={1.5} separator="," /> (22%)
-            </div>
-          </div>
 
-          {/* Normal Users */}
-          <div className="stat">
-            <div className="stat-title bg-slate-400 px-8 py-1 rounded-lg relative">
-              <p className="text-[#FFFDF0]">Normal Users</p>
-              <p className="absolute bottom-1/4 right-2">
-                <FaUsers className="text-[#FFFDF0] md:text-lg" />
-              </p>
-            </div>
-            <div className="stat-value text-4xl font-bold">
-              <CountUp end={normalUsers} duration={2} separator="," />
-            </div>
-            <div className="stat-desc dark:text-gray-200">
-              ↘︎ <CountUp end={90} duration={1.5} separator="," /> (14%)
+            {/* Normal Users */}
+            <div className="stat">
+              <div className="stat-title bg-slate-400 px-8 py-1 rounded-lg relative">
+                <p className="text-[#FFFDF0]">Normal Users</p>
+                <p className="absolute bottom-1/4 right-2">
+                  <FaUsers className="text-[#FFFDF0] md:text-lg" />
+                </p>
+              </div>
+              <div className="stat-value text-4xl font-bold">
+                <CountUp end={normalUsers} duration={2} separator="," />
+              </div>
+              <div className="stat-desc dark:text-gray-200">
+                ↘︎ <CountUp end={90} duration={1.5} separator="," /> (14%)
+              </div>
             </div>
           </div>
         </div>

@@ -3,7 +3,8 @@ import Select from "react-select";
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import useAuth from "../../Hooks/useAuth";
-
+import img1 from "../../assets/Add article Img/img1.avif";
+import SectionTitle from "../../Components/SectionTitle/SectionTitle";
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
@@ -97,102 +98,135 @@ const AddArticles = () => {
   }, [axiosPublic]);
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="card-body bg-gray-300 mt-40"
-    >
-      <h2 className="text-center">{publishers.length}</h2>
-      {/* Title Field */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Title</span>
-        </label>
-        <input
-          type="text"
-          placeholder="Article Title"
-          className="input input-bordered"
-          {...register("articleTitle", { required: true })}
-        />
-        {errors.articleTitle && (
-          <span className="text-error">Title field is required</span>
-        )}
-      </div>
+    <>
+      <SectionTitle
+        title="Contribute"
+        titleStyle="Your Story"
+        subTitle="Share your voice with our readers and make an impact through your words."
+      />
+      <div className="container mx-auto px-4 py-10">
+        <div className="flex flex-col md:flex-row items-center max-w-7xl mx-auto gap-8">
+          {/* Image Section */}
+          <div className="w-full md:w-1/2">
+            <img
+              src={img1}
+              alt="Article Illustration"
+              className="w-full h-auto object-cover rounded-lg shadow-md"
+            />
+          </div>
 
-      {/* Description Field */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Description</span>
-        </label>
-        <textarea
-          placeholder="Article Description"
-          className="textarea textarea-bordered"
-          {...register("articleDescription", { required: true })}
-        />
-        {errors.articleDescription && (
-          <span className="text-error">Description field is required</span>
-        )}
-      </div>
+          {/* Form Section */}
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="w-full md:w-1/2 bg-white shadow-lg p-6 rounded-lg space-y-4 dark:text-gray-700"
+          >
+            {/* Title Field */}
+            <div className="form-control">
+              <label className="label font-medium text-gray-700">
+                <span>Title</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Enter the article title"
+                className="input input-bordered w-full"
+                {...register("articleTitle", { required: true })}
+              />
+              {errors.articleTitle && (
+                <span className="text-error text-sm">
+                  Title field is required
+                </span>
+              )}
+            </div>
 
-      {/* Image Upload */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Image</span>
-        </label>
-        <input
-          type="file"
-          className="input input-bordered"
-          {...register("articleImage", { required: true })}
-        />
-        {errors.articleImage && (
-          <span className="text-error">Image field is required</span>
-        )}
-      </div>
+            {/* Description Field */}
+            <div className="form-control">
+              <label className="label font-medium text-gray-700">
+                <span>Description</span>
+              </label>
+              <textarea
+                placeholder="Write a brief description of the article"
+                className="textarea textarea-bordered w-full"
+                rows="4"
+                {...register("articleDescription", { required: true })}
+              />
+              {errors.articleDescription && (
+                <span className="text-error text-sm">
+                  Description field is required
+                </span>
+              )}
+            </div>
 
-      {/* Publisher Dropdown */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Publisher</span>
-        </label>
-        <select
-          defaultValue=""
-          className="select select-bordered"
-          {...register("publisherName", { required: true })}
-        >
-          <option value="" disabled>
-            Select Publisher Name
-          </option>
-          {publishers.map((publisher) => (
-            <option key={publisher._id} value={publisher.name}>
-              {publisher.publisherName}
-            </option>
-          ))}
-        </select>
-        {errors.publisherName && (
-          <span className="text-error">Publisher field is required</span>
-        )}
-      </div>
+            {/* Image Upload */}
+            <div className="form-control">
+              <label className="label font-medium text-gray-700">
+                <span>Upload Image</span>
+              </label>
+              <input
+                type="file"
+                className="file-input file-input-bordered w-full"
+                {...register("articleImage", { required: true })}
+              />
+              {errors.articleImage && (
+                <span className="text-error text-sm">
+                  Image field is required
+                </span>
+              )}
+            </div>
 
-      {/* Tags Multi-Select */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Tags</span>
-        </label>
-        <Select
-          isMulti
-          options={tagOptions}
-          value={selectedTags}
-          onChange={(selectedOptions) => setSelectedTags(selectedOptions)}
-          className="basic-multi-select"
-        />
-      </div>
+            {/* Publisher Dropdown */}
+            <div className="form-control">
+              <label className="label font-medium text-gray-700">
+                <span>Publisher</span>
+              </label>
+              <select
+                defaultValue=""
+                className="select select-bordered w-full"
+                {...register("publisherName", { required: true })}
+              >
+                <option value="" disabled>
+                  Select a publisher
+                </option>
+                {publishers.map((publisher) => (
+                  <option key={publisher._id} value={publisher.name}>
+                    {publisher.publisherName}
+                  </option>
+                ))}
+              </select>
+              {errors.publisherName && (
+                <span className="text-error text-sm">
+                  Publisher field is required
+                </span>
+              )}
+            </div>
 
-      {/* Submit Button */}
-      <div className="form-control mt-6">
-        <button className="btn btn-primary" type="submit">
-          Add Article
-        </button>
+            {/* Tags Multi-Select */}
+            <div className="form-control">
+              <label className="label font-medium text-gray-700">
+                <span>Tags</span>
+              </label>
+              <Select
+                isMulti
+                options={tagOptions}
+                value={selectedTags}
+                onChange={(selectedOptions) => setSelectedTags(selectedOptions)}
+                className="basic-multi-select"
+                placeholder="Select relevant tags"
+              />
+            </div>
+
+            {/* Submit Button */}
+            <div className="form-control mt-4">
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white font-bold py-3 rounded hover:bg-blue-700 transition duration-300"
+              >
+                Add Article
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </form>
+    </>
   );
 };
 

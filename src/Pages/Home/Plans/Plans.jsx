@@ -9,21 +9,21 @@ const Plans = () => {
       price: "$5",
       features: ["1 Minute", "Quick updates", "Fast read"],
       buttonText: "Get Started",
-      buttonStyle: "btn-primary",
+      buttonStyle: "bg-[#90CAF9] dark:text-[#1E3A8A] border-none text-gray-800",
     },
     {
       title: "Standard",
       price: "$20",
       features: ["5 Days", "Daily highlights", "Brief stories"],
       buttonText: "Upgrade Now",
-      buttonStyle: "btn-info",
+      buttonStyle: "bg-[#66BB6A] text-[#FFFFFF] border-none",
     },
     {
       title: "Premium",
       price: "$35",
       features: ["10 Days", "In-depth", "Comprehensive coverage"],
       buttonText: "Go Premium",
-      buttonStyle: "btn-warning",
+      buttonStyle: "bg-[#FFD700] text-gray border-none",
     },
   ];
   return (

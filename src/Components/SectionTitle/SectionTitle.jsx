@@ -7,7 +7,7 @@ const SectionTitle = ({ title, titleStyle, subTitle }) => {
         <h2 className="text-center uppercase text-xl md:text-2xl xl:text-4xl absolute left-1/2 transform -translate-x-1/2 font-volKHob">
           <span className="text-[#d13030] font-bold">{titleStyle}</span> {title}
         </h2>
-        <p className="text-center absolute  left-1/2 transform -translate-x-1/2 mt-20 text-base md:text-lg dark:text-gray-300">
+        <p className="text-center absolute  left-1/2 transform -translate-x-1/2 mt-40 md:mt-24 md:text-lg dark:text-gray-300">
           {subTitle}
         </p>
       </div>
