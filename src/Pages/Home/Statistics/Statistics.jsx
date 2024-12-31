@@ -5,12 +5,14 @@ import { FaCrown, FaUsers } from "react-icons/fa";
 import user1 from "../../../assets/Total users/user1.webp";
 import user2 from "../../../assets/Total users/user2.webp";
 import user3 from "../../../assets/Total users/user3.webp";
-import ReactStars from "react-rating-stars-component";
 import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
-const ratingChanged = (newRating) => {
-  console.log(newRating);
-};
+import StarRatings from "react-star-ratings";
+
 const Statistics = () => {
+  const ratingChanged = (newRating) => {
+    console.log(newRating);
+  };
+
   const { allUsers } = useUsers();
 
   // Filter users into normal and premium
@@ -113,11 +115,14 @@ const Statistics = () => {
               </button>
               {/* Rating */}
               <div className="rating-container">
-                <ReactStars
-                  count={5} // Number of stars
-                  onChange={ratingChanged} // Function to handle the change
-                  size={40} // Size of the stars
-                  activeColor="#ffd700" // Color for active stars
+                <StarRatings
+                  rating={3.5} // Default value
+                  starRatedColor="#ffd700"
+                  starDimension="40px"
+                  starSpacing="5px"
+                  changeRating={ratingChanged}
+                  numberOfStars={5}
+                  name="rating"
                 />
               </div>
             </div>
@@ -141,11 +146,14 @@ const Statistics = () => {
               </button>
               {/* Rating */}
               <div className="rating-container">
-                <ReactStars
-                  count={5} // Number of stars
-                  onChange={ratingChanged} // Function to handle the change
-                  size={40} // Size of the stars
-                  activeColor="#ffd700" // Color for active stars
+                <StarRatings
+                  rating={4} // Default value
+                  starRatedColor="#ffd700"
+                  starDimension="40px"
+                  starSpacing="5px"
+                  changeRating={ratingChanged}
+                  numberOfStars={5}
+                  name="rating"
                 />
               </div>
             </div>
@@ -169,11 +177,14 @@ const Statistics = () => {
               </button>
               {/* Rating */}
               <div className="rating-container">
-                <ReactStars
-                  count={5} // Number of stars
-                  onChange={ratingChanged} // Function to handle the change
-                  size={40} // Size of the stars
-                  activeColor="#ffd700" // Color for active stars
+                <StarRatings
+                  rating={3} // Default value
+                  starRatedColor="#ffd700"
+                  starDimension="40px"
+                  starSpacing="5px"
+                  changeRating={ratingChanged}
+                  numberOfStars={5}
+                  name="rating"
                 />
               </div>
             </div>
