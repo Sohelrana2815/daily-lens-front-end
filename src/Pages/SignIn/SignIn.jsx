@@ -27,13 +27,6 @@ const SignIn = () => {
         // Now update the profile
         updateUserProfile();
 
-        try {
-          await axiosPublic.patch(`/users/${email}`);
-          console.log("Logged-in date updated successfully");
-        } catch (error) {
-          console.error("Error updating logged-in date:", error);
-        }
-
         // Navigate after login
         navigate(location?.state ? location.state : "/");
         Swal.fire({
