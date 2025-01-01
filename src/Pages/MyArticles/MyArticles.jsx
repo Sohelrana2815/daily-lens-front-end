@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
-import { BsEye } from "react-icons/bs";
+import { BsEye, BsTwitterX } from "react-icons/bs";
 // import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
@@ -181,7 +181,7 @@ const MyArticles = () => {
           <table className="table">
             {/* head */}
             <thead>
-              <tr>
+              <tr className="dark:text-slate-200">
                 <th>Serial No.</th>
                 <th>Article Title</th>
                 <th>Status</th>
@@ -195,7 +195,10 @@ const MyArticles = () => {
               {/* row 1 */}
 
               {myArticles.map((myArticle, index) => (
-                <tr key={myArticle._id} className="hover">
+                <tr
+                  key={myArticle._id}
+                  className="hover hover:dark:text-slate-950"
+                >
                   <th>{index + 1}</th>
                   <td>{myArticle.articleTitle}</td>
                   <td>
@@ -228,7 +231,10 @@ const MyArticles = () => {
                       </Link>
                     ) : (
                       <>
-                        <button disabled className="btn btn-sm btn-success">
+                        <button
+                          disabled
+                          className="btn btn-sm btn-success dark:bg-red-600"
+                        >
                           <BiDetail className="text-white" />
                         </button>
                         <p className="text-xs text-red-600">Not Approved yet</p>
@@ -261,12 +267,24 @@ const MyArticles = () => {
       {/* Modal */}
 
       <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box">
+        <div className="modal-box dark:bg-[#1F2937] relative">
           <h3 className="font-bold text-lg lg:text-xl text-center font-EbGaramond py-4">
             Update Your Article
           </h3>
+
           {selectedArticle && (
             <form onSubmit={handleSubmit(onSubmit)}>
+              {/* Close button */}
+              <div className="modal-action absolute top-0 right-4">
+                <button
+                  title="CLOSE"
+                  className="btn btn-sm btn-outline rounded-full border-black hover:bg-red-600 hover:border-none dark:bg-red-600"
+                  onClick={closeModal}
+                >
+                  <BsTwitterX className="hover:text-white  dark:text-white" />
+                </button>
+              </div>
+
               {/* Article title */}
               <div className="form-control">
                 <label className="label">
@@ -276,7 +294,7 @@ const MyArticles = () => {
                   type="text"
                   {...register("articleTitle")}
                   defaultValue={selectedArticle.articleTitle}
-                  className="input input-bordered bg-[#31795A17]"
+                  className="input input-bordered bg-[#31795A17] dark:bg-[#374151]"
                 />
               </div>
               {/* Article Description */}
@@ -288,9 +306,11 @@ const MyArticles = () => {
                   type="text"
                   {...register("articleDescription")}
                   defaultValue={selectedArticle.articleDescription}
-                  className="textarea textarea-bordered bg-[#31795A17]"
+                  className="textarea textarea-bordered bg-[#31795A17] dark:bg-[#374151] w-full resize-none focus:ring-2 focus:ring-blue-500"
+                  rows={4} // Set a default row count
                 />
               </div>
+
               {/* Current Image Preview */}
               <div className="form-control">
                 <label className="label">
@@ -311,7 +331,7 @@ const MyArticles = () => {
                 <input
                   type="file"
                   {...register("articleImage")} // No 'required' validation here
-                  className="file-input file-input-bordered w-full max-w-xs"
+                  className="file-input file-input-bordered w-full max-w-xs dark:bg-[#374151]"
                 />
               </div>
 
@@ -322,7 +342,7 @@ const MyArticles = () => {
                 </label>
                 <select
                   defaultValue={selectedArticle.publisherName}
-                  className="select select-bordered"
+                  className="select select-bordered dark:bg-[#374151]"
                   {...register("publisherName", { required: true })}
                 >
                   <option value="" disabled>
@@ -348,26 +368,75 @@ const MyArticles = () => {
                 <Select
                   isMulti
                   options={tagOptions}
-                  value={selectedTags} // Use selectedTags state
+                  value={selectedTags}
                   onChange={(selectedOptions) =>
                     setSelectedTags(selectedOptions)
                   }
                   className="basic-multi-select"
+                  // Styles
+
+                  styles={{
+                    control: (base) => ({
+                      ...base,
+                      backgroundColor:
+                        document.documentElement.classList.contains("dark")
+                          ? "#181C14" // Use black background in dark mode
+                          : base.backgroundColor,
+                      color: document.documentElement.classList.contains("dark")
+                        ? "white" // Text color white for visibility in dark mode
+                        : base.color,
+                      borderColor: document.documentElement.classList.contains(
+                        "dark"
+                      )
+                        ? "gray" // Gray border in dark mode for a subtle look
+                        : base.borderColor,
+                    }),
+                    menu: (base) => ({
+                      ...base,
+                      backgroundColor:
+                        document.documentElement.classList.contains("dark")
+                          ? "black"
+                          : base.backgroundColor,
+                    }),
+                    multiValue: (base) => ({
+                      ...base,
+                      backgroundColor:
+                        document.documentElement.classList.contains("dark")
+                          ? "gray"
+                          : base.backgroundColor,
+                      color: document.documentElement.classList.contains("dark")
+                        ? "white"
+                        : base.color,
+                    }),
+
+                    multiValueLabel: (base) => ({
+                      ...base,
+                      color: document.documentElement.classList.contains("dark")
+                        ? "white"
+                        : base.color,
+                    }),
+                    option: (base, { isFocused }) => ({
+                      ...base,
+                      backgroundColor: isFocused
+                        ? document.documentElement.classList.contains("dark")
+                          ? "gray" // Dark mode focused option background
+                          : "lightblue" // Light mode focused option background
+                        : base.backgroundColor,
+                      color: document.documentElement.classList.contains("dark")
+                        ? "white"
+                        : base.color,
+                    }),
+                  }}
                 />
               </div>
               <button
                 type="submit"
-                className="btn mt-5 bg-[#31795A] rounded-full text-white uppercase font-medium w-full text-base"
+                className="btn w-full mt-5 bg-[#201658] rounded-md text-white uppercase font-medium text-base shadow-lg hover:bg-[#1c1450] dark:bg-[#2563EB] dark:hover:bg-[#1d4ed8] border-none font-volKHob focus:outline-none focus:ring-2 focus:ring-blue-400"
               >
                 Update Article
               </button>
             </form>
           )}
-          <div className="modal-action">
-            <button className="btn btn-outline btn-error" onClick={closeModal}>
-              Close
-            </button>
-          </div>
         </div>
       </dialog>
 

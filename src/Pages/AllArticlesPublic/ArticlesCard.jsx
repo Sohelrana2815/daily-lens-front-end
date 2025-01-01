@@ -17,32 +17,48 @@ const ArticlesCard = ({ approvedArticle }) => {
   } = approvedArticle;
   return (
     <>
-      <div
-        className={`card card-compact bg-base-100 w-96 shadow-xl ${
-          isPremium
-            ? "border-4 border-yellow-500 bg-gradient-to-r from-yellow-50 to-yellow-100"
-            : "border"
-        }`}
-      >
-        <figure>
-          <img src={articleImage} alt="Shoes" />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title">
-            {isPremium && (
-              <span className="badge badge-warning ml-2">Premium</span>
-            )}
-          </h2>
-          <h2 className="card-title">{articleTitle}</h2>
-          <p>{publisherName}</p>
-          <p>
-            {articleDescription.slice(0, 80)}{" "}
-            <span className="text-blue-600">read more...</span>
-          </p>
-          <div className="card-actions justify-end">
-            <Link to={`/articlesDetails/${_id}`}>
-              <button className="btn btn-primary">Details</button>
-            </Link>
+      <div className="flex justify-center items-center">
+        <div
+          className={`card w-full max-w-xs md:max-w-sm lg:max-w-md shadow-lg transition-transform transform hover:scale-105 ${
+            isPremium
+              ? "border-4 border-yellow-500 bg-gradient-to-r from-yellow-50 to-yellow-100"
+              : "border bg-white dark:bg-gray-900"
+          }`}
+        >
+          <figure className="h-48 overflow-hidden rounded-t-lg">
+            <img
+              src={articleImage}
+              alt="Article Thumbnail"
+              className="object-cover w-full h-full"
+            />
+          </figure>
+          <div className="card-body p-5 h-[300px]">
+            <div className="flex items-center justify-between ">
+              <h2 className="card-title text-lg font-bold text-gray-800 dark:text-slate-300">
+                {articleTitle}
+              </h2>
+              {isPremium && (
+                <span className="badge bg-yellow-500 text-white text-sm p-2 ">
+                  Premium
+                </span>
+              )}
+            </div>
+            <p className="text-sm text-gray-600 dark:text-slate-300">
+              {publisherName}
+            </p>
+            <p className="text-gray-700 mt-2 dark:text-slate-100">
+              {articleDescription.slice(0, 80)}{" "}
+              <span className="text-blue-600 cursor-pointer dark:text-blue-400">
+                read more...
+              </span>
+            </p>
+            <div className="card-actions mt-4 flex justify-between">
+              <Link to={`/articlesDetails/${_id}`}>
+                <button className="w-full py-2 px-2 text-sm font-medium rounded-lg text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300">
+                  View Details
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
