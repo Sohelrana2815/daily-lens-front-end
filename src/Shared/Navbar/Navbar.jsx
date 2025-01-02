@@ -6,18 +6,11 @@ import { LuSun } from "react-icons/lu";
 import { GoMoon } from "react-icons/go";
 import websiteLogo from "../../assets/Website logo/website logo.png";
 import useAuth from "../../Hooks/useAuth";
-import useUsers from "../../Hooks/useUsers";
 import Swal from "sweetalert2";
 import { FaSearch } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, signOutUser } = useAuth();
-  const { allUsers } = useUsers();
-
-  // Check if user has an active subscription
-  const currentUser = allUsers.find((u) => u.email === user?.email);
-  const hasActiveSubscription =
-    currentUser && currentUser.subscriptionPeriod !== null;
 
   // auth
 
@@ -132,17 +125,15 @@ const Navbar = () => {
               </li>
             )}
             {/*subscription (Private route)  */}
-            {user && !hasActiveSubscription ? (
-              <li className="lg:ml-8 lg:my-0 my-6">
-                <NavLink
-                  to="/subscriptions"
-                  className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
-                  onClick={() => setOpen(false)}
-                >
-                  Subscriptions
-                </NavLink>
-              </li>
-            ) : null}
+            <li className="lg:ml-8 lg:my-0 my-6">
+              <NavLink
+                to="/subscriptions"
+                className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                onClick={() => setOpen(false)}
+              >
+                Subscriptions
+              </NavLink>
+            </li>
 
             {/* Dashboard (private route) */}
             <li className="lg:ml-8 lg:my-0 my-6">
@@ -155,17 +146,15 @@ const Navbar = () => {
               </NavLink>
             </li>
             {/* Premium Articles (private and premium user only) */}
-            {hasActiveSubscription && user ? (
-              <li className="lg:ml-8 lg:my-0 my-6">
-                <NavLink
-                  to="/premiumArticles"
-                  className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
-                  onClick={() => setOpen(false)}
-                >
-                  Premium Articles
-                </NavLink>
-              </li>
-            ) : null}
+            <li className="lg:ml-8 lg:my-0 my-6">
+              <NavLink
+                to="/premiumArticles"
+                className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                onClick={() => setOpen(false)}
+              >
+                Premium Articles
+              </NavLink>
+            </li>
             {/* Dark mode */}
             <div className="py-3 lg:ml-8">
               {isDarkMode ? (
@@ -198,7 +187,7 @@ const Navbar = () => {
                 </div>
                 <ul
                   tabIndex={0}
-                  className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                  className="menu menu-sm dropdown-content dark:bg-gray-900 bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
                 >
                   <li>
                     <a className="justify-between">

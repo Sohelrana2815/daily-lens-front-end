@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import checkoutImg from "../../assets/CheckoutImg/payment-information-concept-illustration_114360-2296.jpg";
+import checkoutImg from "../../assets/CheckoutImg/subscription page.png";
 import { useState } from "react";
 import SectionTitle from "../../Components/SectionTitle/SectionTitle";
+import { FaLock } from "react-icons/fa";
 
 const subscriptionOptions = [
   { label: "1 Minute Plan", value: "1minute", price: 5 },
@@ -26,7 +27,7 @@ const Subscriptions = () => {
         title="Perfect Plan"
         subTitle="Choose a subscription plan that suits your needs and gain access to premium features and exclusive content"
       />
-      <div className="flex flex-col lg:flex-row justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900">
+      <div className="flex md:flex-col  flex-col-reverse  lg:flex-row justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900 md:py-8 lg:py-0">
         {/* Left Section: Subscription Form */}
         <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 w-full lg:w-1/2 max-w-md mx-4">
           <h1 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200 text-center">
@@ -74,8 +75,12 @@ const Subscriptions = () => {
                   </button>
                 </Link>
               ) : (
-                <button className="btn btn-primary w-full py-3" disabled>
+                <button
+                  className="btn btn-primary w-full py-3 dark:bg-stone-200 dark:text-stone-500"
+                  disabled
+                >
                   Proceed to Payment
+                  <FaLock />
                 </button>
               )}
               <p className="text-sm mt-4 text-gray-500 dark:text-gray-400 text-center">
@@ -91,11 +96,11 @@ const Subscriptions = () => {
           <img
             src={checkoutImg}
             alt="Subscription Illustration"
-            className="rounded-lg shadow-md object-cover w-full h-72 md:h-96"
+            className="rounded-lg shadow-md object-cover w-full h-64 md:h-[500px] max-h-[600px]:"
           />
           <p className="text-gray-600 dark:text-gray-300 mt-6 text-center">
-            "Subscribe now and unlock access to our premium articles, expert
-            advice, and much more."
+            &quot;Subscribe now and unlock access to our premium articles,
+            expert advice, and much more.&quot;
           </p>
         </div>
       </div>

@@ -1,0 +1,13 @@
+/* Add this CSS to your stylesheet or component styles */
+.chart-container {
+  width: 100%;
+  max-width: 800px; /* Adjust this value as needed */
+  margin: 0 auto; /* Center the chart */
+  padding: 10px;
+}
+
+@media (max-width: 600px) {
+  .chart-container {
+    padding: 5px;
+  }
+}

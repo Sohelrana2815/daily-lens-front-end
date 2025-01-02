@@ -1,24 +1,27 @@
 import { useEffect } from "react";
 import { Chart } from "react-google-charts";
 import useAllArticles from "../../../Hooks/useAllArticles";
-
+import "./chart.css";
 const ArticlesCharts = () => {
   const { allArticles } = useAllArticles();
 
   // Process the data
+
   const publisherCounts = allArticles.reduce((acc, article) => {
-    const { publisherName } = article;
+    const { publisherName } = article; // destructure the publisherName
     acc[publisherName] = (acc[publisherName] || 0) + 1;
     return acc;
   }, {});
 
   // Calculate total articles
+
   const totalArticles = Object.values(publisherCounts).reduce(
     (acc, count) => acc + count,
     0
   );
 
   // Prepare data for the pie chart
+
   const pieChartData = [
     ["Publisher", "Percentage"],
     ...Object.entries(publisherCounts).map(([publisher, count]) => [
@@ -27,10 +30,11 @@ const ArticlesCharts = () => {
     ]),
   ];
 
+  // PieChartOptions
+
   const pieChartOptions = {
     title: "Articles by Publisher",
-    pieHole: 0.4, // Optional: for a donut chart effect
-    is3D: false,
+    is3D: true,
   };
 
   useEffect(() => {
@@ -65,8 +69,29 @@ const ArticlesCharts = () => {
     };
   }, []);
 
+  const getPublisherData = () => {
+    const publisherCounts = allArticles.reduce((acc, article) => {
+      acc[article.publisherName] = (acc[article.publisherName] || 0) + 1;
+      return acc;
+    }, {});
+    const totalArticles = allArticles.length;
+    return Object.keys(publisherCounts).map((publisherName) => [
+      publisherName,
+      (publisherCounts[publisherName] / totalArticles) * 100,
+    ]);
+  };
+
+  const data = [["Publisher", "Percentage"], ...getPublisherData()];
+
+  // Material chart options
+  const options = {
+    chart: {
+      title: "Articles by Publisher",
+      subtitle: "Percentage of total articles by each publisher",
+    },
+  };
   return (
-    <div>
+    <>
       <div className="chart-container">
         <Chart
           chartType="PieChart"
@@ -76,7 +101,16 @@ const ArticlesCharts = () => {
           height={"400px"}
         />
       </div>
-    </div>
+      <div className="chart-container">
+        <Chart
+          chartType="Bar"
+          data={data}
+          options={options}
+          width={"100%"}
+          height={"400px"}
+        />
+      </div>
+    </>
   );
 };
 
