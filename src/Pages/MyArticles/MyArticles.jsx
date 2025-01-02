@@ -176,37 +176,58 @@ const MyArticles = () => {
 
   return (
     <>
-      <div>
-        <div className="overflow-x-auto">
-          <table className="table">
-            {/* head */}
-            <thead>
-              <tr className="dark:text-slate-200">
-                <th>Serial No.</th>
-                <th>Article Title</th>
-                <th>Status</th>
-                <th>Is Premium</th>
-                <th>Article Details</th>
-                <th>Update</th>
-                <th>Delete</th>
+      <div className="max-w-screen-2xl mx-auto p-4">
+        {/* Table  */}
+        <div className="overflow-x-auto bg-white shadow-lg rounded-lg dark:bg-gray-800 dark:text-gray-200">
+          <table className="table-auto w-full border-collapse">
+            {/* Table Head */}
+            <thead className="bg-gray-100 dark:bg-gray-700">
+              <tr>
+                <th className="px-4 py-2 text-left text-sm font-semibold">#</th>
+                <th className="px-4 py-2 text-left text-sm font-semibold">
+                  Article Title
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold">
+                  Status
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold">
+                  Premium?
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold">
+                  Article Details
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold">
+                  Update
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold">
+                  Delete
+                </th>
               </tr>
             </thead>
-            <tbody>
-              {/* row 1 */}
 
+            {/* Table Body */}
+            <tbody>
               {myArticles.map((myArticle, index) => (
                 <tr
                   key={myArticle._id}
-                  className="hover hover:dark:text-slate-950"
+                  className={`${
+                    index % 2 === 0
+                      ? "bg-gray-50 dark:bg-gray-900"
+                      : "bg-white dark:bg-gray-800"
+                  } hover:bg-gray-100 dark:hover:bg-gray-700`}
                 >
-                  <th>{index + 1}</th>
-                  <td>{myArticle.articleTitle}</td>
-                  <td>
+                  <td className="px-4 py-2 text-sm">{index + 1}</td>
+                  <td className="px-4 py-2 text-sm">
+                    {myArticle.articleTitle}
+                  </td>
+                  <td className="px-4 py-2 text-sm">
                     {myArticle.status === "decline" ? (
                       <>
-                        Declined
+                        <span className="text-red-600 dark:text-red-400">
+                          Declined
+                        </span>
                         <button
-                          className="btn btn-sm btn-info ml-2"
+                          className="btn btn-sm  btn-warning  ml-2"
                           onClick={() => {
                             setDeclineReason(myArticle.declineReason); // Set decline reason
                             document
@@ -218,11 +239,21 @@ const MyArticles = () => {
                         </button>
                       </>
                     ) : (
-                      myArticle.status
+                      <span
+                        className={`px-2 py-1 rounded-md ${
+                          myArticle.status === "approved"
+                            ? "bg-green-200 text-green-800 dark:bg-green-700 dark:text-green-200"
+                            : "bg-yellow-200 text-yellow-800 dark:bg-yellow-700 dark:text-yellow-200"
+                        }`}
+                      >
+                        {myArticle.status}
+                      </span>
                     )}
                   </td>
-                  <td>{myArticle.isPremium ? "Yes" : "NO"}</td>
-                  <td>
+                  <td className="px-4 py-2 text-sm">
+                    {myArticle.isPremium ? "Yes" : "No"}
+                  </td>
+                  <td className="px-4 py-2">
                     {myArticle.status === "approved" ? (
                       <Link to={`/articlesDetails/${myArticle._id}`}>
                         <button className="btn btn-sm btn-success">
@@ -230,29 +261,29 @@ const MyArticles = () => {
                         </button>
                       </Link>
                     ) : (
-                      <>
+                      <div className="text-center">
                         <button
                           disabled
-                          className="btn btn-sm btn-success dark:bg-red-600"
+                          className="btn btn-sm btn-disabled dark:bg-red-600"
                         >
                           <BiDetail className="text-white" />
                         </button>
-                        <p className="text-xs text-red-600">Not Approved yet</p>
-                      </>
+                        <p className="text-xs text-red-600">Not Approved Yet</p>
+                      </div>
                     )}
                   </td>
-                  <td>
+                  <td className="px-4 py-2">
                     <button
                       onClick={() => openModal(myArticle)}
-                      className="btn btn-sm bg-blue-600 text-white"
+                      className="btn btn-sm bg-blue-600 text-white hover:bg-blue-500 dark:border-none"
                     >
                       <BiEdit />
                     </button>
                   </td>
-                  <td>
+                  <td className="px-4 py-2">
                     <button
                       onClick={() => deleteArticle(myArticle._id)}
-                      className="btn btn-sm bg-red-600 text-white"
+                      className="btn btn-sm bg-red-600 text-white hover:bg-red-500 dark:border-none"
                     >
                       X
                     </button>
@@ -262,204 +293,223 @@ const MyArticles = () => {
             </tbody>
           </table>
         </div>
-      </div>
 
-      {/* Modal */}
+        {/* Modal */}
 
-      <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box dark:bg-[#1F2937] relative">
-          <h3 className="font-bold text-lg lg:text-xl text-center font-EbGaramond py-4">
-            Update Your Article
-          </h3>
+        <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+          <div className="modal-box dark:bg-[#1F2937] relative">
+            <h3 className="font-bold text-lg lg:text-xl text-center font-EbGaramond py-4">
+              Update Your Article
+            </h3>
 
-          {selectedArticle && (
-            <form onSubmit={handleSubmit(onSubmit)}>
-              {/* Close button */}
-              <div className="modal-action absolute top-0 right-4">
-                <button
-                  title="CLOSE"
-                  className="btn btn-sm btn-outline rounded-full border-black hover:bg-red-600 hover:border-none dark:bg-red-600"
-                  onClick={closeModal}
-                >
-                  <BsTwitterX className="hover:text-white  dark:text-white" />
-                </button>
-              </div>
+            {selectedArticle && (
+              <form onSubmit={handleSubmit(onSubmit)}>
+                {/* Close button */}
+                <div className="modal-action absolute top-0 right-4">
+                  <button
+                    title="CLOSE"
+                    className="btn btn-sm btn-outline  hover:bg-red-600 hover:border-none dark:border-warning"
+                    onClick={closeModal}
+                  >
+                    <BsTwitterX className="hover:text-white  dark:text-white" />
+                  </button>
+                </div>
 
-              {/* Article title */}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Article Title</span>
-                </label>
-                <input
-                  type="text"
-                  {...register("articleTitle")}
-                  defaultValue={selectedArticle.articleTitle}
-                  className="input input-bordered bg-[#31795A17] dark:bg-[#374151]"
-                />
-              </div>
-              {/* Article Description */}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Article Description</span>
-                </label>
-                <textarea
-                  type="text"
-                  {...register("articleDescription")}
-                  defaultValue={selectedArticle.articleDescription}
-                  className="textarea textarea-bordered bg-[#31795A17] dark:bg-[#374151] w-full resize-none focus:ring-2 focus:ring-blue-500"
-                  rows={4} // Set a default row count
-                />
-              </div>
+                {/* Article title */}
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Article Title</span>
+                  </label>
+                  <input
+                    type="text"
+                    {...register("articleTitle")}
+                    defaultValue={selectedArticle.articleTitle}
+                    className="input input-bordered bg-[#31795A17] dark:bg-[#374151]"
+                  />
+                </div>
+                {/* Article Description */}
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Article Description</span>
+                  </label>
+                  <textarea
+                    type="text"
+                    {...register("articleDescription")}
+                    defaultValue={selectedArticle.articleDescription}
+                    className="textarea textarea-bordered bg-[#31795A17] dark:bg-[#374151] w-full resize-none focus:ring-2 focus:ring-blue-500"
+                    rows={4} // Set a default row count
+                  />
+                </div>
 
-              {/* Current Image Preview */}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Current Image</span>
-                </label>
-                <img
-                  src={selectedArticle?.articleImage}
-                  alt="Current Article"
-                  className="w-32 h-32 object-cover rounded"
-                />
-              </div>
+                {/* Current Image Preview */}
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Current Image</span>
+                  </label>
+                  <img
+                    src={selectedArticle?.articleImage}
+                    alt="Current Article"
+                    className="w-32 h-32 object-cover rounded"
+                  />
+                </div>
 
-              {/* File Input */}
-              <div className="form-control mt-4">
-                <label className="label">
-                  <span className="label-text">Upload New Image</span>
-                </label>
-                <input
-                  type="file"
-                  {...register("articleImage")} // No 'required' validation here
-                  className="file-input file-input-bordered w-full max-w-xs dark:bg-[#374151]"
-                />
-              </div>
+                {/* File Input */}
+                <div className="form-control mt-4">
+                  <label className="label">
+                    <span className="label-text">Upload New Image</span>
+                  </label>
+                  <input
+                    type="file"
+                    {...register("articleImage")} // No 'required' validation here
+                    className="file-input file-input-bordered w-full max-w-xs dark:bg-[#374151]"
+                  />
+                </div>
 
-              {/* Publisher Name Dropdown*/}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Publisher Name</span>
-                </label>
-                <select
-                  defaultValue={selectedArticle.publisherName}
-                  className="select select-bordered dark:bg-[#374151]"
-                  {...register("publisherName", { required: true })}
-                >
-                  <option value="" disabled>
-                    Select Publisher Name
-                  </option>
-                  {publishers.map((publisher) => (
-                    <option key={publisher._id} value={publisher.name}>
-                      {publisher.publisherName}
+                {/* Publisher Name Dropdown*/}
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Publisher Name</span>
+                  </label>
+                  <select
+                    defaultValue={selectedArticle.publisherName}
+                    className="select select-bordered dark:bg-[#374151]"
+                    {...register("publisherName", { required: true })}
+                  >
+                    <option value="" disabled>
+                      Select Publisher Name
                     </option>
-                  ))}
-                </select>
-                {errors.publisher && (
-                  <span className="text-error">
-                    Publisher field is required
-                  </span>
-                )}
-              </div>
-              {/* Tags Multi-Select */}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Tags</span>
-                </label>
-                <Select
-                  isMulti
-                  options={tagOptions}
-                  value={selectedTags}
-                  onChange={(selectedOptions) =>
-                    setSelectedTags(selectedOptions)
-                  }
-                  className="basic-multi-select"
-                  // Styles
+                    {publishers.map((publisher) => (
+                      <option key={publisher._id} value={publisher.name}>
+                        {publisher.publisherName}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.publisher && (
+                    <span className="text-error">
+                      Publisher field is required
+                    </span>
+                  )}
+                </div>
+                {/* Tags Multi-Select */}
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Tags</span>
+                  </label>
+                  <Select
+                    isMulti
+                    options={tagOptions}
+                    value={selectedTags}
+                    onChange={(selectedOptions) =>
+                      setSelectedTags(selectedOptions)
+                    }
+                    className="basic-multi-select"
+                    // Styles
 
-                  styles={{
-                    control: (base) => ({
-                      ...base,
-                      backgroundColor:
-                        document.documentElement.classList.contains("dark")
-                          ? "#181C14" // Use black background in dark mode
-                          : base.backgroundColor,
-                      color: document.documentElement.classList.contains("dark")
-                        ? "white" // Text color white for visibility in dark mode
-                        : base.color,
-                      borderColor: document.documentElement.classList.contains(
-                        "dark"
-                      )
-                        ? "gray" // Gray border in dark mode for a subtle look
-                        : base.borderColor,
-                    }),
-                    menu: (base) => ({
-                      ...base,
-                      backgroundColor:
-                        document.documentElement.classList.contains("dark")
-                          ? "black"
-                          : base.backgroundColor,
-                    }),
-                    multiValue: (base) => ({
-                      ...base,
-                      backgroundColor:
-                        document.documentElement.classList.contains("dark")
-                          ? "gray"
-                          : base.backgroundColor,
-                      color: document.documentElement.classList.contains("dark")
-                        ? "white"
-                        : base.color,
-                    }),
+                    styles={{
+                      control: (base) => ({
+                        ...base,
+                        backgroundColor:
+                          document.documentElement.classList.contains("dark")
+                            ? "#181C14" // Use black background in dark mode
+                            : base.backgroundColor,
+                        color: document.documentElement.classList.contains(
+                          "dark"
+                        )
+                          ? "white" // Text color white for visibility in dark mode
+                          : base.color,
+                        borderColor:
+                          document.documentElement.classList.contains("dark")
+                            ? "gray" // Gray border in dark mode for a subtle look
+                            : base.borderColor,
+                      }),
+                      menu: (base) => ({
+                        ...base,
+                        backgroundColor:
+                          document.documentElement.classList.contains("dark")
+                            ? "black"
+                            : base.backgroundColor,
+                      }),
+                      multiValue: (base) => ({
+                        ...base,
+                        backgroundColor:
+                          document.documentElement.classList.contains("dark")
+                            ? "gray"
+                            : base.backgroundColor,
+                        color: document.documentElement.classList.contains(
+                          "dark"
+                        )
+                          ? "white"
+                          : base.color,
+                      }),
 
-                    multiValueLabel: (base) => ({
-                      ...base,
-                      color: document.documentElement.classList.contains("dark")
-                        ? "white"
-                        : base.color,
-                    }),
-                    option: (base, { isFocused }) => ({
-                      ...base,
-                      backgroundColor: isFocused
-                        ? document.documentElement.classList.contains("dark")
-                          ? "gray" // Dark mode focused option background
-                          : "lightblue" // Light mode focused option background
-                        : base.backgroundColor,
-                      color: document.documentElement.classList.contains("dark")
-                        ? "white"
-                        : base.color,
-                    }),
-                  }}
-                />
-              </div>
-              <button
-                type="submit"
-                className="btn w-full mt-5 bg-[#201658] rounded-md text-white uppercase font-medium text-base shadow-lg hover:bg-[#1c1450] dark:bg-[#2563EB] dark:hover:bg-[#1d4ed8] border-none font-volKHob focus:outline-none focus:ring-2 focus:ring-blue-400"
-              >
-                Update Article
-              </button>
-            </form>
-          )}
-        </div>
-      </dialog>
-
-      {/* Decline Reason Modal */}
-      <dialog
-        id="decline_reason_modal"
-        className="modal modal-bottom sm:modal-middle"
-      >
-        <div className="modal-box">
-          <h3 className="font-bold text-lg">Decline Reason</h3>
-          <p>{declineReason || "No reason provided."}</p>
-          <div className="modal-action">
-            <button
-              className="btn btn-outline btn-error"
-              onClick={() => {
-                document.getElementById("decline_reason_modal").close(); // Close modal
-              }}
-            >
-              Close
-            </button>
+                      multiValueLabel: (base) => ({
+                        ...base,
+                        color: document.documentElement.classList.contains(
+                          "dark"
+                        )
+                          ? "white"
+                          : base.color,
+                      }),
+                      option: (base, { isFocused }) => ({
+                        ...base,
+                        backgroundColor: isFocused
+                          ? document.documentElement.classList.contains("dark")
+                            ? "gray" // Dark mode focused option background
+                            : "lightblue" // Light mode focused option background
+                          : base.backgroundColor,
+                        color: document.documentElement.classList.contains(
+                          "dark"
+                        )
+                          ? "white"
+                          : base.color,
+                      }),
+                    }}
+                  />
+                </div>
+                <button
+                  title="Update"
+                  type="submit"
+                  className="btn w-full mt-5 bg-[#201658] rounded-md text-white uppercase font-medium text-base shadow-lg hover:bg-[#1c1450] dark:bg-[#2563EB] dark:hover:bg-[#1d4ed8] border-none font-volKHob focus:outline-none focus:ring-2 focus:ring-blue-400"
+                >
+                  Update Article
+                </button>
+              </form>
+            )}
           </div>
-        </div>
-      </dialog>
+        </dialog>
+
+        {/* Decline Reason Modal */}
+        <dialog
+          id="decline_reason_modal"
+          className="modal modal-bottom sm:modal-middle dark:text-gray-300"
+        >
+          <div className="modal-box bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-bold text-lg text-gray-800 dark:text-gray-200">
+                Decline Reason
+              </h3>
+              <button
+                className=" hover:text-white hover:bg-red-600 p-2"
+                title="Close"
+                onClick={() => {
+                  document.getElementById("decline_reason_modal").close(); // Close modal
+                }}
+                aria-label="Close"
+              >
+                <BsTwitterX className="text-lg" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="mb-6">
+              <p className="text-gray-700 dark:text-gray-400">
+                {declineReason || "No reason provided."}
+              </p>
+            </div>
+          </div>
+        </dialog>
+      </div>
     </>
   );
 };

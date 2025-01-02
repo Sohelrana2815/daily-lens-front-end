@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import checkoutImg from "../../assets/CheckoutImg/payment-information-concept-illustration_114360-2296.jpg";
 import { useState } from "react";
+import SectionTitle from "../../Components/SectionTitle/SectionTitle";
 
 const subscriptionOptions = [
   { label: "1 Minute Plan", value: "1minute", price: 5 },
@@ -20,45 +21,83 @@ const Subscriptions = () => {
   };
   return (
     <>
-      <div className="flex flex-col justify-center items-center min-h-screen">
-        <div className="flex flex-col items-center">
+      <SectionTitle
+        titleStyle="Select Your"
+        title="Perfect Plan"
+        subTitle="Choose a subscription plan that suits your needs and gain access to premium features and exclusive content"
+      />
+      <div className="flex flex-col lg:flex-row justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900">
+        {/* Left Section: Subscription Form */}
+        <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 w-full lg:w-1/2 max-w-md mx-4">
+          <h1 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200 text-center">
+            Choose Your Subscription Plan
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300 mb-6 text-center">
+            Select a plan that fits your needs. Enjoy premium features and
+            exclusive content by subscribing today.
+          </p>
           <form>
-            <div className="form-control">
+            {/* Subscription Period */}
+            <div className="form-control mb-6">
               <label className="label">
-                <span className="label-text">Subscription Period</span>
+                <span className="label-text text-gray-600 dark:text-gray-300">
+                  Subscription Period
+                </span>
               </label>
               <select
                 onChange={handleSubscription}
-                className="select select-bordered"
-                defaultValue="value"
+                className="select select-bordered dark:bg-gray-700 dark:text-gray-200"
+                defaultValue=""
               >
-                <option value="">Select your plan</option>
+                <option value="" disabled>
+                  Select your plan
+                </option>
                 {subscriptionOptions.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label} - ${option.price}
                   </option>
                 ))}
               </select>
+              <p className="text-sm mt-2 text-gray-500 dark:text-gray-400">
+                Plans are billed monthly or annually depending on your choice.
+              </p>
             </div>
-            <div className="form-control mt-6">
+            {/* Proceed Button */}
+            <div className="form-control">
               {selectedSubscription ? (
                 <Link
                   to="/payment"
                   state={{ subscription: selectedSubscription }}
                 >
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btn btn-primary w-full py-3">
                     Proceed to Payment
                   </button>
                 </Link>
               ) : (
-                <button className="btn btn-primary" disabled>
+                <button className="btn btn-primary w-full py-3" disabled>
                   Proceed to Payment
                 </button>
               )}
+              <p className="text-sm mt-4 text-gray-500 dark:text-gray-400 text-center">
+                You can cancel your subscription anytime from your account
+                settings.
+              </p>
             </div>
           </form>
         </div>
-        <img src={checkoutImg} alt="" />
+
+        {/* Right Section: Illustration */}
+        <div className="w-full lg:w-1/2 p-4">
+          <img
+            src={checkoutImg}
+            alt="Subscription Illustration"
+            className="rounded-lg shadow-md object-cover w-full h-72 md:h-96"
+          />
+          <p className="text-gray-600 dark:text-gray-300 mt-6 text-center">
+            "Subscribe now and unlock access to our premium articles, expert
+            advice, and much more."
+          </p>
+        </div>
       </div>
     </>
   );
