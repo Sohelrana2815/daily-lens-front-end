@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import { Chart } from "react-google-charts";
 import useAllArticles from "../../../Hooks/useAllArticles";
 import "./chart.css";
-const ArticlesCharts = () => {
+import useTheme from "../../../Hooks/useTheme";
+const Analytics = () => {
   const { allArticles } = useAllArticles();
-
+  const { isDarkMode } = useTheme();
   // Process the data
 
   const publisherCounts = allArticles.reduce((acc, article) => {
@@ -32,10 +33,29 @@ const ArticlesCharts = () => {
 
   // PieChartOptions
 
+  // Dynamic PieChartOptions
   const pieChartOptions = {
     title: "Articles by Publisher",
-    is3D: true,
+    is3D: window.innerWidth >= 768, // True for md and larger devices
+    backgroundColor: isDarkMode ? "#181C14" : "#ffffff", // Tailwind's gray-900 for dark, white otherwise
+    titleTextStyle: {
+      color: isDarkMode ? "#ffffff" : "#000000", // Adjust title color
+    },
+    legend: {
+      textStyle: {
+        color: isDarkMode ? "#ffffff" : "#000000", // Adjust legend text color
+      },
+    },
   };
+
+  // Update is3D dynamically when resizing the window
+
+  window.addEventListener("resize", () => {
+    pieChartOptions.is3D = window.innerWidth >= 768;
+  });
+
+  // Usage example
+  console.log(pieChartOptions);
 
   useEffect(() => {
     const makePassive = () => {
@@ -84,14 +104,16 @@ const ArticlesCharts = () => {
   const data = [["Publisher", "Percentage"], ...getPublisherData()];
 
   // Material chart options
-  const options = {
+  const barChartOptions = {
     chart: {
       title: "Articles by Publisher",
       subtitle: "Percentage of total articles by each publisher",
     },
   };
+
   return (
     <>
+      {/* Pie chart */}
       <div className="chart-container">
         <Chart
           chartType="PieChart"
@@ -101,11 +123,12 @@ const ArticlesCharts = () => {
           height={"400px"}
         />
       </div>
+      {/* Bar chart */}
       <div className="chart-container">
         <Chart
           chartType="Bar"
           data={data}
-          options={options}
+          options={barChartOptions}
           width={"100%"}
           height={"400px"}
         />
@@ -114,4 +137,4 @@ const ArticlesCharts = () => {
   );
 };
 
-export default ArticlesCharts;
+export default Analytics;

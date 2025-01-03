@@ -1,12 +1,10 @@
-import { useTheme } from "@emotion/react";
-import { FaMoon } from "react-icons/fa";
+import { GoMoon } from "react-icons/go";
+import { LuSun } from "react-icons/lu";
 import { Link, NavLink, Outlet } from "react-router-dom";
+import useTheme from "../../Hooks/useTheme";
 
 const Dashboard = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
-
-
-  
 
   const navLinks = (
     <>
@@ -29,16 +27,30 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="relative z-10">
-        <button className="btn absolute">
-          <FaMoon />
-        </button>
+      {/* Dark mode */}
+
+      <div className="relative">
+        {isDarkMode ? (
+          <button
+            onClick={toggleDarkMode}
+            className="btn btn-sm rounded-full btn-warning absolute z-10 left-40 top-4"
+          >
+            <LuSun />
+          </button>
+        ) : (
+          <button
+            onClick={toggleDarkMode}
+            className="btn btn-sm rounded-full bg-gray-800 text-white absolute z-10 left-40 top-4"
+          >
+            <GoMoon />
+          </button>
+        )}
       </div>
-      <div className="drawer">
+      <div className="drawer ">
         <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col">
           {/* Navbar */}
-          <div className="navbar bg-base-300 w-full">
+          <div className="navbar bg-base-300 w-full dark:bg-gray-800 dark:text-gray-300">
             <div className="flex-none lg:hidden">
               <label
                 htmlFor="my-drawer-3"
@@ -73,7 +85,9 @@ const Dashboard = () => {
             </div>
           </div>
           {/* Page content here */}
-          <Outlet />
+          <div className="dark:bg-black">
+            <Outlet />
+          </div>
         </div>
         <div className="drawer-side">
           <label
@@ -81,7 +95,7 @@ const Dashboard = () => {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <ul className="menu bg-base-200 min-h-full w-80 p-4">
+          <ul className="menu bg-base-200 min-h-full w-80 p-4 dark:bg-gray-800 dark:text-gray-300">
             {/* Sidebar content here */}
             {navLinks}
           </ul>

@@ -156,23 +156,34 @@ const Navbar = () => {
               </NavLink>
             </li>
             {/* Dark mode */}
-            <div className="py-3 lg:ml-8">
-              {isDarkMode ? (
-                <button
-                  onClick={toggleDarkMode}
-                  className="btn btn-sm rounded-full btn-warning"
-                >
-                  <LuSun />
-                </button>
-              ) : (
-                <button
-                  onClick={toggleDarkMode}
-                  className="btn btn-sm rounded-full bg-gray-800 text-white"
-                >
-                  <GoMoon />
-                </button>
-              )}
-            </div>
+            <label className="flex items-center cursor-pointer gap-4 p-2 rounded-md transition duration-300 lg:ml-8">
+              <div className="relative">
+                <input
+                  type="checkbox"
+                  checked={isDarkMode}
+                  onChange={toggleDarkMode}
+                  className="sr-only" // Hides the input for better visuals
+                />
+                <div
+                  className={`w-10 h-5 rounded-full ${
+                    isDarkMode ? "bg-yellow-500" : "bg-gray-400"
+                  } transition-colors duration-300`}
+                ></div>
+                <div
+                  className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow-md transform transition-transform duration-300 ${
+                    isDarkMode ? "translate-x-5" : ""
+                  }`}
+                ></div>
+              </div>
+              <span className="text-gray-700 dark:text-gray-300">
+                {isDarkMode ? (
+                  <LuSun className="text-xl lg:text-2xl text-yellow-400" />
+                ) : (
+                  <GoMoon className="text-xl lg:text-2xl text-gray-800" />
+                )}
+              </span>
+            </label>
+
             {user ? (
               <div className="dropdown lg:dropdown-end lg:ml-8">
                 <div
