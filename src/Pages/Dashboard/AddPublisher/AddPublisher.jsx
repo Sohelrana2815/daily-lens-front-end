@@ -46,59 +46,75 @@ const AddPublisher = () => {
   };
   return (
     <>
-      <div className="min-h-screen flex items-center justify-center">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 max-w-md mx-auto space-y-4"
-        >
-          <div className="text-center">
-            {publisherImg && (
-              <img
-                src={publisherImg}
-                alt="Publisher Logo"
-                className="w-24 h-24 mx-auto rounded-full border border-gray-300 shadow-sm"
-              />
-            )}
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-800 dark:to-gray-900 p-6">
+        <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg max-w-lg w-full p-8">
+          {/* Title and Subtitle */}
+          <div className="text-center mb-8">
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-200">
+              Add Publisher
+            </h1>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Fill out the details to create a new publisher profile.
+            </p>
           </div>
 
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text text-gray-700 dark:text-gray-300 font-semibold">
+          {/* Publisher Image */}
+          <div className="text-center mb-6">
+            <div className="relative w-28 h-28 mx-auto">
+              {publisherImg ? (
+                <img
+                  src={publisherImg}
+                  alt="Publisher Logo"
+                  className="rounded-full border-4 border-primary shadow-lg object-cover w-full h-full"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center text-gray-500 dark:text-gray-400">
+                  No Image
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Form */}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {/* Publisher Name */}
+            <div className="form-control">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Publisher Name
-              </span>
-            </label>
-            <input
-              type="text"
-              placeholder="Enter Publisher Name"
-              {...register("publisherName")}
-              className="input input-bordered border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-200 w-full rounded-md shadow-sm focus:ring-primary focus:border-primary"
-              required
-            />
-          </div>
+              </label>
+              <input
+                type="text"
+                placeholder="Enter Publisher Name"
+                {...register("publisherName")}
+                className="input input-bordered border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-200 w-full rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                required
+              />
+            </div>
 
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text text-gray-700 dark:text-gray-300 font-semibold">
+            {/* Publisher Image */}
+            <div className="form-control">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Publisher Logo/Image
-              </span>
-            </label>
-            <input
-              type="file"
-              {...register("publisherImage")}
-              className="file-input file-input-bordered border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-200 w-full rounded-md shadow-sm focus:ring-primary focus:border-primary"
-              required
-            />
-          </div>
+              </label>
+              <input
+                type="file"
+                {...register("publisherImage")}
+                className="file-input file-input-bordered border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-200 w-full rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                required
+              />
+            </div>
 
-          <div className="form-control mt-6">
-            <button
-              type="submit"
-              className="btn btn-primary w-full text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 focus:ring focus:ring-blue-300 rounded-lg"
-            >
-              Submit
-            </button>
-          </div>
-        </form>
+            {/* Submit Button */}
+            <div className="form-control">
+              <button
+                type="submit"
+                className="btn btn-primary w-full text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 rounded-md shadow-md transition-transform transform hover:scale-105"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </>
   );

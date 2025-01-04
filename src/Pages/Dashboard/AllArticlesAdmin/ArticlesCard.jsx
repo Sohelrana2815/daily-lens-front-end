@@ -152,19 +152,19 @@ const ArticlesCard = ({ article }) => {
           <div className="flex flex-wrap gap-2 mt-4">
             <button
               onClick={() => handleAction("approve", _id, approveArticle)}
-              className="btn btn-xs btn-outline text-primary border-primary hover:bg-primary hover:text-white"
+              className="btn btn-xs btn-outline dark:text-white text-primary border-primary hover:bg-primary hover:text-white"
             >
               Approve
             </button>
             <button
               onClick={() => openModal(article)}
-              className="btn btn-xs text-white bg-blue-500 hover:bg-blue-600"
+              className="btn btn-xs text-white bg-blue-500 hover:bg-blue-600 dark:border-none"
             >
               Decline
             </button>
             <button
               onClick={() => handleAction("delete", _id, deleteArticle)}
-              className="btn btn-xs text-white bg-red-500 hover:bg-red-600"
+              className="btn btn-xs dark:border-none text-white bg-red-500 hover:bg-red-600"
             >
               Delete
             </button>
@@ -172,7 +172,7 @@ const ArticlesCard = ({ article }) => {
               onClick={() =>
                 handleAction("make premium", _id, makePremiumArticle)
               }
-              className="btn btn-xs text-white bg-yellow-500 hover:bg-yellow-600"
+              className="btn btn-xs text-white bg-yellow-500 hover:bg-yellow-600 dark:border-none dark:text-gray-800"
             >
               Make Premium
             </button>

@@ -1,3 +1,4 @@
+import { FaCrown } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const ArticlesCard = ({ approvedArticle }) => {
@@ -17,11 +18,11 @@ const ArticlesCard = ({ approvedArticle }) => {
   } = approvedArticle;
   return (
     <>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center py-8">
         <div
           className={`card w-full max-w-xs md:max-w-sm lg:max-w-md shadow-lg transition-transform transform hover:scale-105 ${
             isPremium
-              ? "border-4 border-yellow-500 bg-gradient-to-r from-yellow-50 to-yellow-100"
+              ? "border-4 border-yellow-500"
               : "border bg-white dark:bg-gray-900"
           }`}
         >
@@ -38,9 +39,14 @@ const ArticlesCard = ({ approvedArticle }) => {
                 {articleTitle}
               </h2>
               {isPremium && (
-                <span className="badge bg-yellow-500 text-white text-sm p-2 ">
-                  Premium
-                </span>
+                <>
+                  <p className="badge dark:border-none  bg-yellow-500 text-white text-sm p-2 dark:text-gray-900">
+                    Premium
+                    <span className="ml-1 dark:text-gray-900 ">
+                      <FaCrown />
+                    </span>
+                  </p>
+                </>
               )}
             </div>
             <p className="text-sm text-gray-600 dark:text-slate-300">
