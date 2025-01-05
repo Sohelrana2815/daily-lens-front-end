@@ -3,16 +3,19 @@ import useAuth from "../../Hooks/useAuth";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
-
+import signinImg from "../../assets/Sign up/login.svg";
 const SignIn = () => {
-  const axiosPublic = useAxiosPublic();
   const [err, setErr] = useState("");
   const { signInUser, updateUserProfile } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   // console.log("location in the login page", location);
-  const { handleSubmit, register, reset } = useForm();
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm();
   const onSubmit = (data) => {
     console.log(data);
     reset();
@@ -44,56 +47,71 @@ const SignIn = () => {
   };
   return (
     <>
-      <div className="hero bg-base-200 min-h-screen">
-        <div className="hero-content flex-col lg:flex-row-reverse">
-          <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Login now!</h1>
-            <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
+      <div className="min-h-screen flex flex-col md:flex-row items-center justify-center bg-gray-50 dark:bg-gray-800 dark:text-gray-500 p-4 gap-x-2 gap-y-4">
+        {/* Image Section */}
+        <div className="w-full lg:w-1/3  lg:h-auto flex justify-center items-center">
+          <img
+            src={signinImg}
+            alt="Sign In"
+            className="w-full h-full object-cover  lg:max-h-full rounded-lg"
+          />
+        </div>
+
+        {/* Form Section */}
+        <div className="w-full max-w-lg p-8 bg-white shadow-lg rounded-lg lg:ml-8">
+          <h2 className="text-2xl font-bold text-center mb-6">Welcome Back</h2>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-medium mb-1">Email</label>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                {...register("email", { required: true })}
+              />
+              {errors.email && (
+                <span className="text-red-500 text-sm">Email is required</span>
+              )}
+            </div>
+
+            {/* Password */}
+            <div>
+              <label className="block text-sm font-medium mb-1">Password</label>
+              <input
+                type="password"
+                placeholder="Enter your password"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                {...register("password", { required: true })}
+              />
+              {errors.password && (
+                <span className="text-red-500 text-sm">
+                  Password is required
+                </span>
+              )}
+            </div>
+
+            {/* Submit Button */}
+            <div className="mt-6">
+              <button
+                type="submit"
+                className="w-full py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              >
+                Login
+              </button>
+            </div>
+
+            {/* Error Message */}
+            {err && <p className="text-red-500 text-sm mt-2">{err}</p>}
+
+            {/* Sign Up Redirect */}
+            <p className="text-center text-sm mt-4">
+              Don&apos;t have an account?{" "}
+              <Link to="/signUp" className="text-blue-600 hover:underline">
+                Sign up
+              </Link>
             </p>
-          </div>
-          <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-            <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email</span>
-                </label>
-                <input
-                  type="email"
-                  placeholder="email"
-                  className="input input-bordered"
-                  {...register("email")}
-                  required
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Password</span>
-                </label>
-                <input
-                  type="password"
-                  placeholder="password"
-                  className="input input-bordered"
-                  {...register("password")}
-                  required
-                />
-              </div>
-              <div className="form-control mt-6">
-                <button type="submit" className="btn btn-primary">
-                  Login
-                </button>
-                {err && <p className="text-red-500">{err}</p>}
-              </div>
-              <p className="text-center">
-                Don&apos;t have an account?{" "}
-                <Link to="/signUp">
-                  <span className="text-blue-700 underline">Sign up</span>
-                </Link>
-              </p>
-            </form>
-          </div>
+          </form>
         </div>
       </div>
     </>

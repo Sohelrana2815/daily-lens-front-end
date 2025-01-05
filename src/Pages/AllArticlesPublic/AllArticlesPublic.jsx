@@ -3,7 +3,7 @@ import useApprovedArticles from "../../Hooks/useApprovedArticles";
 import SectionTitle from "../../Components/SectionTitle/SectionTitle";
 import { useEffect, useState } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
-
+import { IoFilter } from "react-icons/io5";
 const AllArticlesPublic = () => {
   const { approvedArticles } = useApprovedArticles(); // Custom hook to fetch articles
   const [searchTerm, setSearchTerm] = useState(""); // Search input
@@ -98,7 +98,10 @@ const AllArticlesPublic = () => {
         <div className="max-w-screen-2xl flex lg:flex-row-reverse mx-auto items-center justify-between border border-primary-100 dark:border-gray-800 p-4 rounded-lg mb-4">
           {/* Tags Filter */}
           <div className="flex flex-col gap-4 lg:gap-0 lg:w-1/2">
-            <label className="block font-medium">Filter by Tags:</label>
+            <label className="font-medium flex items-center gap-2 font-volKHob text-gray-800 dark:text-gray-200">
+              <IoFilter className="md:text-lg xl:text-xl" />
+              Filter by Tags:
+            </label>
             <div className="flex flex-wrap gap-2">
               {tags.map((tag) => (
                 <label key={tag} className="flex items-center gap-2">

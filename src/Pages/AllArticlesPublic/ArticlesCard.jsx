@@ -40,9 +40,9 @@ const ArticlesCard = ({ approvedArticle }) => {
               </h2>
               {isPremium && (
                 <>
-                  <p className="badge dark:border-none  bg-yellow-500 text-white text-sm p-2 dark:text-gray-900">
+                  <p className="badge dark:border-none text-slate-700 bg-yellow-500 text-sm p-2 dark:text-gray-900">
                     Premium
-                    <span className="ml-1 dark:text-gray-900 ">
+                    <span className="ml-1 text-gray-900  ">
                       <FaCrown />
                     </span>
                   </p>

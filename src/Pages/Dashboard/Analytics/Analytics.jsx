@@ -3,6 +3,7 @@ import { Chart } from "react-google-charts";
 import useAllArticles from "../../../Hooks/useAllArticles";
 import "./chart.css";
 import useTheme from "../../../Hooks/useTheme";
+import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
 const Analytics = () => {
   const { allArticles } = useAllArticles();
   const { isDarkMode } = useTheme();
@@ -113,6 +114,11 @@ const Analytics = () => {
 
   return (
     <>
+      <SectionTitle
+        title="Dashboard"
+        titleStyle="Overview"
+        subTitle="Analyze Publisher Contributions with Insightful Visualizations."
+      />
       {/* Pie chart */}
       <div className="chart-container">
         <Chart
