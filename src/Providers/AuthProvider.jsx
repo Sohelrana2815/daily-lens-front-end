@@ -71,6 +71,7 @@ const AuthProvider = ({ children }) => {
 
       // User info will stored here
       setUser(currentUser);
+      setLoading(false);
     });
 
     return () => {

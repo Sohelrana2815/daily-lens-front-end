@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import useAuth from "../../Hooks/useAuth";
 import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,12 +6,14 @@ import Swal from "sweetalert2";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 import signUpImg from "../../assets/Sign up/singup.png";
+import useAuth from "../../Hooks/useAuth";
 const SignUp = () => {
+  const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
   const [err, setErr] = useState("");
   // auth
   const { createNewUser, updateUserProfile, signOutUser } = useAuth();
-  const navigate = useNavigate();
+
   const {
     handleSubmit,
     register,
@@ -26,50 +27,62 @@ const SignUp = () => {
 
     createNewUser(email, password)
       .then(() => {
-        // Now update the profile
-        updateUserProfile(name, photoURL).then(() => {
-          const userData = {
-            email: email,
-            name: name,
-            photoURL: photoURL,
-            subscriptionPeriod: null,
-            isAdmin: null,
-          };
-          // Make a POST request to save the user data
-
-          axiosPublic.post("/users", userData).then((response) => {
-            console.log("User data posted successfullyL:", response.data);
-            if (response.data.insertedId) {
-              signOutUser();
-
-              setTimeout(() => {
-                navigate("/signIn");
-              }, 500);
-
-              Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Sign up successfully",
-                text: "Please login to continue",
-                timer: 6000,
-              });
-              // Reset the form after successful user creation
-              reset();
-            }
+        // Update user profile
+        return updateUserProfile(name, photoURL);
+      })
+      .then(() => {
+        // Post user data to server
+        const userData = {
+          email,
+          name,
+          photoURL,
+          subscriptionPeriod: null,
+          isAdmin: null,
+        };
+        return axiosPublic.post("/users", userData);
+      })
+      .then((response) => {
+        if (response.data.insertedId) {
+          // Show success alert
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Sign up successfully",
+            text: "Please login to continue",
+            timer: 6000,
+            showConfirmButton: false,
           });
-        });
+
+          // Sign out the user
+          return signOutUser().then(() => {
+            // Redirect to sign-in page after sign-out
+            setTimeout(() => {
+              navigate("/signIn");
+            }, 500);
+
+            // Reset form
+            reset();
+          });
+        } else {
+          throw new Error("Failed to save user data.");
+        }
       })
       .catch((error) => {
-        setErr("Something went wrong please try again");
+        // Handle errors
+        setErr("Something went wrong. Please try again.");
         console.error(error);
+
         Swal.fire({
           position: "center",
           icon: "error",
-          title: "Failed to save user data",
+          title: "Error",
+          text: error.message || "Failed to save user data",
           showConfirmButton: true,
         });
       });
   };
+
+  // 
   return (
     <>
       <div className="min-h-screen flex flex-col md:flex-row items-center justify-center bg-gray-50 dark:bg-gray-800 dark:text-gray-500 p-4 gap-x-2 gap-y-4">
