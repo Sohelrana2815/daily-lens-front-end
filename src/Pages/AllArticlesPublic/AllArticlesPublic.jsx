@@ -77,43 +77,28 @@ const AllArticlesPublic = () => {
         />
 
         {/* Search Bar */}
-        <div className="flex justify-end">
-          <div className="relative w-52 border justify-end">
+
+        <div className="max-w-screen-2xl mx-auto flex justify-end p-4 ">
+          {/* Search Bar */}
+          <div className="relative md:w-1/2 w-full">
             <input
               type="text"
               placeholder="Search articles..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={handleKeyPress}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full dark:text-gray-950"
             />
-            <p className="absolute top-3 right-0 ">
+            <p className="absolute top-3 right-3 dark:text-gray-950">
               <FaMagnifyingGlass />
             </p>
           </div>
         </div>
 
-        {/* Filters */}
-        <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-screen-2xl mx-auto">
-          {/* Publisher Filter */}
-          <div>
-            <select
-              value={selectedPublisher}
-              onChange={(e) => setSelectedPublisher(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 dark:text-gray-950"
-            >
-              <option value="">All Publishers</option>
-              {publishers.map((publisher) => (
-                <option key={publisher} value={publisher}>
-                  {publisher}
-                </option>
-              ))}
-            </select>
-          </div>
-
+        <div className="max-w-screen-2xl flex lg:flex-row-reverse mx-auto items-center justify-between border border-primary-100 dark:border-gray-800 p-4 rounded-lg mb-4">
           {/* Tags Filter */}
-          <div>
-            <label className="block mb-2 font-medium">Filter by Tags:</label>
+          <div className="flex flex-col gap-4 lg:gap-0 lg:w-1/2">
+            <label className="block font-medium">Filter by Tags:</label>
             <div className="flex flex-wrap gap-2">
               {tags.map((tag) => (
                 <label key={tag} className="flex items-center gap-2">
@@ -127,6 +112,23 @@ const AllArticlesPublic = () => {
                 </label>
               ))}
             </div>
+          </div>
+
+          {/* Publisher Filter */}
+
+          <div className="flex flex-col gap-4 lg:gap-0 lg:w-1/3">
+            <select
+              value={selectedPublisher}
+              onChange={(e) => setSelectedPublisher(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 dark:text-gray-950"
+            >
+              <option value="">All Publishers</option>
+              {publishers.map((publisher) => (
+                <option key={publisher} value={publisher}>
+                  {publisher}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
