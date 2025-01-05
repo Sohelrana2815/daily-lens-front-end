@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 
 const AllArticlesPublic = () => {
   const { approvedArticles } = useApprovedArticles();
-  const [searchTerm, setSearchTerm] = useState(""); // for search input
-  const [filteredArticles, setFilteredArticles] = useState(approvedArticles); // search for all articles
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredArticles, setFilteredArticles] = useState(approvedArticles);
 
   // Handle search functionality
 
@@ -19,25 +19,24 @@ const AllArticlesPublic = () => {
     // Filter articles based on search term
 
     const filtered = approvedArticles.filter((article) =>
-      article.articleTitle
-        .toLowerCase()
-        .includes(searchTerm.toLocaleLowerCase())
+      article.articleTitle.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredArticles(filtered);
   };
 
   // Trigger search when user presses Enter key
+
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       handleSearch();
     }
   };
 
-  // Update filtered articles when approvedArticles changes
+  // Update filtered articles when approvedArticles or searchTerm changes
 
   useEffect(() => {
     setFilteredArticles(approvedArticles);
-  }, [approvedArticles]);
+  }, [approvedArticles, searchTerm]);
 
   return (
     <>
