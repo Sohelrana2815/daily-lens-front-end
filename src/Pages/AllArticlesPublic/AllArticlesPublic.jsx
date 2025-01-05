@@ -2,77 +2,146 @@ import ArticlesCard from "./ArticlesCard";
 import useApprovedArticles from "../../Hooks/useApprovedArticles";
 import SectionTitle from "../../Components/SectionTitle/SectionTitle";
 import { useEffect, useState } from "react";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 
 const AllArticlesPublic = () => {
-  const { approvedArticles } = useApprovedArticles();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredArticles, setFilteredArticles] = useState(approvedArticles);
+  const { approvedArticles } = useApprovedArticles(); // Custom hook to fetch articles
+  const [searchTerm, setSearchTerm] = useState(""); // Search input
+  const [filteredArticles, setFilteredArticles] = useState(approvedArticles); // Filtered articles
 
-  // Handle search functionality
+  const [selectedPublisher, setSelectedPublisher] = useState(""); // Publisher filter
+  const [selectedTags, setSelectedTags] = useState([]); // Tags filter
 
-  const handleSearch = () => {
-    if (!searchTerm.trim()) {
-      setFilteredArticles(approvedArticles); // if search input is empty, show all articles
-      return;
-    }
+  // Extract unique publishers and tags
+  const publishers = Array.from(
+    new Set(approvedArticles.map((article) => article.publisherName))
+  );
 
-    // Filter articles based on search term
+  const tags = Array.from(
+    new Set(approvedArticles.flatMap((article) => article.articleTags))
+  );
 
-    const filtered = approvedArticles.filter((article) =>
-      article.articleTitle.toLowerCase().includes(searchTerm.toLowerCase())
+  // Apply filters whenever dependencies change
+  useEffect(() => {
+    const applyFilters = () => {
+      let filtered = approvedArticles;
+
+      // Filter by search term
+      if (searchTerm.trim()) {
+        filtered = filtered.filter((article) =>
+          article.articleTitle.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      }
+
+      // Filter by publisher
+      if (selectedPublisher) {
+        filtered = filtered.filter(
+          (article) => article.publisherName === selectedPublisher
+        );
+      }
+
+      // Filter by tags
+      if (selectedTags.length > 0) {
+        filtered = filtered.filter((article) =>
+          selectedTags.every((tag) => article.articleTags.includes(tag))
+        );
+      }
+
+      setFilteredArticles(filtered);
+    };
+
+    applyFilters();
+  }, [approvedArticles, searchTerm, selectedPublisher, selectedTags]);
+
+  // Handle tag selection toggle
+  const handleTagToggle = (tag) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
-    setFilteredArticles(filtered);
   };
 
-  // Trigger search when user presses Enter key
-
+  // Search on Enter key
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      handleSearch();
+      // Trigger filter application (already happens via useEffect)
     }
   };
-
-  // Update filtered articles when approvedArticles or searchTerm changes
-
-  useEffect(() => {
-    setFilteredArticles(approvedArticles);
-  }, [approvedArticles, searchTerm]);
 
   return (
     <>
-      <SectionTitle
-        titleStyle="Explore"
-        title="All Articles"
-        subTitle="Discover the Stories and Insights That Matter Most."
-      />
-      {/* Search Bar */}
-      <div className="mb-6 flex justify-center">
-        <input
-          type="text"
-          placeholder="Search articles..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          onKeyDown={handleKeyPress}
-          className="px-4 py-2 border border-gray-300 rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:text-gray-950"
+      <div>
+        <SectionTitle
+          titleStyle="Explore"
+          title="All Articles"
+          subTitle="Discover the Stories and Insights That Matter Most."
         />
-        <button
-          onClick={handleSearch}
-          className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-        >
-          Search
-        </button>
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  max-w-screen-2xl mx-auto gap-6">
-        {filteredArticles.length > 0 ? (
-          filteredArticles.map((article) => (
-            <ArticlesCard key={article._id} approvedArticle={article} />
-          ))
-        ) : (
-          <p className="col-span-full text-center text-gray-500">
-            No articles found for &quot;{searchTerm}&quot;.
-          </p>
-        )}
+        {/* Search Bar */}
+        <div className="flex justify-end">
+          <div className="relative w-52 border justify-end">
+            <input
+              type="text"
+              placeholder="Search articles..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={handleKeyPress}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            <p className="absolute top-3 right-0 ">
+              <FaMagnifyingGlass />
+            </p>
+          </div>
+        </div>
+
+        {/* Filters */}
+        <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-screen-2xl mx-auto">
+          {/* Publisher Filter */}
+          <div>
+            <select
+              value={selectedPublisher}
+              onChange={(e) => setSelectedPublisher(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 dark:text-gray-950"
+            >
+              <option value="">All Publishers</option>
+              {publishers.map((publisher) => (
+                <option key={publisher} value={publisher}>
+                  {publisher}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Tags Filter */}
+          <div>
+            <label className="block mb-2 font-medium">Filter by Tags:</label>
+            <div className="flex flex-wrap gap-2">
+              {tags.map((tag) => (
+                <label key={tag} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    value={tag}
+                    checked={selectedTags.includes(tag)}
+                    onChange={() => handleTagToggle(tag)}
+                  />
+                  {tag}
+                </label>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Articles Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-screen-2xl mx-auto gap-6">
+          {filteredArticles.length > 0 ? (
+            filteredArticles.map((article) => (
+              <ArticlesCard key={article._id} approvedArticle={article} />
+            ))
+          ) : (
+            <p className="col-span-full text-center text-gray-500">
+              No articles found.
+            </p>
+          )}
+        </div>
       </div>
     </>
   );
