@@ -1,5 +1,7 @@
 import { FaCrown } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
+import useUsers from "../../Hooks/useUsers";
 
 const ArticlesCard = ({ approvedArticle }) => {
   const {
@@ -16,6 +18,20 @@ const ArticlesCard = ({ approvedArticle }) => {
     authorPhoto,
     isPremium,
   } = approvedArticle;
+
+  const { user } = useAuth(); // Get current logged-in user
+  const { allUsers } = useUsers(); // Get all users data
+
+  // Find the current user's details
+
+  const currentUser = allUsers?.find((u) => u.email === user?.email);
+
+  // Check if the subscription is active
+
+  const isSubscriptionActive = currentUser?.subscriptionPeriod
+    ? new Date(currentUser.subscriptionPeriod) // Compare the current date with the subscription end date > new Date()
+    : false;
+
   return (
     <>
       <div className="flex justify-center items-center py-8">
@@ -60,7 +76,14 @@ const ArticlesCard = ({ approvedArticle }) => {
             </p>
             <div className="card-actions mt-4 flex justify-between">
               <Link to={`/articlesDetails/${_id}`}>
-                <button className="w-full py-2 px-2 text-sm font-medium rounded-lg text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300">
+                <button
+                  disabled={isPremium && !isSubscriptionActive} // Disable for premium articles without subscription
+                  className={`w-full p-2 text-sm font-medium rounded-lg text-white transition-all duration-300 ${
+                    isPremium && !isSubscriptionActive
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+                  }`}
+                >
                   View Details
                 </button>
               </Link>
