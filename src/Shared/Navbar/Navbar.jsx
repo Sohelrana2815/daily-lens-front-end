@@ -91,17 +91,15 @@ const Navbar = () => {
               </NavLink>
             </li>
             {/* Add Articles (Private route) */}
-            {user && (
-              <li className="lg:ml-8 lg:my-0 my-6">
-                <NavLink
-                  to="/addArticles"
-                  className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
-                  onClick={() => setOpen(false)}
-                >
-                  Add Articles
-                </NavLink>
-              </li>
-            )}
+            <li className="lg:ml-8 lg:my-0 my-6">
+              <NavLink
+                to="/addArticles"
+                className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                onClick={() => setOpen(false)}
+              >
+                Add Articles
+              </NavLink>
+            </li>
             {/* All Articles (Public) */}
             <li className="lg:ml-8  lg:my-0 my-6">
               <NavLink
@@ -113,17 +111,15 @@ const Navbar = () => {
               </NavLink>
             </li>
             {/* My Articles (Private route) */}
-            {user && (
-              <li className="lg:ml-8  lg:my-0 my-6">
-                <NavLink
-                  to="/myArticles"
-                  className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
-                  onClick={() => setOpen(false)}
-                >
-                  My Articles
-                </NavLink>
-              </li>
-            )}
+            <li className="lg:ml-8  lg:my-0 my-6">
+              <NavLink
+                to="/myArticles"
+                className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                onClick={() => setOpen(false)}
+              >
+                My Articles
+              </NavLink>
+            </li>
             {/*subscription (Private route)  */}
             <li className="lg:ml-8 lg:my-0 my-6">
               <NavLink

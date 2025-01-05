@@ -90,6 +90,8 @@ const SignIn = () => {
                 </span>
               )}
             </div>
+            {/* Error Message */}
+            {err && <p className="text-red-500 text-sm mt-2">{err}</p>}
 
             {/* Submit Button */}
             <div className="mt-6">
@@ -100,9 +102,6 @@ const SignIn = () => {
                 Login
               </button>
             </div>
-
-            {/* Error Message */}
-            {err && <p className="text-red-500 text-sm mt-2">{err}</p>}
 
             {/* Sign Up Redirect */}
             <p className="text-center text-sm mt-4">

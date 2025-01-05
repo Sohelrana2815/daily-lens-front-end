@@ -172,6 +172,8 @@ const SignUp = () => {
                 </p>
               )}
             </div>
+            {/* Error Message */}
+            {err && <p className="text-red-500 text-sm mt-2">{err}</p>}
 
             {/* Submit Button */}
             <button
