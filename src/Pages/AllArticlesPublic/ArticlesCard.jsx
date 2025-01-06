@@ -36,12 +36,19 @@ const ArticlesCard = ({ approvedArticle }) => {
     <>
       <div className="flex justify-center items-center py-8">
         <div
-          className={`card w-full max-w-xs md:max-w-sm lg:max-w-md shadow-lg transition-transform transform hover:scale-105 ${
+          className={`card w-full max-w-xs md:max-w-sm lg:max-w-md shadow-lg transition-transform transform hover:scale-105 relative ${
             isPremium
               ? "border-4 border-yellow-500"
               : "border bg-white dark:bg-gray-900"
           }`}
         >
+          {/* Premium Badge */}
+          {isPremium && (
+            <p className="absolute top-2 right-2 flex items-center gap-1 text-sm font-medium text-gray-900 bg-yellow-500 py-1 px-2 rounded-lg shadow-md">
+              Premium <FaCrown />
+            </p>
+          )}
+
           <figure className="h-48 overflow-hidden rounded-t-lg">
             <img
               src={articleImage}
@@ -50,21 +57,9 @@ const ArticlesCard = ({ approvedArticle }) => {
             />
           </figure>
           <div className="card-body p-5 h-[300px]">
-            <div className="flex items-center justify-between ">
-              <h2 className="card-title text-lg font-bold text-gray-800 dark:text-slate-300">
-                {articleTitle}
-              </h2>
-              {isPremium && (
-                <>
-                  <p className="badge dark:border-none text-slate-700 bg-yellow-500 text-sm p-2 dark:text-gray-900">
-                    Premium
-                    <span className="ml-1 text-gray-900  ">
-                      <FaCrown />
-                    </span>
-                  </p>
-                </>
-              )}
-            </div>
+            <h2 className="card-title text-lg font-bold text-gray-800 dark:text-slate-300 truncate">
+              {articleTitle}
+            </h2>
             <p className="text-sm text-gray-600 dark:text-slate-300">
               {publisherName}
             </p>

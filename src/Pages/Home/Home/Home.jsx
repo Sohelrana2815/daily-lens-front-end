@@ -14,7 +14,7 @@ const Home = () => {
         <AllPublishers />
         <Statistics />
         <Plans />
-        <FAQSection/>
+        <FAQSection />
       </div>
     </>
   );

@@ -5,6 +5,7 @@ import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import useAuth from "../../Hooks/useAuth";
 import img1 from "../../assets/Add article Img/img1.avif";
 import SectionTitle from "../../Components/SectionTitle/SectionTitle";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
@@ -13,6 +14,7 @@ const AddArticles = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   // Tag options (predefined)
   const tagOptions = [
     { value: "news", label: "News" },
@@ -70,7 +72,7 @@ const AddArticles = () => {
         };
         console.log(articleData);
 
-        const articleResponse = await axiosPublic.post(
+        const articleResponse = await axiosSecure.post(
           "/articles",
           articleData
         );

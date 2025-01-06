@@ -1,13 +1,11 @@
 import Swal from "sweetalert2";
-import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import useUsers from "../../../Hooks/useUsers";
-// import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const AllUsers = () => {
   const { allUsers, refetch } = useUsers();
 
-  const axiosPublic = useAxiosPublic();
-  // const axiosSecure = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
   // Make admin function
   const makeUserAdmin = (user) => {
     Swal.fire({
@@ -20,7 +18,7 @@ const AllUsers = () => {
       confirmButtonText: "Yes, Make Admin!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const response = await axiosPublic.patch(`/users/${user._id}`);
+        const response = await axiosSecure.patch(`/users/${user._id}`);
         if (response.data.modifiedCount > 0) {
           refetch();
           Swal.fire({
