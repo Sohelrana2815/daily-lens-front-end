@@ -6,7 +6,6 @@ export default {
     extend: {
       fontFamily: {
         volKHob: ["Volkhov", "serif"],
-        archIvo: ["Archivo Narrow", "serif;"],
       },
     },
   },

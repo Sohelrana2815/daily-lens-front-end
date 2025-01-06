@@ -43,7 +43,11 @@ const router = createBrowserRouter([
       },
       {
         path: "myArticles",
-        element: <MyArticles />,
+        element: (
+          <PrivateRoute>
+            <MyArticles />
+          </PrivateRoute>
+        ),
       },
       {
         path: "articlesDetails/:id",
@@ -53,7 +57,11 @@ const router = createBrowserRouter([
       },
       {
         path: "subscriptions",
-        element: <Subscriptions />,
+        element: (
+          <PrivateRoute>
+            <Subscriptions />
+          </PrivateRoute>
+        ),
       },
       {
         path: "payment",
