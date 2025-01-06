@@ -7,15 +7,11 @@ import { GoMoon } from "react-icons/go";
 import websiteLogo from "../../assets/Website logo/website logo.png";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
-// import useAdmin from "../../Hooks/useAdmin";
 
 const Navbar = () => {
   const { user, signOutUser } = useAuth();
-  // const { isAdmin } = useAdmin();
-  // auth
-
-  //
-
+  const [open, setOpen] = useState(false);
+  const { isDarkMode, toggleDarkMode } = useTheme();
   // logout function
 
   const handleSignOut = () => {
@@ -37,8 +33,6 @@ const Navbar = () => {
     });
   };
 
-  const [open, setOpen] = useState(false);
-  const { isDarkMode, toggleDarkMode } = useTheme();
   return (
     <>
       <div className="shadow-md fixed w-full z-10 top-0  left-0">
@@ -147,6 +141,7 @@ const Navbar = () => {
                 Dashboard
               </NavLink>
             </li>
+
             {/* Premium Articles (private and premium user only) */}
             <li className="lg:ml-8 lg:my-0 my-6">
               <NavLink

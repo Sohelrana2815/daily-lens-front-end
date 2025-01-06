@@ -10,11 +10,11 @@ const PrivateRoute = ({ children }) => {
     return <span className="loading loading-bars loading-lg"></span>;
   }
 
-  if (user) {
-    return children;
+  if (!user) {
+    return <Navigate to="/signIn" state={location.pathname} />;
   }
 
-  return <Navigate to="/signIn" state={location.pathname} />;
+  return children;
 };
 
 PrivateRoute.propTypes = {
