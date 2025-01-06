@@ -7,10 +7,11 @@ import { GoMoon } from "react-icons/go";
 import websiteLogo from "../../assets/Website logo/website logo.png";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
+// import useAdmin from "../../Hooks/useAdmin";
 
 const Navbar = () => {
   const { user, signOutUser } = useAuth();
-
+  // const { isAdmin } = useAdmin();
   // auth
 
   //
