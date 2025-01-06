@@ -7,7 +7,6 @@ import { GoMoon } from "react-icons/go";
 import websiteLogo from "../../assets/Website logo/website logo.png";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
-import { FaSearch } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, signOutUser } = useAuth();
@@ -227,20 +226,17 @@ const Navbar = () => {
                     Sign in
                   </NavLink>
                 </li>
+                <li className="lg:ml-8 lg:my-0 my-6">
+                  <NavLink
+                    to="/signUp"
+                    className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                    onClick={() => setOpen(false)}
+                  >
+                    Sign up
+                  </NavLink>
+                </li>
               </>
             )}
-
-            {/* Search */}
-            <div className="form-control relative w-3/4 block lg:hidden mt-4 dark:text-gray-800">
-              <input
-                type="text"
-                placeholder="Search"
-                className="input input-bordered"
-              />
-              <p className="absolute right-0 top-4 pr-4">
-                <FaSearch />
-              </p>
-            </div>
           </ul>
         </div>
       </div>
