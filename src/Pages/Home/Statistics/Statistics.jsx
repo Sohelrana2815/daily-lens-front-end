@@ -1,5 +1,5 @@
 import CountUp from "react-countup";
-import useUsers from "../../../Hooks/useUsers";
+// import useUsers from "../../../Hooks/useUsers";
 import { FcGlobe } from "react-icons/fc";
 import { FaCrown, FaUsers } from "react-icons/fa";
 import user1 from "../../../assets/Total users/user1.webp";
@@ -7,28 +7,30 @@ import user2 from "../../../assets/Total users/user2.webp";
 import user3 from "../../../assets/Total users/user3.webp";
 import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
 import StarRatings from "react-star-ratings";
+import useUserHome from "../../../Hooks/useUserHome";
 
 const Statistics = () => {
   const ratingChanged = (newRating) => {
     console.log(newRating);
   };
 
-  const { allUsers } = useUsers();
+  // const { allUsers } = useUsers();
+  const { usersHome } = useUserHome();
 
   // Filter users into normal and premium
 
   // 1. Normal Users
-  const normalUsers = allUsers.filter(
+  const normalUsers = usersHome.filter(
     (user) => user.subscriptionPeriod === null
   ).length;
 
   //  2. Premium Users
 
-  const premiumUsers = allUsers.filter(
+  const premiumUsers = usersHome.filter(
     (user) => user.subscriptionPeriod !== null
   ).length;
 
-  const totalUsers = allUsers.length;
+  const totalUsers = usersHome.length;
 
   return (
     <>
