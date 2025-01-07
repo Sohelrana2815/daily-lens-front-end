@@ -7,11 +7,14 @@ import { GoMoon } from "react-icons/go";
 import websiteLogo from "../../assets/Website logo/website logo.png";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
+import useAdmin from "../../Hooks/useAdmin";
 
 const Navbar = () => {
-  const { user, signOutUser } = useAuth();
+  const [isAdmin, adminLoading] = useAdmin();
+  const { user, signOutUser, loading } = useAuth();
   const [open, setOpen] = useState(false);
   const { isDarkMode, toggleDarkMode } = useTheme();
+
   // logout function
 
   const handleSignOut = () => {
@@ -32,7 +35,10 @@ const Navbar = () => {
       }
     });
   };
-
+  // console.log("Admin Status in Navbar:", { isAdmin, adminLoading });
+  if (adminLoading || loading) {
+    return <span className="loading loading-bars loading-lg"></span>;
+  }
   return (
     <>
       <div className="shadow-md fixed w-full z-10 top-0  left-0">
@@ -132,16 +138,17 @@ const Navbar = () => {
             )}
 
             {/* Dashboard (private route) */}
-            <li className="lg:ml-8 lg:my-0 my-6">
-              <NavLink
-                to="/dashboard/analytics"
-                className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
-                onClick={() => setOpen(false)}
-              >
-                Dashboard
-              </NavLink>
-            </li>
-
+            {isAdmin && (
+              <li className="lg:ml-8 lg:my-0 my-6">
+                <NavLink
+                  to="/dashboard/analytics"
+                  className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                  onClick={() => setOpen(false)}
+                >
+                  Dashboard
+                </NavLink>
+              </li>
+            )}
             {/* Premium Articles (private and premium user only) */}
             <li className="lg:ml-8 lg:my-0 my-6">
               <NavLink

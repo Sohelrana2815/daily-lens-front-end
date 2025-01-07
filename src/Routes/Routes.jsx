@@ -18,6 +18,7 @@ import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import MyArticles from "../Pages/MyArticles/MyArticles";
 import Analytics from "../Pages/Dashboard/Analytics/Analytics";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import AdminRoute from "./AdminRoute/AdminRoute";
 
 const router = createBrowserRouter([
   {
@@ -87,7 +88,11 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <Dashboard />,
+    element: (
+      <AdminRoute>
+        <Dashboard />
+      </AdminRoute>
+    ),
     children: [
       {
         path: "addPublisher",

@@ -1,7 +1,8 @@
 import { FaCrown } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
-import useUsers from "../../Hooks/useUsers";
+// import useUsers from "../../Hooks/useUsers";
+import useUserHome from "../../Hooks/useUserHome";
 
 const ArticlesCard = ({ approvedArticle }) => {
   const {
@@ -20,11 +21,12 @@ const ArticlesCard = ({ approvedArticle }) => {
   } = approvedArticle;
 
   const { user } = useAuth(); // Get current logged-in user
-  const { allUsers } = useUsers(); // Get all users data
+  // const { allUsers } = useUsers();
+  const { usersHome } = useUserHome(); // Get the users data for public
 
   // Find the current user's details
 
-  const currentUser = allUsers?.find((u) => u.email === user?.email);
+  const currentUser = usersHome?.find((u) => u.email === user?.email);
 
   // Check if the subscription is active
 
