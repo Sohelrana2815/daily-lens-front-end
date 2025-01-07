@@ -1,10 +1,12 @@
 // axiosSecure future
 
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "./useAxiosPublic";
+import useAxiosSecure from "./useAxiosSecure";
+// import useAxiosPublic from "./useAxiosPublic";
 
 const useAllArticles = () => {
-  const axiosPublic = useAxiosPublic();
+  // const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
   const {
     data: articles = [],
@@ -14,7 +16,7 @@ const useAllArticles = () => {
   } = useQuery({
     queryKey: ["articles"],
     queryFn: async () => {
-      const response = await axiosPublic.get("/articles");
+      const response = await axiosSecure.get("/articles");
       return response.data;
     },
   });

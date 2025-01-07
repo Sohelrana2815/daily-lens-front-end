@@ -1,14 +1,21 @@
-import { Navigate } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
 import useAdmin from "../../Hooks/useAdmin";
-
+import PropTypes from "prop-types";
+import { Navigate } from "react-router-dom";
 const AdminRoute = ({ children }) => {
+  const { user, loading } = useAuth();
   const [isAdmin, adminLoading] = useAdmin();
 
-  if (adminLoading) {
-    return <span className="loading loading-ring loading-lg"></span>;
+  if (loading || adminLoading) {
+    return <span className="loading loading-bars loading-lg"></span>;
   }
 
-  return isAdmin ? children : <Navigate to="/" replace />;
+  if (!user || !isAdmin) {
+    return <Navigate to="/" state={location.pathname} />;
+  }
+  return children;
 };
-
+AdminRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 export default AdminRoute;

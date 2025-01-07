@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
+// import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { Link } from "react-router-dom";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const PremiumArticles = () => {
   const [premiumArticles, setPremiumArticles] = useState([]);
-  const axiosPublic = useAxiosPublic();
+  // const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
-    axiosPublic
+    axiosSecure
       .get("/premiumArticles")
       .then((response) => {
         setPremiumArticles(response.data);
@@ -16,7 +18,7 @@ const PremiumArticles = () => {
       .catch((error) => {
         console.error("Error Premium Articles Fetching Data", error);
       });
-  }, [axiosPublic]);
+  }, [axiosSecure]);
 
   return (
     <>

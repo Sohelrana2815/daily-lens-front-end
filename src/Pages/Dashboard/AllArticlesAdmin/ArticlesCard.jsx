@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+// import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const ArticlesCard = ({ article }) => {
   const {
@@ -14,9 +15,11 @@ const ArticlesCard = ({ article }) => {
     authorName,
     authorEmail,
     authorPhoto,
+    isPremium,
   } = article;
 
-  const axiosPublic = useAxiosPublic();
+  // const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const [selectedArticle, setSelectedArticle] = useState(null);
 
   const {
@@ -39,7 +42,7 @@ const ArticlesCard = ({ article }) => {
     };
 
     try {
-      const response = await axiosPublic.patch(
+      const response = await axiosSecure.patch(
         `/declineArticles/${selectedArticle._id}`,
         declineArticle
       );
@@ -88,9 +91,9 @@ const ArticlesCard = ({ article }) => {
     });
   };
 
-  const approveArticle = (id) => axiosPublic.patch(`/approveArticles/${id}`);
-  const makePremiumArticle = (id) => axiosPublic.patch(`/makePremium/${id}`);
-  const deleteArticle = (id) => axiosPublic.delete(`/articles/${id}`);
+  const approveArticle = (id) => axiosSecure.patch(`/approveArticles/${id}`);
+  const makePremiumArticle = (id) => axiosSecure.patch(`/makePremium/${id}`);
+  const deleteArticle = (id) => axiosSecure.delete(`/articles/${id}`);
 
   // Modal handlers
   const openModal = (article) => {
@@ -150,32 +153,49 @@ const ArticlesCard = ({ article }) => {
             </p>
           </div>
           <div className="flex flex-wrap gap-2 mt-4">
-            <button
-              onClick={() => handleAction("approve", _id, approveArticle)}
-              className="btn btn-xs btn-outline dark:text-white text-primary border-primary hover:bg-primary hover:text-white"
-            >
-              Approve
-            </button>
-            <button
-              onClick={() => openModal(article)}
-              className="btn btn-xs text-white bg-blue-500 hover:bg-blue-600 dark:border-none"
-            >
-              Decline
-            </button>
-            <button
-              onClick={() => handleAction("delete", _id, deleteArticle)}
-              className="btn btn-xs dark:border-none text-white bg-red-500 hover:bg-red-600"
-            >
-              Delete
-            </button>
-            <button
-              onClick={() =>
-                handleAction("make premium", _id, makePremiumArticle)
-              }
-              className="btn btn-xs text-white bg-yellow-500 hover:bg-yellow-600 dark:border-none dark:text-gray-800"
-            >
-              Make Premium
-            </button>
+            {/* Approve Button */}
+            {status === "pending" && (
+              <button
+                onClick={() => handleAction("approve", _id, approveArticle)}
+                className="btn btn-xs btn-outline dark:text-white text-primary border-primary hover:bg-primary hover:text-white"
+              >
+                Approve
+              </button>
+            )}
+            {/* Decline Button */}
+            {status === "pending" && (
+              <button
+                onClick={() => openModal(article)}
+                className="btn btn-xs text-white bg-blue-500 hover:bg-blue-600 dark:border-none"
+              >
+                Decline
+              </button>
+            )}
+            {(status === "pending" || status === "decline") && !isPremium && (
+              <button
+                onClick={() => handleAction("delete", _id, deleteArticle)}
+                className="btn btn-xs dark:border-none text-white bg-red-500 hover:bg-red-600"
+              >
+                Delete
+              </button>
+            )}
+            {/* Make Premium Button */}
+            {!isPremium && (
+              <button
+                title="Article not approved yet"
+                disabled={status !== "approved"} // Disable if not approved
+                onClick={() =>
+                  handleAction("make premium", _id, makePremiumArticle)
+                }
+                className={`btn btn-xs font-semibold text-black px-4 rounded-lg  ${
+                  status !== "approved"
+                    ? "bg-stone-300 dark:bg-stone-400 dark:text-black" // Visible but clearly disabled
+                    : "bg-yellow-500 hover:bg-yellow-600 border-none" // Active state styles
+                }`}
+              >
+                Make Premium
+              </button>
+            )}
           </div>
         </div>
       </div>

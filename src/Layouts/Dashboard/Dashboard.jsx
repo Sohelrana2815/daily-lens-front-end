@@ -3,20 +3,25 @@ import { LuSun } from "react-icons/lu";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import useTheme from "../../Hooks/useTheme";
 import websiteLogo from "../../assets/Website logo/website logo.png";
+import useAdmin from "../../Hooks/useAdmin";
 const Dashboard = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
-
+  const [isAdmin, adminLoading] = useAdmin();
   const navLinks = (
     <>
-      <li>
-        <NavLink to="/dashboard/allUsers">All Users</NavLink>
-      </li>
-      <li>
-        <NavLink to="/dashboard/allArticles">All Articles</NavLink>
-      </li>
-      <li>
-        <NavLink to="/dashboard/addPublisher">Add Publisher</NavLink>
-      </li>
+      {isAdmin ? (
+        <>
+          <li>
+            <NavLink to="/dashboard/allUsers">All Users</NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/allArticles">All Articles</NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/addPublisher">Add Publisher</NavLink>
+          </li>
+        </>
+      ) : null}
 
       {/* Shared navLinks */}
       <li>
@@ -24,7 +29,9 @@ const Dashboard = () => {
       </li>
     </>
   );
-
+  if (adminLoading) {
+    return <span className="loading loading-bars loading-lg"></span>;
+  }
   return (
     <>
       {/* Dark mode */}

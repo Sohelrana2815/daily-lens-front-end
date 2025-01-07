@@ -8,9 +8,11 @@ import websiteLogo from "../../assets/Website logo/website logo.png";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import useAdmin from "../../Hooks/useAdmin";
+import usePremium from "../../Hooks/usePremium";
 
 const Navbar = () => {
   const [isAdmin, adminLoading] = useAdmin();
+  const [isPremium, premiumLoading] = usePremium();
   const { user, signOutUser, loading } = useAuth();
   const [open, setOpen] = useState(false);
   const { isDarkMode, toggleDarkMode } = useTheme();
@@ -138,7 +140,7 @@ const Navbar = () => {
             )}
 
             {/* Dashboard (private route) */}
-            {isAdmin && (
+            {user && isAdmin && (
               <li className="lg:ml-8 lg:my-0 my-6">
                 <NavLink
                   to="/dashboard/analytics"
@@ -150,15 +152,17 @@ const Navbar = () => {
               </li>
             )}
             {/* Premium Articles (private and premium user only) */}
-            <li className="lg:ml-8 lg:my-0 my-6">
-              <NavLink
-                to="/premiumArticles"
-                className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
-                onClick={() => setOpen(false)}
-              >
-                Premium Articles
-              </NavLink>
-            </li>
+            {!premiumLoading && isPremium && (
+              <li className="lg:ml-8 lg:my-0 my-6">
+                <NavLink
+                  to="/premiumArticles"
+                  className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                  onClick={() => setOpen(false)}
+                >
+                  Premium Articles
+                </NavLink>
+              </li>
+            )}
             {/* Dark mode */}
             <label className="flex items-center cursor-pointer gap-4 p-2 rounded-md transition duration-300 lg:ml-8">
               <div className="relative">
