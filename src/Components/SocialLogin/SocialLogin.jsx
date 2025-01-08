@@ -95,14 +95,14 @@ const SocialLogin = () => {
     <>
       <div className="flex flex-col justify-center gap-4">
         <button
-          className="btn btn-outline rounded-md"
+          className="btn btn-outline rounded-md dark:border dark:border-white dark:text-white"
           onClick={handleGoogleLogin}
         >
           <FcGoogle className="text-lg" />
           Continue With Google
         </button>
         <button
-          className="btn btn-outline rounded-md"
+          className="btn btn-outline rounded-md dark:border dark:border-white dark:text-white"
           onClick={handleGitHubLogin}
         >
           <FaGithub className="text-lg" />
