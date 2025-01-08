@@ -2,6 +2,7 @@ import { RiTwitterXFill } from "react-icons/ri";
 import { GrArticle } from "react-icons/gr";
 import { useState } from "react";
 import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
+import AnimatedComponent from "../../../Components/AnimatedComponent/AnimatedComponent";
 const FAQSection = () => {
   const [openAccordion, setOpenAccordion] = useState(null);
   const toggleAccordion = (index) => {
@@ -43,23 +44,27 @@ const FAQSection = () => {
               key={index}
               className="border border-gray-300 rounded-lg shadow-md"
             >
-              <div
-                className="flex items-center justify-between p-4 cursor-pointer"
-                onClick={() => toggleAccordion(index)}
-              >
-                <h3 className="text-lg font-semibold">{faq.question}</h3>
-                <div className="text-xl">
-                  {openAccordion === index ? (
-                    <RiTwitterXFill className="dark:text-red-500 md:text-xl lg:text-2xl" />
-                  ) : (
-                    <GrArticle className="dark:text-gray-300 md:text-xl lg:text-2xl" />
-                  )}
+              <AnimatedComponent animation="fade-in">
+                <div
+                  className="flex items-center justify-between p-4 cursor-pointer"
+                  onClick={() => toggleAccordion(index)}
+                >
+                  <h3 className="text-lg font-semibold">{faq.question}</h3>
+                  <div className="text-xl">
+                    {openAccordion === index ? (
+                      <RiTwitterXFill className="dark:text-red-500 md:text-xl lg:text-2xl" />
+                    ) : (
+                      <GrArticle className="dark:text-gray-300 md:text-xl lg:text-2xl" />
+                    )}
+                  </div>
                 </div>
-              </div>
+              </AnimatedComponent>
               {openAccordion === index && (
-                <div className="p-4 bg-gray-50 text-gray-700 transition-all ease-in-out dark:bg-slate-800 dark:text-gray-100">
-                  <p>{faq.answer}</p>
-                </div>
+                <AnimatedComponent animation="fade-in">
+                  <div className="p-4 bg-gray-50 text-gray-700 transition-all ease-in-out dark:bg-slate-800 dark:text-gray-100">
+                    <p>{faq.answer}</p>
+                  </div>
+                </AnimatedComponent>
               )}
             </div>
           ))}

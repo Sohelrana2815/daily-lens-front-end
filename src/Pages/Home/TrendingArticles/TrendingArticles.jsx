@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
+import "react-loading-skeleton/dist/skeleton.css";
 
 // Import Swiper styles
 import "swiper/css";
@@ -13,6 +14,7 @@ import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
+import AnimatedComponent from "../../../Components/AnimatedComponent/AnimatedComponent";
 const TrendingArticles = () => {
   // approved article
   const [trendingArticles, setTrendingArticles] = useState([]);
@@ -52,57 +54,59 @@ const TrendingArticles = () => {
         >
           {trendingArticles.map((trendingArticle) => (
             <SwiperSlide key={trendingArticle._id}>
-              <div className="card bg-base-100 shadow-xl rounded-lg max-w-xs md:max-w-sm lg:max-w-md mx-auto h-[450px] md:h-[500px] dark:bg-gray-800">
-                <figure className="relative h-48 md:h-56 lg:h-64">
-                  <img
-                    className="w-full h-full object-cover rounded-t-lg"
-                    src={trendingArticle.articleImage}
-                    alt="Article"
-                  />
-                  <p className="absolute text-white bg-black bg-opacity-60 p-2 rounded-lg top-4 left-4 text-xs md:text-sm lg:text-base ">
-                    {new Date(trendingArticle.postedDate).toLocaleDateString(
-                      "en-US",
-                      {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      }
-                    )}
-                  </p>
-                </figure>
-                <div className="card-body p-4 md:p-6 h-[300px]">
-                  <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-600 dark:text-gray-300">
-                    {trendingArticle.articleTitle}
-                  </h2>
-                  <div className="flex justify-between items-center mt-2">
-                    <p className="text-sm md:text-base text-gray-600 dark:text-slate-300">
-                      {trendingArticle.publisherName}
+              <AnimatedComponent animation="fade-left">
+                <div className="card bg-base-100 shadow-xl rounded-lg max-w-xs md:max-w-sm lg:max-w-md mx-auto h-[450px] md:h-[500px] dark:bg-gray-800">
+                  <figure className="relative h-48 md:h-56 lg:h-64">
+                    <img
+                      className="w-full h-full object-cover rounded-t-lg"
+                      src={trendingArticle.articleImage}
+                      alt="Article"
+                    />
+                    <p className="absolute text-white bg-black bg-opacity-60 p-2 rounded-lg top-4 left-4 text-xs md:text-sm lg:text-base ">
+                      {new Date(trendingArticle.postedDate).toLocaleDateString(
+                        "en-US",
+                        {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        }
+                      )}
                     </p>
-                    <p className="text-sm md:text-base text-gray-700 dark:text-gray-200 flex items-center gap-1">
-                      <FaEye />
-                      {trendingArticle.views}
+                  </figure>
+                  <div className="card-body p-4 md:p-6 h-[300px]">
+                    <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-600 dark:text-gray-300">
+                      {trendingArticle.articleTitle}
+                    </h2>
+                    <div className="flex justify-between items-center mt-2">
+                      <p className="text-sm md:text-base text-gray-600 dark:text-slate-300">
+                        {trendingArticle.publisherName}
+                      </p>
+                      <p className="text-sm md:text-base text-gray-700 dark:text-gray-200 flex items-center gap-1">
+                        <FaEye />
+                        {trendingArticle.views}
+                      </p>
+                    </div>
+                    <p className="text-sm md:text-base text-gray-600 mt-2 flex flex-wrap gap-2 items-center">
+                      {trendingArticle.articleTags.map((articleTag, index) => (
+                        <span
+                          key={index}
+                          className="bg-red-600 text-white px-2 py-[2px] rounded-none text-xs md:text-sm"
+                        >
+                          # {articleTag}
+                        </span>
+                      ))}
                     </p>
+                    <p className="text-sm md:text-base text-gray-700 mt-4 dark:text-slate-300">
+                      {trendingArticle.articleDescription.slice(0, 79)}...
+                    </p>
+                    <Link to="/allArticles">
+                      <button className=" text-xs rounded-none text-gray-900 border px-2 py-[2px] uppercase hover:bg-red-600 hover:text-white dark:text-slate-300 hover:dark:border-none hover:dark:text-slate-100">
+                        Read more
+                      </button>
+                    </Link>
                   </div>
-                  <p className="text-sm md:text-base text-gray-600 mt-2 flex flex-wrap gap-2 items-center">
-                    {trendingArticle.articleTags.map((articleTag, index) => (
-                      <span
-                        key={index}
-                        className="bg-red-600 text-white px-2 py-[2px] rounded-none text-xs md:text-sm"
-                      >
-                        # {articleTag}
-                      </span>
-                    ))}
-                  </p>
-                  <p className="text-sm md:text-base text-gray-700 mt-4 dark:text-slate-300">
-                    {trendingArticle.articleDescription.slice(0, 79)}...
-                  </p>
-                  <Link to="/allArticles">
-                    <button className=" text-xs rounded-none text-gray-900 border px-2 py-[2px] uppercase hover:bg-red-600 hover:text-white dark:text-slate-300 hover:dark:border-none hover:dark:text-slate-100">
-                      Read more
-                    </button>
-                  </Link>
                 </div>
-              </div>
+              </AnimatedComponent>
             </SwiperSlide>
           ))}
         </Swiper>
