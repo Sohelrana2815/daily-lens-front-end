@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 // import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
-const ArticlesCard = ({ article }) => {
+const ArticlesCard = ({ article, refetch }) => {
   const {
     _id,
     articleTitle,
@@ -47,6 +47,7 @@ const ArticlesCard = ({ article }) => {
         declineArticle
       );
       if (response.data.modifiedCount > 0) {
+        refetch();
         Swal.fire(
           "Declined!",
           "Article has been declined successfully.",
@@ -83,6 +84,7 @@ const ArticlesCard = ({ article }) => {
               `The article has been ${action}d.`,
               "success"
             );
+            refetch();
           }
         } catch (error) {
           console.error(`Error while ${action}ing article:`, error);
@@ -114,88 +116,116 @@ const ArticlesCard = ({ article }) => {
   return (
     <>
       {/* Card */}
-      <div className="card max-w-sm bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden mx-auto">
-        <figure className="relative h-48">
-          <img
-            src={articleImage}
-            alt="Article"
-            className="w-full h-full object-cover"
-          />
-        </figure>
-        <div className="p-4">
-          <h2 className="text-lg font-semibold text-gray-800 dark:text-white truncate">
-            {articleTitle}
-          </h2>
-          <div className="flex items-center mt-2 gap-2">
+      <div className="flex flex-wrap justify-center">
+        <div className="card w-full max-w-sm bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden mx-auto">
+          {/* Article Image */}
+          <figure className="relative h-48 w-full">
             <img
-              src={authorPhoto}
-              alt="Author"
-              className="w-8 h-8 rounded-full object-cover border-2 border-gray-300"
+              src={articleImage}
+              alt="Article"
+              className="w-full h-full object-cover"
             />
-            <div>
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                {authorName}
+            {/* Conditional Badge */}
+            <div className="absolute top-2 left-2">
+              {isPremium && (
+                <span className="badge badge-warning text-slate-700 text-sm font-bold px-3 py-1 rounded-lg">
+                  Premium
+                </span>
+              )}
+              {!isPremium && status === "approved" && (
+                <span className="badge badge-success text-white text-sm font-bold px-3 py-1 rounded-lg">
+                  Approved
+                </span>
+              )}
+              {status === "decline" && (
+                <span className="badge badge-error text-white text-sm font-bold px-3 py-1 rounded-lg">
+                  Declined
+                </span>
+              )}
+              {status === "pending" && (
+                <span className="badge badge-info text-gray-900  text-sm font-semibold px-3 py-1 rounded-lg">
+                  Pending...
+                </span>
+              )}
+            </div>
+          </figure>
+
+          {/* Article Details */}
+          <div className="p-4">
+            <h2 className="text-lg font-semibold text-gray-800 dark:text-white truncate">
+              {articleTitle}
+            </h2>
+
+            <div className="flex items-center mt-2 gap-2">
+              <img
+                src={authorPhoto}
+                alt="Author"
+                className="w-8 h-8 rounded-full object-cover border-2 border-gray-300"
+              />
+              <div>
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                  {authorName}
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-500">
+                  {authorEmail}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Posted on: {postedDate}
               </p>
-              <p className="text-xs text-gray-500 dark:text-gray-500">
-                {authorEmail}
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Status: <span className="font-medium">{status}</span>
+              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Publisher: <span className="font-medium">{publisherName}</span>
               </p>
             </div>
-          </div>
-          <div className="mt-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Posted on: {postedDate}
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Status: <span className="font-medium">{status}</span>
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Publisher: <span className="font-medium">{publisherName}</span>
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-2 mt-4">
-            {/* Approve Button */}
-            {status === "pending" && (
-              <button
-                onClick={() => handleAction("approve", _id, approveArticle)}
-                className="btn btn-xs btn-outline dark:text-white text-primary border-primary hover:bg-primary hover:text-white"
-              >
-                Approve
-              </button>
-            )}
-            {/* Decline Button */}
-            {status === "pending" && (
-              <button
-                onClick={() => openModal(article)}
-                className="btn btn-xs text-white bg-blue-500 hover:bg-blue-600 dark:border-none"
-              >
-                Decline
-              </button>
-            )}
-            {(status === "pending" || status === "decline") && !isPremium && (
-              <button
-                onClick={() => handleAction("delete", _id, deleteArticle)}
-                className="btn btn-xs dark:border-none text-white bg-red-500 hover:bg-red-600"
-              >
-                Delete
-              </button>
-            )}
-            {/* Make Premium Button */}
-            {!isPremium && (
-              <button
-                title="Article not approved yet"
-                disabled={status !== "approved"} // Disable if not approved
-                onClick={() =>
-                  handleAction("make premium", _id, makePremiumArticle)
-                }
-                className={`btn btn-xs font-semibold text-black px-4 rounded-lg  ${
-                  status !== "approved"
-                    ? "bg-stone-300 dark:bg-stone-400 dark:text-black" // Visible but clearly disabled
-                    : "bg-yellow-500 hover:bg-yellow-600 border-none" // Active state styles
-                }`}
-              >
-                Make Premium
-              </button>
-            )}
+
+            <div className="flex flex-wrap gap-2 mt-4">
+              {status === "pending" && (
+                <button
+                  onClick={() => handleAction("approve", _id, approveArticle)}
+                  className="btn btn-xs btn-outline dark:text-white text-primary border-primary hover:bg-primary hover:text-white"
+                >
+                  Approve
+                </button>
+              )}
+              {status === "pending" && (
+                <button
+                  onClick={() => openModal(article)}
+                  className="btn btn-xs text-white bg-blue-500 hover:bg-blue-600 dark:border-none"
+                >
+                  Decline
+                </button>
+              )}
+              {!isPremium && (
+                <button
+                  onClick={() => handleAction("delete", _id, deleteArticle)}
+                  className="btn btn-xs dark:border-none text-white bg-red-500 hover:bg-red-600"
+                >
+                  Delete
+                </button>
+              )}
+              {!isPremium && status !== "decline" && (
+                <button
+                  title="Article not approved yet"
+                  disabled={status !== "approved"}
+                  onClick={() =>
+                    handleAction("make premium", _id, makePremiumArticle)
+                  }
+                  className={`btn btn-xs font-semibold text-black px-4 rounded-lg ${
+                    status !== "approved"
+                      ? "bg-stone-300 dark:bg-stone-400 dark:text-black"
+                      : "bg-yellow-500 hover:bg-yellow-600 border-none"
+                  }`}
+                >
+                  Make Premium
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
