@@ -4,6 +4,7 @@ import SectionTitle from "../../Components/SectionTitle/SectionTitle";
 import { useEffect, useState } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { IoFilter } from "react-icons/io5";
+import AnimatedComponent from "../../Components/AnimatedComponent/AnimatedComponent";
 const AllArticlesPublic = () => {
   const { approvedArticles } = useApprovedArticles(); // Custom hook to fetch articles
   const [searchTerm, setSearchTerm] = useState(""); // Search input
@@ -76,64 +77,66 @@ const AllArticlesPublic = () => {
           subTitle="Discover the Stories and Insights That Matter Most."
         />
 
-        {/* Search Bar */}
-
-        <div className="max-w-screen-2xl mx-auto flex justify-end p-4 ">
+        <AnimatedComponent animation="fade-out">
           {/* Search Bar */}
-          <div className="relative md:w-1/2 w-full">
-            <input
-              type="text"
-              placeholder="Search articles..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyDown={handleKeyPress}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full dark:text-gray-950"
-            />
-            <p className="absolute top-3 right-3 dark:text-gray-950">
-              <FaMagnifyingGlass />
-            </p>
-          </div>
-        </div>
 
-        <div className="max-w-screen-2xl flex lg:flex-row-reverse mx-auto items-center justify-between border border-primary-100 dark:border-gray-800 p-4 rounded-lg mb-4">
-          {/* Tags Filter */}
-          <div className="flex flex-col gap-4 lg:gap-0 lg:w-1/2">
-            <label className="font-medium flex items-center gap-2 font-volKHob text-gray-800 dark:text-gray-200">
-              <IoFilter className="md:text-lg xl:text-xl" />
-              Filter by Tags:
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {tags.map((tag) => (
-                <label key={tag} className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    value={tag}
-                    checked={selectedTags.includes(tag)}
-                    onChange={() => handleTagToggle(tag)}
-                  />
-                  {tag}
-                </label>
-              ))}
+          <div className="max-w-screen-2xl mx-auto flex justify-end p-4 ">
+            {/* Search Bar */}
+            <div className="relative md:w-1/2 w-full">
+              <input
+                type="text"
+                placeholder="Search articles..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={handleKeyPress}
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full dark:text-gray-950"
+              />
+              <p className="absolute top-3 right-3 dark:text-gray-950">
+                <FaMagnifyingGlass />
+              </p>
             </div>
           </div>
 
-          {/* Publisher Filter */}
+          <div className="max-w-screen-2xl flex lg:flex-row-reverse mx-auto items-center justify-between border border-primary-100 dark:border-gray-800 p-4 rounded-lg mb-4">
+            {/* Tags Filter */}
+            <div className="flex flex-col gap-4 lg:gap-0 lg:w-1/2">
+              <label className="font-medium flex items-center gap-2 font-volKHob text-gray-800 dark:text-gray-200">
+                <IoFilter className="md:text-lg xl:text-xl" />
+                Filter by Tags:
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {tags.map((tag) => (
+                  <label key={tag} className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      value={tag}
+                      checked={selectedTags.includes(tag)}
+                      onChange={() => handleTagToggle(tag)}
+                    />
+                    {tag}
+                  </label>
+                ))}
+              </div>
+            </div>
 
-          <div className="flex flex-col gap-4 lg:gap-0 lg:w-1/3">
-            <select
-              value={selectedPublisher}
-              onChange={(e) => setSelectedPublisher(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 dark:text-gray-950"
-            >
-              <option value="">All Publishers</option>
-              {publishers.map((publisher) => (
-                <option key={publisher} value={publisher}>
-                  {publisher}
-                </option>
-              ))}
-            </select>
+            {/* Publisher Filter */}
+
+            <div className="flex flex-col gap-4 lg:gap-0 lg:w-1/3">
+              <select
+                value={selectedPublisher}
+                onChange={(e) => setSelectedPublisher(e.target.value)}
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 dark:text-gray-950"
+              >
+                <option value="">All Publishers</option>
+                {publishers.map((publisher) => (
+                  <option key={publisher} value={publisher}>
+                    {publisher}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-        </div>
+        </AnimatedComponent>
 
         {/* Articles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-screen-2xl mx-auto gap-6">

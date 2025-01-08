@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 // import useUsers from "../../Hooks/useUsers";
 import useUserHome from "../../Hooks/useUserHome";
+import SkeletonWrapper from "../../Components/SkeletonWrapper/SkeletonWrapper";
+import useLoading from "../../Hooks/useLoading";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const ArticlesCard = ({ approvedArticle }) => {
+  const skeletonLoading = useLoading();
   const {
     _id,
     publisherName,
@@ -51,38 +55,61 @@ const ArticlesCard = ({ approvedArticle }) => {
             </p>
           )}
 
-          <figure className="h-48 overflow-hidden rounded-t-lg">
-            <img
-              src={articleImage}
-              alt="Article Thumbnail"
-              className="object-cover w-full h-full"
-            />
-          </figure>
+          <SkeletonWrapper loading={skeletonLoading} width={360} height={200}>
+            <figure className="h-48 overflow-hidden rounded-t-lg">
+              <img
+                src={articleImage}
+                alt="Article Thumbnail"
+                className="object-cover w-full h-full"
+              />
+            </figure>
+          </SkeletonWrapper>
           <div className="card-body p-5 h-[300px]">
-            <h2 className="card-title text-lg font-bold text-gray-800 dark:text-slate-300 truncate">
-              {articleTitle}
-            </h2>
+            <SkeletonWrapper loading={skeletonLoading} width={330} height={18}>
+              <h2 className="card-title text-lg font-bold text-gray-800 dark:text-slate-300 truncate">
+                {articleTitle}
+              </h2>
+            </SkeletonWrapper>
             <p className="text-sm text-gray-600 dark:text-slate-300">
-              {publisherName}
+              <SkeletonWrapper
+                loading={skeletonLoading}
+                width={100}
+                height={15}
+              >
+                {publisherName}
+              </SkeletonWrapper>
             </p>
-            <p className="text-gray-700 mt-2 dark:text-slate-100">
-              {articleDescription.slice(0, 80)}{" "}
-              <span className="text-blue-600 cursor-pointer dark:text-blue-400">
-                read more...
-              </span>
-            </p>
+            <SkeletonWrapper
+              loading={skeletonLoading}
+              width={300}
+              height={10}
+              count={3}
+            >
+              <p className="text-gray-700 mt-2 dark:text-slate-100">
+                {articleDescription.slice(0, 80)}{" "}
+                <span className="text-blue-600 cursor-pointer dark:text-blue-400">
+                  read more...
+                </span>
+              </p>
+            </SkeletonWrapper>
             <div className="card-actions mt-4 flex justify-between">
               <Link to={`/articlesDetails/${_id}`}>
-                <button
-                  disabled={isPremium && !isSubscriptionActive} // Disable for premium articles without subscription
-                  className={`w-full p-2 text-sm font-medium rounded-lg text-white transition-all duration-300 ${
-                    isPremium && !isSubscriptionActive
-                      ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
-                  }`}
+                <SkeletonWrapper
+                  loading={skeletonLoading}
+                  width={120}
+                  height={25}
                 >
-                  View Details
-                </button>
+                  <button
+                    disabled={isPremium && !isSubscriptionActive} // Disable for premium articles without subscription
+                    className={`w-full p-2 text-sm font-medium rounded-lg text-white transition-all duration-300 ${
+                      isPremium && !isSubscriptionActive
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+                    }`}
+                  >
+                    View Details
+                  </button>
+                </SkeletonWrapper>
               </Link>
             </div>
           </div>
