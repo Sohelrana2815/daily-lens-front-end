@@ -35,7 +35,12 @@ const ArticlesDetails = () => {
     fetchArticleDetails();
   }, [axiosPublic, id]);
 
-  if (!article) return <p>Loading...</p>;
+  if (!article)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <span className="loading loading-dots loading-lg"></span>
+      </div>
+    );
   return (
     <div className="max-w-screen-2xl mx-auto  flex flex-col lg:flex-row justify-between">
       <div className="w-full lg:w-3/4 p-4 space-y-6">
