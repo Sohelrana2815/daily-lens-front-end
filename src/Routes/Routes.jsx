@@ -101,19 +101,35 @@ const router = createBrowserRouter([
     children: [
       {
         path: "addPublisher",
-        element: <AddPublisher />,
+        element: (
+          <AdminRoute>
+            <AddPublisher />
+          </AdminRoute>
+        ),
       },
       {
         path: "allArticles",
-        element: <AllArticlesAdmin />,
+        element: (
+          <AdminRoute>
+            <AllArticlesAdmin />
+          </AdminRoute>
+        ),
       },
       {
         path: "allUsers",
-        element: <AllUsers />,
+        element: (
+          <AdminRoute>
+            <AllUsers />
+          </AdminRoute>
+        ),
       },
       {
         path: "analytics",
-        element: <Analytics />,
+        element: (
+          <AdminRoute>
+            <Analytics />
+          </AdminRoute>
+        ),
       },
     ],
   },

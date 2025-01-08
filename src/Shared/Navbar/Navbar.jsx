@@ -39,7 +39,11 @@ const Navbar = () => {
   };
   // console.log("Admin Status in Navbar:", { isAdmin, adminLoading });
   if (adminLoading || loading) {
-    return <span className="loading loading-bars loading-lg"></span>;
+    return (
+      <div className="flex justify-center py-4">
+        <span className="loading loading-bars text-red-700 loading-lg"></span>
+      </div>
+    );
   }
   return (
     <>

@@ -7,7 +7,11 @@ const PremiumRoute = ({ children }) => {
   const [isPremium, premiumLoading] = usePremium();
 
   if (premiumLoading || loading) {
-    return <span className="loading loading-bars loading-lg"></span>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <span className="loading loading-infinity loading-lg text-primary"></span>
+      </div>
+    );
   }
   if (!isPremium && !user) {
     return <Navigate to="/expiredSubscription" />;

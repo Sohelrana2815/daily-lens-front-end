@@ -4,6 +4,10 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import useTheme from "../../Hooks/useTheme";
 import websiteLogo from "../../assets/Website logo/website logo.png";
 import useAdmin from "../../Hooks/useAdmin";
+import { FaHome, FaUsers } from "react-icons/fa";
+import { FcDocument } from "react-icons/fc";
+import { BiUpload } from "react-icons/bi";
+import { GrAnalytics } from "react-icons/gr";
 const Dashboard = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
   const [isAdmin, adminLoading] = useAdmin();
@@ -11,21 +15,55 @@ const Dashboard = () => {
     <>
       {isAdmin ? (
         <>
-          <li>
-            <NavLink to="/dashboard/allUsers">All Users</NavLink>
+          <li className="font-volKHob group">
+            <NavLink
+              to="/dashboard/analytics"
+              className="flex items-center gap-2 hover:text-indigo-500 transition-colors"
+            >
+              <GrAnalytics className="md:text-xl group-hover:text-indigo-500" />
+              <span>Analytics</span>
+            </NavLink>
           </li>
-          <li>
-            <NavLink to="/dashboard/allArticles">All Articles</NavLink>
+          <li className="font-volKHob group">
+            <NavLink
+              to="/dashboard/allUsers"
+              className="flex items-center gap-2 hover:text-indigo-500 transition-colors"
+            >
+              <FaUsers className="md:text-xl group-hover:text-indigo-500" />
+              <span>All Users</span>
+            </NavLink>
           </li>
-          <li>
-            <NavLink to="/dashboard/addPublisher">Add Publisher</NavLink>
+          <li className="font-volKHob group">
+            <NavLink
+              to="/dashboard/allArticles"
+              className="flex items-center gap-2 hover:text-indigo-500 transition-colors"
+            >
+              <FcDocument className="md:text-xl group-hover:text-indigo-500" />
+              <span>All Articles</span>
+            </NavLink>
+          </li>
+          <li className="font-volKHob group">
+            <NavLink
+              to="/dashboard/addPublisher"
+              className="flex items-center gap-2 hover:text-indigo-500 transition-colors"
+            >
+              <BiUpload className="md:text-xl group-hover:text-indigo-500" />
+              <span>Add Publisher</span>
+            </NavLink>
           </li>
         </>
       ) : null}
 
       {/* Shared navLinks */}
-      <li>
-        <NavLink to="/">Home</NavLink>
+      <div className="border my-2 border-indigo-600"></div>
+      <li className="font-volKHob group">
+        <NavLink
+          to="/"
+          className="flex items-center gap-2 hover:text-indigo-500 transition-colors"
+        >
+          <FaHome className="md:text-xl group-hover:text-indigo-500" />
+          <span>Home</span>
+        </NavLink>
       </li>
     </>
   );
