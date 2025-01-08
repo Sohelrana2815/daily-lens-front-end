@@ -3,11 +3,24 @@ import { useState } from "react";
 // import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useAuth from "../../Hooks/useAuth";
+import useUserHome from "../../Hooks/useUserHome";
 
 const PremiumArticles = () => {
   const [premiumArticles, setPremiumArticles] = useState([]);
   // const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth(); // Get current logged-in user
+  const { usersHome } = useUserHome(); // Get the users data for public
+  // Find the current user's details
+
+  const currentUser = usersHome?.find((u) => u.email === user?.email);
+
+  // Check if the subscription is active
+
+  const isSubscriptionActive = currentUser?.subscriptionPeriod
+    ? new Date(currentUser.subscriptionPeriod) // Compare the current date with the subscription end date > new Date()
+    : false;
 
   useEffect(() => {
     axiosSecure
@@ -54,11 +67,20 @@ const PremiumArticles = () => {
                 {premiumArticle.articleDescription}
               </p>
               <div className="card-actions justify-end">
-                <Link to={`/articlesDetails/${premiumArticle._id}`}>
-                  <button className="btn bg-yellow-800 hover:bg-yellow-900 border-none text-white rounded-full px-8 py-2 text-sm shadow-md">
+                {premiumArticle?.isPremium && !isSubscriptionActive ? (
+                  <button
+                    disabled
+                    className="btn dark:bg-stone-400 cursor-not-allowed border-none  rounded-full px-8 py-2 text-sm shadow-md"
+                  >
                     View Details
                   </button>
-                </Link>
+                ) : (
+                  <Link to={`/articlesDetails/${premiumArticle._id}`}>
+                    <button className="btn bg-yellow-800 hover:bg-yellow-900 border-none text-white rounded-full px-8 py-2 text-sm shadow-md">
+                      View Details
+                    </button>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

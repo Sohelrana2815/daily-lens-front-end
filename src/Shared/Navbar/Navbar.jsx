@@ -86,7 +86,11 @@ const Navbar = () => {
             <li className="lg:ml-8 lg:my-0 my-6">
               <NavLink
                 to="/"
-                className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                className={({ isActive }) =>
+                  `hover:text-indigo-600 dark:hover:text-indigo-400 duration-500 ${
+                    isActive ? "text-indigo-500" : ""
+                  }`
+                }
                 onClick={() => setOpen(false)}
               >
                 HOME
@@ -97,7 +101,11 @@ const Navbar = () => {
               <li className="lg:ml-8 lg:my-0 my-6">
                 <NavLink
                   to="/addArticles"
-                  className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                  className={({ isActive }) =>
+                    `hover:text-indigo-600 dark:hover:text-indigo-400 duration-500 ${
+                      isActive ? "text-indigo-500" : ""
+                    }`
+                  }
                   onClick={() => setOpen(false)}
                 >
                   Add Articles
@@ -108,7 +116,11 @@ const Navbar = () => {
             <li className="lg:ml-8  lg:my-0 my-6">
               <NavLink
                 to="/allArticles"
-                className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                className={({ isActive }) =>
+                  `hover:text-indigo-600 dark:hover:text-indigo-400 duration-500 ${
+                    isActive ? "text-indigo-500" : ""
+                  }`
+                }
                 onClick={() => setOpen(false)}
               >
                 All Articles
@@ -119,7 +131,11 @@ const Navbar = () => {
               <li className="lg:ml-8  lg:my-0 my-6">
                 <NavLink
                   to="/myArticles"
-                  className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                  className={({ isActive }) =>
+                    `hover:text-indigo-600 dark:hover:text-indigo-400 duration-500 ${
+                      isActive ? "text-indigo-500" : ""
+                    }`
+                  }
                   onClick={() => setOpen(false)}
                 >
                   My Articles
@@ -131,7 +147,11 @@ const Navbar = () => {
               <li className="lg:ml-8 lg:my-0 my-6">
                 <NavLink
                   to="/subscriptions"
-                  className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                  className={({ isActive }) =>
+                    `hover:text-indigo-600 dark:hover:text-indigo-400 duration-500 ${
+                      isActive ? "text-indigo-500" : ""
+                    }`
+                  }
                   onClick={() => setOpen(false)}
                 >
                   Subscriptions
@@ -144,7 +164,11 @@ const Navbar = () => {
               <li className="lg:ml-8 lg:my-0 my-6">
                 <NavLink
                   to="/dashboard/analytics"
-                  className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                  className={({ isActive }) =>
+                    `hover:text-indigo-600 dark:hover:text-indigo-400 duration-500 ${
+                      isActive ? "text-indigo-500" : ""
+                    }`
+                  }
                   onClick={() => setOpen(false)}
                 >
                   Dashboard
@@ -156,7 +180,11 @@ const Navbar = () => {
               <li className="lg:ml-8 lg:my-0 my-6">
                 <NavLink
                   to="/premiumArticles"
-                  className="hover:text-indigo-600 dark:hover:text-indigo-400 duration-500"
+                  className={({ isActive }) =>
+                    `hover:text-indigo-600 dark:hover:text-indigo-400 duration-500 ${
+                      isActive ? "text-indigo-500" : ""
+                    }`
+                  }
                   onClick={() => setOpen(false)}
                 >
                   Premium Articles

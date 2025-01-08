@@ -87,7 +87,7 @@ const CheckoutForm = ({ subscription }) => {
               refetch();
               Swal.fire({
                 title: "Thank you for subscription",
-                text: "You Can Access Premium Articles!",
+                text: " Please refresh the page to see the Premium Articles link.",
                 icon: "success",
               });
               navigate("/");
