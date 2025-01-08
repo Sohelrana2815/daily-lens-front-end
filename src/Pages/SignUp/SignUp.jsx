@@ -7,7 +7,12 @@ import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 import signUpImg from "../../assets/Sign up/singup.png";
 import useAuth from "../../Hooks/useAuth";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 const SignUp = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
   const [err, setErr] = useState("");
@@ -82,7 +87,7 @@ const SignUp = () => {
       });
   };
 
-  // 
+  //
   return (
     <>
       <div className="min-h-screen flex flex-col md:flex-row items-center justify-center bg-gray-50 dark:bg-gray-800 dark:text-gray-500 p-4 gap-x-2 gap-y-4">
@@ -155,10 +160,10 @@ const SignUp = () => {
             </div>
 
             {/* Password */}
-            <div>
+            <div className="relative">
               <label className="block text-sm font-medium mb-1">Password</label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Enter password"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 {...register("password", {
@@ -179,6 +184,12 @@ const SignUp = () => {
                   },
                 })}
               />
+              <span
+                onClick={togglePasswordVisibility}
+                className="absolute bottom-2.5 right-3 cursor-pointer text-gray-500 hover:text-gray-700 transition-colors"
+              >
+                {showPassword ? <FaEye size={20} /> : <FaEyeSlash size={20} />}
+              </span>
               {errors.password && (
                 <p className="text-red-500 text-sm">
                   {errors.password.message}

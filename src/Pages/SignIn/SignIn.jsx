@@ -4,7 +4,14 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import signinImg from "../../assets/Sign up/login.svg";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 const SignIn = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+
   const [err, setErr] = useState("");
   const { signInUser, updateUserProfile } = useAuth();
   const location = useLocation();
@@ -76,14 +83,20 @@ const SignIn = () => {
             </div>
 
             {/* Password */}
-            <div>
+            <div className="relative">
               <label className="block text-sm font-medium mb-1">Password</label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 {...register("password", { required: true })}
               />
+              <span
+                onClick={togglePasswordVisibility}
+                className="absolute bottom-2.5 right-3 cursor-pointer text-gray-500 hover:text-gray-700 transition-colors"
+              >
+                {showPassword ? <FaEye size={20} /> : <FaEyeSlash size={20} />}
+              </span>
               {errors.password && (
                 <span className="text-red-500 text-sm">
                   Password is required
