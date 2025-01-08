@@ -87,10 +87,9 @@ const CheckoutForm = ({ subscription }) => {
               refetch();
               Swal.fire({
                 title: "Thank you for subscription",
-                text: " Please refresh the page to see the Premium Articles link.",
+                text: " Please refresh your 'Home' page to see the Premium Articles link.",
                 icon: "success",
               });
-              navigate("/");
             }
           })
           .catch((error) => {
