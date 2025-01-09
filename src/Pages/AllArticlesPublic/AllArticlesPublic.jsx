@@ -97,9 +97,9 @@ const AllArticlesPublic = () => {
             </div>
           </div>
 
-          <div className="max-w-screen-2xl  md:flex lg:flex-row-reverse mx-auto items-center justify-between border border-primary-100 dark:border-gray-800 p-4 rounded-lg mb-4 hidden">
+          <div className="max-w-screen-2xl  md:flex lg:flex-row-reverse mx-auto items-center justify-between border border-primary-100 dark:border-gray-800 p-4 rounded-lg mb-4">
             {/* Tags Filter */}
-            <div className="flex flex-col gap-4 lg:gap-0 lg:w-1/2">
+            <div className="md:flex flex-col gap-4 lg:gap-0 lg:w-1/2 hidden">
               <label className="font-medium flex items-center gap-2 font-volKHob text-gray-800 dark:text-gray-200">
                 <IoFilter className="md:text-lg xl:text-xl" />
                 Filter by Tags:

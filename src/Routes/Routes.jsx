@@ -55,7 +55,9 @@ const router = createBrowserRouter([
         path: "articlesDetails/:id",
         element: <ArticlesDetails />,
         loader: ({ params }) =>
-          fetch(`https://daily-lens-backend.vercel.app/approvedArticles/${params.id}`),
+          fetch(
+            `https://daily-lens-backend.vercel.app/approvedArticles/${params.id}`
+          ),
       },
       {
         path: "subscriptions",

@@ -35,7 +35,7 @@ const PremiumArticles = () => {
 
   return (
     <>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-sm md:max-w-screen-2xl mx-auto">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-sm md:max-w-screen-2xl mx-auto p-4">
         {premiumArticles.map((premiumArticle) => (
           <div
             key={premiumArticle._id}
