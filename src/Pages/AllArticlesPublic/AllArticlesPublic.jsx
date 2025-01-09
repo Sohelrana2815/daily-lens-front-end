@@ -85,7 +85,7 @@ const AllArticlesPublic = () => {
             <div className="relative md:w-1/2 w-full">
               <input
                 type="text"
-                placeholder="Search articles..."
+                placeholder="Search articles by title..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={handleKeyPress}
@@ -97,7 +97,7 @@ const AllArticlesPublic = () => {
             </div>
           </div>
 
-          <div className="max-w-screen-2xl flex lg:flex-row-reverse mx-auto items-center justify-between border border-primary-100 dark:border-gray-800 p-4 rounded-lg mb-4">
+          <div className="max-w-screen-2xl  md:flex lg:flex-row-reverse mx-auto items-center justify-between border border-primary-100 dark:border-gray-800 p-4 rounded-lg mb-4 hidden">
             {/* Tags Filter */}
             <div className="flex flex-col gap-4 lg:gap-0 lg:w-1/2">
               <label className="font-medium flex items-center gap-2 font-volKHob text-gray-800 dark:text-gray-200">
