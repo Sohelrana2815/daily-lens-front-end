@@ -101,7 +101,7 @@ const SignIn = () => {
                 />
                 <span
                   onClick={togglePasswordVisibility}
-                  className="absolute bottom-2.5 right-3 cursor-pointer text-gray-500 hover:text-gray-700 transition-colors"
+                  className="absolute bottom-2.5 right-3 cursor-pointer text-gray-500 dark:text-white hover:dark:text-gray-400 hover:text-gray-700 transition-colors"
                 >
                   {showPassword ? (
                     <FaEye size={20} />

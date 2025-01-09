@@ -4,24 +4,34 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "./useAxiosSecure";
 // import useAxiosPublic from "./useAxiosPublic";
 
-const useAllArticles = () => {
+const useAllArticles = (page = 1, limit = 3) => {
   // const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
 
   const {
-    data: articles = [],
+    data: articlesData = { articles: [], currentPage: 1, totalPages: 1 },
     refetch,
     isPending,
     error,
   } = useQuery({
-    queryKey: ["articles"],
+    queryKey: ["articles", page, limit],
     queryFn: async () => {
-      const response = await axiosSecure.get("/articles");
+      const response = await axiosSecure.get(
+        `/articles?page=${page}&limit=${limit}`
+      );
       return response.data;
     },
+    keepPreviousData: true, // Retains previous data while fetching new data
   });
 
-  return { allArticles: articles, refetch, isPending, error };
+  return {
+    allArticles: articlesData.articles,
+    currentPage: articlesData.currentPage,
+    totalPages: articlesData.totalPages,
+    refetch,
+    isPending,
+    error,
+  };
 };
 
 export default useAllArticles;

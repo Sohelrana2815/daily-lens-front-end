@@ -4,7 +4,7 @@ import axios from "axios";
 import { useEffect } from "react";
 
 export const axiosSecure = axios.create({
-  baseURL: "https://daily-lens-backend.vercel.app",
+  baseURL: "http://localhost:5000",
 });
 
 const useAxiosSecure = () => {

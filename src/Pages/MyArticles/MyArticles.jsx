@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import Select from "react-select";
 import { BsEye, BsTwitterX } from "react-icons/bs";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { enqueueSnackbar, SnackbarProvider } from "notistack";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosing_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -100,7 +101,7 @@ const MyArticles = () => {
 
       if (response.data.modifiedCount > 0) {
         refetch();
-        alert("Update success!");
+        enqueueSnackbar("Updated successfully!");
         closeModal();
         reset();
       }
@@ -178,340 +179,358 @@ const MyArticles = () => {
 
   return (
     <>
-      <div className="max-w-screen-2xl mx-auto p-4">
-        {/* Table  */}
-        <div className="overflow-x-auto bg-white shadow-lg rounded-lg dark:bg-gray-800 dark:text-gray-200">
-          <table className="table-auto w-full border-collapse">
-            {/* Table Head */}
-            <thead className="bg-gray-100 dark:bg-gray-700">
-              <tr>
-                <th className="px-4 py-2 text-left text-sm font-semibold">#</th>
-                <th className="px-4 py-2 text-left text-sm font-semibold">
-                  Article Title
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold">
-                  Status
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold">
-                  Premium?
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold">
-                  Article Details
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold">
-                  Update
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold">
-                  Delete
-                </th>
-              </tr>
-            </thead>
+      <SnackbarProvider
+        variant="success"
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        autoHideDuration={3000}
+      >
+        <div className="max-w-screen-2xl mx-auto p-4">
+          {/* Table  */}
+          <div className="overflow-x-auto bg-white shadow-lg rounded-lg dark:bg-gray-800 dark:text-gray-200">
+            <table className="table-auto w-full border-collapse">
+              {/* Table Head */}
+              <thead className="bg-gray-100 dark:bg-gray-700">
+                <tr>
+                  <th className="px-4 py-2 text-left text-sm font-semibold">
+                    #
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-semibold">
+                    Article Title
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-semibold">
+                    Status
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-semibold">
+                    Premium?
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-semibold">
+                    Article Details
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-semibold">
+                    Update
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-semibold">
+                    Delete
+                  </th>
+                </tr>
+              </thead>
 
-            {/* Table Body */}
-            <tbody>
-              {myArticles.map((myArticle, index) => (
-                <tr
-                  key={myArticle._id}
-                  className={`${
-                    index % 2 === 0
-                      ? "bg-gray-50 dark:bg-gray-900"
-                      : "bg-white dark:bg-gray-800"
-                  } hover:bg-gray-100 dark:hover:bg-gray-700`}
-                >
-                  <td className="px-4 py-2 text-sm">{index + 1}</td>
-                  <td className="px-4 py-2 text-sm">
-                    {myArticle.articleTitle}
-                  </td>
-                  <td className="px-4 py-2 text-sm">
-                    {myArticle.status === "decline" ? (
-                      <>
-                        <span className="text-red-600 dark:text-red-400">
-                          Declined
-                        </span>
-                        <button
-                          className="btn btn-sm  btn-warning  ml-2"
-                          onClick={() => {
-                            setDeclineReason(myArticle.declineReason); // Set decline reason
-                            document
-                              .getElementById("decline_reason_modal")
-                              .showModal(); // Open modal
-                          }}
+              {/* Table Body */}
+              <tbody>
+                {myArticles.map((myArticle, index) => (
+                  <tr
+                    key={myArticle._id}
+                    className={`${
+                      index % 2 === 0
+                        ? "bg-gray-50 dark:bg-gray-900"
+                        : "bg-white dark:bg-gray-800"
+                    } hover:bg-gray-100 dark:hover:bg-gray-700`}
+                  >
+                    <td className="px-4 py-2 text-sm">{index + 1}</td>
+                    <td className="px-4 py-2 text-sm">
+                      {myArticle.articleTitle}
+                    </td>
+                    <td className="px-4 py-2 text-sm">
+                      {myArticle.status === "decline" ? (
+                        <>
+                          <span className="text-red-600 dark:text-red-400">
+                            Declined
+                          </span>
+                          <button
+                            className="btn btn-sm  btn-warning  ml-2"
+                            onClick={() => {
+                              setDeclineReason(myArticle.declineReason); // Set decline reason
+                              document
+                                .getElementById("decline_reason_modal")
+                                .showModal(); // Open modal
+                            }}
+                          >
+                            <BsEye />
+                          </button>
+                        </>
+                      ) : (
+                        <span
+                          className={`px-2 py-1 rounded-md ${
+                            myArticle.status === "approved"
+                              ? "bg-green-200 text-green-800 dark:bg-green-700 dark:text-green-200"
+                              : "bg-yellow-200 text-yellow-800 dark:bg-yellow-700 dark:text-yellow-200"
+                          }`}
                         >
-                          <BsEye />
-                        </button>
-                      </>
-                    ) : (
-                      <span
-                        className={`px-2 py-1 rounded-md ${
-                          myArticle.status === "approved"
-                            ? "bg-green-200 text-green-800 dark:bg-green-700 dark:text-green-200"
-                            : "bg-yellow-200 text-yellow-800 dark:bg-yellow-700 dark:text-yellow-200"
-                        }`}
+                          {myArticle.status}
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-4 py-2 text-sm">
+                      {myArticle.isPremium ? "Yes" : "No"}
+                    </td>
+                    <td className="px-4 py-2">
+                      {myArticle.status === "approved" ? (
+                        <Link to={`/articlesDetails/${myArticle._id}`}>
+                          <button className="btn btn-sm btn-success">
+                            <BiDetail className="text-white" />
+                          </button>
+                        </Link>
+                      ) : (
+                        <div className="text-center">
+                          <button
+                            disabled
+                            className="btn btn-sm btn-disabled dark:bg-red-600"
+                          >
+                            <BiDetail className="text-white" />
+                          </button>
+                          <p className="text-xs text-red-600">
+                            Not Approved Yet
+                          </p>
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-4 py-2">
+                      <button
+                        onClick={() => openModal(myArticle)}
+                        className="btn btn-sm bg-blue-600 text-white hover:bg-blue-500 dark:border-none"
                       >
-                        {myArticle.status}
+                        <BiEdit />
+                      </button>
+                    </td>
+                    <td className="px-4 py-2">
+                      <button
+                        onClick={() => deleteArticle(myArticle._id)}
+                        className="btn btn-sm bg-red-600 text-white hover:bg-red-500 dark:border-none"
+                      >
+                        X
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Modal */}
+
+          <dialog
+            id="my_modal_5"
+            className="modal modal-bottom sm:modal-middle"
+          >
+            <div className="modal-box dark:bg-[#1F2937] relative">
+              <h3 className="font-bold text-lg lg:text-xl text-center font-EbGaramond py-4">
+                Update Your Article
+              </h3>
+
+              {selectedArticle && (
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  {/* Close button */}
+                  <div className="modal-action absolute top-0 right-4">
+                    <button
+                      title="CLOSE"
+                      className="btn btn-sm btn-outline  hover:bg-red-600 hover:border-none dark:border-warning"
+                      onClick={closeModal}
+                    >
+                      <BsTwitterX className="hover:text-white  dark:text-white" />
+                    </button>
+                  </div>
+
+                  {/* Article title */}
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Article Title</span>
+                    </label>
+                    <input
+                      type="text"
+                      {...register("articleTitle")}
+                      defaultValue={selectedArticle.articleTitle}
+                      className="input input-bordered bg-[#31795A17] dark:bg-[#374151]"
+                    />
+                  </div>
+                  {/* Article Description */}
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Article Description</span>
+                    </label>
+                    <textarea
+                      type="text"
+                      {...register("articleDescription")}
+                      defaultValue={selectedArticle.articleDescription}
+                      className="textarea textarea-bordered bg-[#31795A17] dark:bg-[#374151] w-full resize-none focus:ring-2 focus:ring-blue-500"
+                      rows={4} // Set a default row count
+                    />
+                  </div>
+
+                  {/* Current Image Preview */}
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Current Image</span>
+                    </label>
+                    <img
+                      src={selectedArticle?.articleImage}
+                      alt="Current Article"
+                      className="w-32 h-32 object-cover rounded"
+                    />
+                  </div>
+
+                  {/* File Input */}
+                  <div className="form-control mt-4">
+                    <label className="label">
+                      <span className="label-text">Upload New Image</span>
+                    </label>
+                    <input
+                      type="file"
+                      {...register("articleImage")} // No 'required' validation here
+                      className="file-input file-input-bordered w-full max-w-xs dark:bg-[#374151]"
+                    />
+                  </div>
+
+                  {/* Publisher Name Dropdown*/}
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Publisher Name</span>
+                    </label>
+                    <select
+                      defaultValue={selectedArticle.publisherName}
+                      className="select select-bordered dark:bg-[#374151]"
+                      {...register("publisherName", { required: true })}
+                    >
+                      <option value="" disabled>
+                        Select Publisher Name
+                      </option>
+                      {publishers.map((publisher) => (
+                        <option key={publisher._id} value={publisher.name}>
+                          {publisher.publisherName}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.publisher && (
+                      <span className="text-error">
+                        Publisher field is required
                       </span>
                     )}
-                  </td>
-                  <td className="px-4 py-2 text-sm">
-                    {myArticle.isPremium ? "Yes" : "No"}
-                  </td>
-                  <td className="px-4 py-2">
-                    {myArticle.status === "approved" ? (
-                      <Link to={`/articlesDetails/${myArticle._id}`}>
-                        <button className="btn btn-sm btn-success">
-                          <BiDetail className="text-white" />
-                        </button>
-                      </Link>
-                    ) : (
-                      <div className="text-center">
-                        <button
-                          disabled
-                          className="btn btn-sm btn-disabled dark:bg-red-600"
-                        >
-                          <BiDetail className="text-white" />
-                        </button>
-                        <p className="text-xs text-red-600">Not Approved Yet</p>
-                      </div>
-                    )}
-                  </td>
-                  <td className="px-4 py-2">
-                    <button
-                      onClick={() => openModal(myArticle)}
-                      className="btn btn-sm bg-blue-600 text-white hover:bg-blue-500 dark:border-none"
-                    >
-                      <BiEdit />
-                    </button>
-                  </td>
-                  <td className="px-4 py-2">
-                    <button
-                      onClick={() => deleteArticle(myArticle._id)}
-                      className="btn btn-sm bg-red-600 text-white hover:bg-red-500 dark:border-none"
-                    >
-                      X
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </div>
+                  {/* Tags Multi-Select */}
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Tags</span>
+                    </label>
+                    <Select
+                      isMulti
+                      options={tagOptions}
+                      value={selectedTags}
+                      onChange={(selectedOptions) =>
+                        setSelectedTags(selectedOptions)
+                      }
+                      className="basic-multi-select"
+                      // Styles
 
-        {/* Modal */}
+                      styles={{
+                        control: (base) => ({
+                          ...base,
+                          backgroundColor:
+                            document.documentElement.classList.contains("dark")
+                              ? "#181C14" // Use black background in dark mode
+                              : base.backgroundColor,
+                          color: document.documentElement.classList.contains(
+                            "dark"
+                          )
+                            ? "white" // Text color white for visibility in dark mode
+                            : base.color,
+                          borderColor:
+                            document.documentElement.classList.contains("dark")
+                              ? "gray" // Gray border in dark mode for a subtle look
+                              : base.borderColor,
+                        }),
+                        menu: (base) => ({
+                          ...base,
+                          backgroundColor:
+                            document.documentElement.classList.contains("dark")
+                              ? "black"
+                              : base.backgroundColor,
+                        }),
+                        multiValue: (base) => ({
+                          ...base,
+                          backgroundColor:
+                            document.documentElement.classList.contains("dark")
+                              ? "gray"
+                              : base.backgroundColor,
+                          color: document.documentElement.classList.contains(
+                            "dark"
+                          )
+                            ? "white"
+                            : base.color,
+                        }),
 
-        <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-          <div className="modal-box dark:bg-[#1F2937] relative">
-            <h3 className="font-bold text-lg lg:text-xl text-center font-EbGaramond py-4">
-              Update Your Article
-            </h3>
-
-            {selectedArticle && (
-              <form onSubmit={handleSubmit(onSubmit)}>
-                {/* Close button */}
-                <div className="modal-action absolute top-0 right-4">
+                        multiValueLabel: (base) => ({
+                          ...base,
+                          color: document.documentElement.classList.contains(
+                            "dark"
+                          )
+                            ? "white"
+                            : base.color,
+                        }),
+                        option: (base, { isFocused }) => ({
+                          ...base,
+                          backgroundColor: isFocused
+                            ? document.documentElement.classList.contains(
+                                "dark"
+                              )
+                              ? "gray" // Dark mode focused option background
+                              : "lightblue" // Light mode focused option background
+                            : base.backgroundColor,
+                          color: document.documentElement.classList.contains(
+                            "dark"
+                          )
+                            ? "white"
+                            : base.color,
+                        }),
+                      }}
+                    />
+                  </div>
                   <button
-                    title="CLOSE"
-                    className="btn btn-sm btn-outline  hover:bg-red-600 hover:border-none dark:border-warning"
-                    onClick={closeModal}
+                    title="Update"
+                    type="submit"
+                    className="btn w-full mt-5 bg-[#201658] rounded-md text-white uppercase font-medium text-base shadow-lg hover:bg-[#1c1450] dark:bg-[#2563EB] dark:hover:bg-[#1d4ed8] border-none font-volKHob focus:outline-none focus:ring-2 focus:ring-blue-400"
                   >
-                    <BsTwitterX className="hover:text-white  dark:text-white" />
+                    Update Article
                   </button>
-                </div>
+                </form>
+              )}
+            </div>
+          </dialog>
 
-                {/* Article title */}
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Article Title</span>
-                  </label>
-                  <input
-                    type="text"
-                    {...register("articleTitle")}
-                    defaultValue={selectedArticle.articleTitle}
-                    className="input input-bordered bg-[#31795A17] dark:bg-[#374151]"
-                  />
-                </div>
-                {/* Article Description */}
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Article Description</span>
-                  </label>
-                  <textarea
-                    type="text"
-                    {...register("articleDescription")}
-                    defaultValue={selectedArticle.articleDescription}
-                    className="textarea textarea-bordered bg-[#31795A17] dark:bg-[#374151] w-full resize-none focus:ring-2 focus:ring-blue-500"
-                    rows={4} // Set a default row count
-                  />
-                </div>
-
-                {/* Current Image Preview */}
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Current Image</span>
-                  </label>
-                  <img
-                    src={selectedArticle?.articleImage}
-                    alt="Current Article"
-                    className="w-32 h-32 object-cover rounded"
-                  />
-                </div>
-
-                {/* File Input */}
-                <div className="form-control mt-4">
-                  <label className="label">
-                    <span className="label-text">Upload New Image</span>
-                  </label>
-                  <input
-                    type="file"
-                    {...register("articleImage")} // No 'required' validation here
-                    className="file-input file-input-bordered w-full max-w-xs dark:bg-[#374151]"
-                  />
-                </div>
-
-                {/* Publisher Name Dropdown*/}
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Publisher Name</span>
-                  </label>
-                  <select
-                    defaultValue={selectedArticle.publisherName}
-                    className="select select-bordered dark:bg-[#374151]"
-                    {...register("publisherName", { required: true })}
-                  >
-                    <option value="" disabled>
-                      Select Publisher Name
-                    </option>
-                    {publishers.map((publisher) => (
-                      <option key={publisher._id} value={publisher.name}>
-                        {publisher.publisherName}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.publisher && (
-                    <span className="text-error">
-                      Publisher field is required
-                    </span>
-                  )}
-                </div>
-                {/* Tags Multi-Select */}
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Tags</span>
-                  </label>
-                  <Select
-                    isMulti
-                    options={tagOptions}
-                    value={selectedTags}
-                    onChange={(selectedOptions) =>
-                      setSelectedTags(selectedOptions)
-                    }
-                    className="basic-multi-select"
-                    // Styles
-
-                    styles={{
-                      control: (base) => ({
-                        ...base,
-                        backgroundColor:
-                          document.documentElement.classList.contains("dark")
-                            ? "#181C14" // Use black background in dark mode
-                            : base.backgroundColor,
-                        color: document.documentElement.classList.contains(
-                          "dark"
-                        )
-                          ? "white" // Text color white for visibility in dark mode
-                          : base.color,
-                        borderColor:
-                          document.documentElement.classList.contains("dark")
-                            ? "gray" // Gray border in dark mode for a subtle look
-                            : base.borderColor,
-                      }),
-                      menu: (base) => ({
-                        ...base,
-                        backgroundColor:
-                          document.documentElement.classList.contains("dark")
-                            ? "black"
-                            : base.backgroundColor,
-                      }),
-                      multiValue: (base) => ({
-                        ...base,
-                        backgroundColor:
-                          document.documentElement.classList.contains("dark")
-                            ? "gray"
-                            : base.backgroundColor,
-                        color: document.documentElement.classList.contains(
-                          "dark"
-                        )
-                          ? "white"
-                          : base.color,
-                      }),
-
-                      multiValueLabel: (base) => ({
-                        ...base,
-                        color: document.documentElement.classList.contains(
-                          "dark"
-                        )
-                          ? "white"
-                          : base.color,
-                      }),
-                      option: (base, { isFocused }) => ({
-                        ...base,
-                        backgroundColor: isFocused
-                          ? document.documentElement.classList.contains("dark")
-                            ? "gray" // Dark mode focused option background
-                            : "lightblue" // Light mode focused option background
-                          : base.backgroundColor,
-                        color: document.documentElement.classList.contains(
-                          "dark"
-                        )
-                          ? "white"
-                          : base.color,
-                      }),
-                    }}
-                  />
-                </div>
+          {/* Decline Reason Modal */}
+          <dialog
+            id="decline_reason_modal"
+            className="modal modal-bottom sm:modal-middle dark:text-gray-300"
+          >
+            <div className="modal-box bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+              {/* Modal Header */}
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-bold text-lg text-gray-800 dark:text-gray-200">
+                  Decline Reason
+                </h3>
                 <button
-                  title="Update"
-                  type="submit"
-                  className="btn w-full mt-5 bg-[#201658] rounded-md text-white uppercase font-medium text-base shadow-lg hover:bg-[#1c1450] dark:bg-[#2563EB] dark:hover:bg-[#1d4ed8] border-none font-volKHob focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className=" hover:text-white hover:bg-red-600 p-2"
+                  title="Close"
+                  onClick={() => {
+                    document.getElementById("decline_reason_modal").close(); // Close modal
+                  }}
+                  aria-label="Close"
                 >
-                  Update Article
+                  <BsTwitterX className="text-lg" />
                 </button>
-              </form>
-            )}
-          </div>
-        </dialog>
+              </div>
 
-        {/* Decline Reason Modal */}
-        <dialog
-          id="decline_reason_modal"
-          className="modal modal-bottom sm:modal-middle dark:text-gray-300"
-        >
-          <div className="modal-box bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-            {/* Modal Header */}
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-lg text-gray-800 dark:text-gray-200">
-                Decline Reason
-              </h3>
-              <button
-                className=" hover:text-white hover:bg-red-600 p-2"
-                title="Close"
-                onClick={() => {
-                  document.getElementById("decline_reason_modal").close(); // Close modal
-                }}
-                aria-label="Close"
-              >
-                <BsTwitterX className="text-lg" />
-              </button>
+              {/* Modal Body */}
+              <div className="mb-6">
+                <p className="text-gray-700 dark:text-gray-400">
+                  {declineReason || "No reason provided."}
+                </p>
+              </div>
             </div>
-
-            {/* Modal Body */}
-            <div className="mb-6">
-              <p className="text-gray-700 dark:text-gray-400">
-                {declineReason || "No reason provided."}
-              </p>
-            </div>
-          </div>
-        </dialog>
-      </div>
+          </dialog>
+        </div>
+      </SnackbarProvider>
     </>
   );
 };
