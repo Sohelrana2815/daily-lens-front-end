@@ -161,75 +161,116 @@ const ArticlesCard = ({ article, refetch }) => {
               </h2>
             </SkeletonWrapper>
             <div className="flex items-center mt-2 gap-2">
-              <SkeletonWrapper circle={true}>
+              <SkeletonWrapper
+                loading={skeletonLoading}
+                width={130}
+                height={16}
+                count={2}
+              >
                 <img
                   src={authorPhoto}
                   alt="Author"
                   className="w-8 h-8 rounded-full object-cover border-2 border-gray-300"
                 />
+                <div>
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                    {authorName}
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-500">
+                    {authorEmail}
+                  </p>
+                </div>
               </SkeletonWrapper>
-              <div>
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                  {authorName}
+            </div>
+
+            <SkeletonWrapper
+              width={200}
+              height={12}
+              loading={skeletonLoading}
+              count={3}
+            >
+              <div className="mt-4">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Posted on: {postedDate}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-500">
-                  {authorEmail}
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Status: <span className="font-medium">{status}</span>
+                </p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Publisher:{" "}
+                  <span className="font-medium">{publisherName}</span>
                 </p>
               </div>
-            </div>
-
-            <div className="mt-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Posted on: {postedDate}
-              </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Status: <span className="font-medium">{status}</span>
-              </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Publisher: <span className="font-medium">{publisherName}</span>
-              </p>
-            </div>
+            </SkeletonWrapper>
 
             <div className="flex flex-wrap gap-2 mt-4">
+              {/* Approve button */}
               {status === "pending" && (
-                <button
-                  onClick={() => handleAction("approve", _id, approveArticle)}
-                  className="btn btn-xs btn-outline dark:text-white text-primary border-primary hover:bg-primary hover:text-white"
+                <SkeletonWrapper
+                  loading={skeletonLoading}
+                  width={80}
+                  height={25}
                 >
-                  Approve
-                </button>
+                  <button
+                    onClick={() => handleAction("approve", _id, approveArticle)}
+                    className="btn btn-xs btn-outline dark:text-white text-primary border-primary hover:bg-primary hover:text-white"
+                  >
+                    Approve
+                  </button>
+                </SkeletonWrapper>
               )}
+              {/* Decline button */}
               {status === "pending" && (
-                <button
-                  onClick={() => openModal(article)}
-                  className="btn btn-xs text-white bg-blue-500 hover:bg-blue-600 dark:border-none"
+                <SkeletonWrapper
+                  loading={skeletonLoading}
+                  width={80}
+                  height={25}
                 >
-                  Decline
-                </button>
+                  <button
+                    onClick={() => openModal(article)}
+                    className="btn btn-xs text-white bg-blue-500 hover:bg-blue-600 dark:border-none"
+                  >
+                    Decline
+                  </button>
+                </SkeletonWrapper>
               )}
+              {/* Delete button */}
               {!isPremium && (
-                <button
-                  onClick={() => handleAction("delete", _id, deleteArticle)}
-                  className="btn btn-xs dark:border-none text-white bg-red-500 hover:bg-red-600"
+                <SkeletonWrapper
+                  loading={skeletonLoading}
+                  width={80}
+                  height={25}
                 >
-                  Delete
-                </button>
+                  <button
+                    onClick={() => handleAction("delete", _id, deleteArticle)}
+                    className="btn btn-xs dark:border-none text-white bg-red-500 hover:bg-red-600"
+                  >
+                    Delete
+                  </button>
+                </SkeletonWrapper>
               )}
+              {/* Premium button */}
               {!isPremium && status !== "decline" && (
-                <button
-                  title="Article not approved yet"
-                  disabled={status !== "approved"}
-                  onClick={() =>
-                    handleAction("make premium", _id, makePremiumArticle)
-                  }
-                  className={`btn btn-xs font-semibold text-black px-4 rounded-lg ${
-                    status !== "approved"
-                      ? "bg-stone-300 dark:bg-stone-400 dark:text-black"
-                      : "bg-yellow-500 hover:bg-yellow-600 border-none"
-                  }`}
+                <SkeletonWrapper
+                  loading={skeletonLoading}
+                  width={80}
+                  height={25}
                 >
-                  Make Premium
-                </button>
+                  <button
+                    title="Article not approved yet"
+                    disabled={status !== "approved"}
+                    onClick={() =>
+                      handleAction("make premium", _id, makePremiumArticle)
+                    }
+                    className={`btn btn-xs font-semibold text-black px-4 rounded-lg ${
+                      status !== "approved"
+                        ? "bg-stone-300 dark:bg-stone-400 dark:text-black"
+                        : "bg-yellow-500 hover:bg-yellow-600 border-none"
+                    }`}
+                  >
+                    Make Premium
+                  </button>
+                </SkeletonWrapper>
               )}
             </div>
           </div>

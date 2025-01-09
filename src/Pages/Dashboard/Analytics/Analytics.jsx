@@ -1,15 +1,16 @@
 import { useEffect } from "react";
 import { Chart } from "react-google-charts";
-import useAllArticles from "../../../Hooks/useAllArticles";
 import "./chart.css";
 import useTheme from "../../../Hooks/useTheme";
 import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
+import useAllArticlesAnalytics from "../../../Hooks/useAllArticlesAnalytics";
+import AnimatedComponent from "../../../Components/AnimatedComponent/AnimatedComponent";
 const Analytics = () => {
-  const { allArticles } = useAllArticles();
+  const { articles } = useAllArticlesAnalytics();
   const { isDarkMode } = useTheme();
   // Process the data
 
-  const publisherCounts = allArticles.reduce((acc, article) => {
+  const publisherCounts = articles.reduce((acc, article) => {
     const { publisherName } = article; // destructure the publisherName
     acc[publisherName] = (acc[publisherName] || 0) + 1;
     return acc;
@@ -91,11 +92,11 @@ const Analytics = () => {
   }, []);
 
   const getPublisherData = () => {
-    const publisherCounts = allArticles.reduce((acc, article) => {
+    const publisherCounts = articles.reduce((acc, article) => {
       acc[article.publisherName] = (acc[article.publisherName] || 0) + 1;
       return acc;
     }, {});
-    const totalArticles = allArticles.length;
+    const totalArticles = articles.length;
     return Object.keys(publisherCounts).map((publisherName) => [
       publisherName,
       (publisherCounts[publisherName] / totalArticles) * 100,
@@ -120,25 +121,29 @@ const Analytics = () => {
         subTitle="Analyze Publisher Contributions with Insightful Visualizations."
       />
       {/* Pie chart */}
-      <div className="chart-container">
-        <Chart
-          chartType="PieChart"
-          data={pieChartData}
-          options={pieChartOptions}
-          width={"100%"}
-          height={"400px"}
-        />
-      </div>
+      <AnimatedComponent animation="zoom-in">
+        <div className="chart-container">
+          <Chart
+            chartType="PieChart"
+            data={pieChartData}
+            options={pieChartOptions}
+            width={"100%"}
+            height={"400px"}
+          />
+        </div>
+      </AnimatedComponent>
       {/* Bar chart */}
-      <div className="chart-container">
-        <Chart
-          chartType="Bar"
-          data={data}
-          options={barChartOptions}
-          width={"100%"}
-          height={"400px"}
-        />
-      </div>
+      <AnimatedComponent animation="fade-in">
+        <div className="chart-container">
+          <Chart
+            chartType="Bar"
+            data={data}
+            options={barChartOptions}
+            width={"100%"}
+            height={"400px"}
+          />
+        </div>
+      </AnimatedComponent>
     </>
   );
 };
