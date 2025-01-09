@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 // import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import SkeletonWrapper from "../../../Components/SkeletonWrapper/SkeletonWrapper";
+import useLoading from "../../../Hooks/useLoading";
 
 const ArticlesCard = ({ article, refetch }) => {
   const {
@@ -17,7 +19,7 @@ const ArticlesCard = ({ article, refetch }) => {
     authorPhoto,
     isPremium,
   } = article;
-
+  const skeletonLoading = useLoading();
   // const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   const [selectedArticle, setSelectedArticle] = useState(null);
@@ -119,49 +121,53 @@ const ArticlesCard = ({ article, refetch }) => {
       <div className="flex flex-wrap justify-center">
         <div className="card w-full max-w-sm bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden mx-auto">
           {/* Article Image */}
-          <figure className="relative h-48 w-full">
-            <img
-              src={articleImage}
-              alt="Article"
-              className="w-full h-full object-cover"
-            />
-            {/* Conditional Badge */}
-            <div className="absolute top-2 left-2">
-              {isPremium && (
-                <span className="badge badge-warning text-slate-700 text-sm font-bold px-3 py-1 rounded-lg">
-                  Premium
-                </span>
-              )}
-              {!isPremium && status === "approved" && (
-                <span className="badge badge-success text-white text-sm font-bold px-3 py-1 rounded-lg">
-                  Approved
-                </span>
-              )}
-              {status === "decline" && (
-                <span className="badge badge-error text-white text-sm font-bold px-3 py-1 rounded-lg">
-                  Declined
-                </span>
-              )}
-              {status === "pending" && (
-                <span className="badge badge-info text-gray-900  text-sm font-semibold px-3 py-1 rounded-lg">
-                  Pending...
-                </span>
-              )}
-            </div>
-          </figure>
-
+          <SkeletonWrapper loading={skeletonLoading} width={381} height={180}>
+            <figure className="relative h-48 w-full">
+              <img
+                src={articleImage}
+                alt="Article"
+                className="w-full h-full object-cover"
+              />
+              {/* Conditional Badge */}
+              <div className="absolute top-2 left-2">
+                {isPremium && (
+                  <span className="badge badge-warning text-slate-700 text-sm font-bold px-3 py-1 rounded-lg">
+                    Premium
+                  </span>
+                )}
+                {!isPremium && status === "approved" && (
+                  <span className="badge badge-success text-white text-sm font-bold px-3 py-1 rounded-lg">
+                    Approved
+                  </span>
+                )}
+                {status === "decline" && (
+                  <span className="badge badge-error text-white text-sm font-bold px-3 py-1 rounded-lg">
+                    Declined
+                  </span>
+                )}
+                {status === "pending" && (
+                  <span className="badge badge-info text-gray-900  text-sm font-semibold px-3 py-1 rounded-lg">
+                    Pending...
+                  </span>
+                )}
+              </div>
+            </figure>
+          </SkeletonWrapper>
           {/* Article Details */}
           <div className="p-4">
-            <h2 className="text-lg font-semibold text-gray-800 dark:text-white truncate">
-              {articleTitle}
-            </h2>
-
+            <SkeletonWrapper loading={skeletonLoading} width={340} height={20}>
+              <h2 className="text-lg font-semibold text-gray-800 dark:text-white truncate">
+                {articleTitle}
+              </h2>
+            </SkeletonWrapper>
             <div className="flex items-center mt-2 gap-2">
-              <img
-                src={authorPhoto}
-                alt="Author"
-                className="w-8 h-8 rounded-full object-cover border-2 border-gray-300"
-              />
+              <SkeletonWrapper circle={true}>
+                <img
+                  src={authorPhoto}
+                  alt="Author"
+                  className="w-8 h-8 rounded-full object-cover border-2 border-gray-300"
+                />
+              </SkeletonWrapper>
               <div>
                 <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                   {authorName}
