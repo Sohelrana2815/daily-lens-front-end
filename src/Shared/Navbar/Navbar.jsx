@@ -240,12 +240,14 @@ const Navbar = () => {
                   tabIndex={0}
                   className="menu menu-sm dropdown-content dark:bg-gray-900 bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
                 >
-                  <li>
-                    <a className="justify-between">
-                      Profile
-                      <span className="badge">New</span>
-                    </a>
-                  </li>
+                  <Link to="/profilePage">
+                    <li>
+                      <a className="justify-between">
+                        Profile
+                        <span className="badge">New</span>
+                      </a>
+                    </li>
+                  </Link>
                   <li>
                     <a onClick={handleSignOut}>Logout</a>
                   </li>

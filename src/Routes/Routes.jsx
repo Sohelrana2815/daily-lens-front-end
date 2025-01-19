@@ -20,6 +20,7 @@ import Analytics from "../Pages/Dashboard/Analytics/Analytics";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import PremiumRoute from "./PremiumRoute/PremiumRoute";
 import AdminRoute from "./AdminRoute/AdminRoute";
+import ProfilePage from "../Pages/ProfilePage/ProfilePage";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
       {
         path: "payment",
         element: <Payment />,
+      },
+      {
+        path: "profilePage",
+        element: <ProfilePage />,
       },
       {
         path: "signIn",
