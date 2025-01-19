@@ -21,6 +21,7 @@ import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import PremiumRoute from "./PremiumRoute/PremiumRoute";
 import AdminRoute from "./AdminRoute/AdminRoute";
 import ProfilePage from "../Pages/ProfilePage/ProfilePage";
+import EditProfile from "../Pages/ProfilePage/EditProfile";
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
       {
         path: "profilePage",
         element: <ProfilePage />,
+      },
+      {
+        path: "editProfile",
+        element: <EditProfile />,
       },
       {
         path: "signIn",
