@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import checkoutImg from "../../assets/CheckoutImg/subscription page.png";
+import checkoutImg from "../../assets/CheckoutImg/subscription page.WebP";
 import { useState } from "react";
 import SectionTitle from "../../Components/SectionTitle/SectionTitle";
 import { FaLock } from "react-icons/fa";

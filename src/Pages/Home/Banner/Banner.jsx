@@ -3,8 +3,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { FaChevronLeft, FaChevronRight, FaClock } from "react-icons/fa"; // For custom arrow icons
 
 const bannerImages = [
-  { src: "/assets/Banner/banner1.jpg", alt: "Banner 1" },
-  { src: "/assets/Banner/banner2.jpg", alt: "Banner 2" },
+  { src: "/assets/Banner/banner1.webp", alt: "Banner 1" },
+  { src: "/assets/Banner/banner2.webp", alt: "Banner 2" },
 ];
 
 const Banner = () => {

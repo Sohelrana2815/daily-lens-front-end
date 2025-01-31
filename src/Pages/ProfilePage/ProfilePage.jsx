@@ -17,17 +17,17 @@ const ProfilePage = () => {
           <div className="flex flex-col items-center mb-6">
             {/* Profile Image */}
             <img
-              src={user.photoURL || "https://via.placeholder.com/150"}
+              src={user?.photoURL || "https://via.placeholder.com/150"}
               alt="Profile"
               className="w-28 h-28 rounded-full object-cover mb-4 border-4 border-blue-500 dark:border-blue-400 shadow-lg"
             />
             {/* Display Name */}
             <p className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">
-              {user.displayName || "No Name Provided"}
+              {user?.displayName || "No Name Provided"}
             </p>
             {/* Email */}
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              {user.email || "No Email Available"}
+              {user?.email || "No Email Available"}
             </p>
           </div>
 

@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 const AnimatedComponent = ({
   animation,
-  duration = 1500,
+  duration = 800,
   delay = 0,
   offset = 100,
   children,
