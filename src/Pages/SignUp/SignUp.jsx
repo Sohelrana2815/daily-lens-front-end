@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
-import signUpImg from "../../assets/Sign up/singup.png";
+import signUpImg from "../../assets/Sign up/singup.webp";
 import useAuth from "../../Hooks/useAuth";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import AnimatedComponent from "../../Components/AnimatedComponent/AnimatedComponent";
