@@ -9,6 +9,29 @@
 ## Live Site URL
 [Daily Lens Web App](https://daily-lens-90dd8.web.app)
 
+## Technology Stack
+### Frontend
+- **React.js** - Core framework with Vite
+- **Tailwind CSS** - Styled with modern utility classes
+- **React Router DOM** - Client-side routing
+- **React TanStack Query** - Server-state management
+- **React Google Charts** - Data visualization
+- **Swiper.js** - Interactive carousels
+
+### Backend
+- **Node.js** - Runtime environment
+- **Express.js** - REST API framework
+- **MongoDB** - Database with Mongoose ODM
+- **JWT** - Authentication tokens
+- **CORS** - Cross-origin resource sharing
+
+### DevOps & Tools
+- **Firebase** - Hosting & Authentication
+- **Vercel** - Backend deployment
+- **Git** - Version control
+- **ESLint** - Code quality
+- **React Hot Toast** - Notifications
+
 ## Key Features
 1. **Responsive Design**  
    - Fully optimized for mobile, tablet, and desktop devices, including the admin dashboard.
@@ -16,46 +39,36 @@
 2. **Trending Articles**  
    - Displays trending articles based on user engagement (view count).
 
-3. **User and Admin Roles**  
-   - Role-based functionality ensures secure access to features like managing articles, publishers, and users.
+3. **Role-Based Access Control**  
+   - Secure admin dashboard with JWT verification for managing content and users.
 
-4. **Subscription Plans**  
-   - Users can subscribe to premium plans to unlock exclusive articles and features.
+12. **Real-Time Updates**  
+    - Statistics updated in real time with `react-countup`.
 
-5. **Rich User Interface**  
-   - Dynamic pie charts, bar charts, and other visuals created using `react-google-charts`.
+## Challenges Faced
+### 1. Subscription Management
+- **Problem:** Implementing automatic downgrade from premium to normal users after subscription expiration
+- **Solution:** Created a cron job that runs daily to check expiration dates and update user status
 
-6. **Interactive Home Page**  
-   - Includes trending articles, publishers, statistics, and unique sections with animations and effects.
+### 2. Article View Tracking
+- **Problem:** Accurate view count updates without duplicate counts
+- **Solution:** Implemented IP-based tracking with a 24-hour cache system using MongoDB
 
-7. **CRUD Operations with Notifications**  
-   - Sweet alerts and toast notifications for all create, read, update, and delete operations.
+### 3. Search & Filter Optimization
+- **Problem:** Efficient handling of complex search queries with multiple filters
+- **Solution:** Developed backend API endpoints with MongoDB aggregation pipelines for fast query processing
 
-8. **Advanced Search and Filters**  
-   - Search articles by title and filter by publisher and tags.
-
-9. **Secure Authentication**  
-   - Implements email/password login, social logins, and JWT-based authentication for private routes.
-
-10. **Modern Development Stack**  
-   - Built with React, Firebase, Node.js, Express, MongoDB, and styled with modern component libraries.
-
-11. **Unique Premium Features**  
-    - Premium articles are accessible only to subscribed users. Articles can be dynamically upgraded to premium.
-
-12. **Pagination and Loaders**  
-    - Implements smooth pagination and proper loaders for an enhanced user experience.
-
-13. **Real-Time Updates**  
-    - Statistics like user counts and premium subscriptions are updated in real time with `react-countup`.
+### 4. Payment Gateway Integration
+- **Problem:** Secure handling of premium subscriptions
+- **Solution:** Integrated Stripe API with webhook verification for payment confirmation
 
 ## Developer Information
-- **Frontend Repository:** [GitHub Link](https://github.com/Sohelrana2815/daily-lens-front-end)*
-- **Backend Repository:** [GitHub Link](https://github.com/Sohelrana2815/daily-lens-back-end)*
+- **Frontend Repository:** [GitHub Link](https://github.com/Sohelrana2815/daily-lens-front-end)
+- **Backend Repository:** [GitHub Link](https://github.com/Sohelrana2815/daily-lens-back-end)
 
 ## Additional Notes
-- **Environment Variables:** Firebase and MongoDB credentials are secured using `.env` files.
-- **404 Page:** Custom-designed "Page Not Found" ensures a professional user experience.
-- **Live Demo:** A homepage modal encourages users to subscribe after 10 seconds of inactivity.
+- **Security:** Implemented rate limiting and Helmet middleware for API protection
+- **Performance:** Optimized MongoDB queries with proper indexing
+- **Error Handling:** Comprehensive error logging with Winston middleware
 
 Thank you for exploring **Daily Lens**!
